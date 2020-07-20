@@ -33,8 +33,7 @@ public class CustomLogoutSuccessHandler extends
         if ( authentication != null && authentication.getDetails() != null ) {
             try {
                 //do some logic here if you want something to be done whenever
-                User authUser =
-                        userService.findByUserName(authentication.getName());
+                User authUser =userService.findByUserName(authentication.getName());
                 UserSessionLog userSessionLog = new UserSessionLog();
                 userSessionLog.setUser(authUser);
                 userSessionLog.setUserSessionLogStatus(UserSessionLogStatus.LOGOUT);

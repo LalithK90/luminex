@@ -1,5 +1,6 @@
 package lk.luminex.asset.message.entity;
 
+
 import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -30,11 +31,11 @@ public class EmailMessage extends AuditEntity {
     @NotNull
     private String subject;
 
-    @ManyToMany( fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
-    @Fetch( FetchMode.SUBSELECT )
-    @JoinTable( name = "email_message_employee",
-            joinColumns = @JoinColumn( name = "email_message_id" ),
-            inverseJoinColumns = @JoinColumn( name = "employee_id" ) )
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "email_message_employee",
+            joinColumns = @JoinColumn(name = "email_message_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
 

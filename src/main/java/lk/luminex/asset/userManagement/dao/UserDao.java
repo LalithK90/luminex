@@ -1,5 +1,7 @@
 package lk.luminex.asset.userManagement.dao;
 
+
+
 import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.userManagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface UserDao extends JpaRepository<User, Integer > {
 
     @Query( value = "select id from User where employee_id=?1", nativeQuery = true )
-    Integer findByEmployeeId(@Param( "employee_id" ) Integer id);
+    Integer findByEmployeeId(@Param("employee_id") Integer id);
 
     @Query( "select id from User where username=?1" )
     Integer findUserIdByUserName(String userName);
@@ -19,5 +21,4 @@ public interface UserDao extends JpaRepository<User, Integer > {
     User findByUsername(String name);
 
     User findByEmployee(Employee employee);
-
-   }
+}

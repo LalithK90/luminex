@@ -1,5 +1,6 @@
 package lk.luminex.asset.userManagement.dao;
 
+
 import lk.luminex.asset.userManagement.entity.Enum.UserSessionLogStatus;
 import lk.luminex.asset.userManagement.entity.User;
 import lk.luminex.asset.userManagement.entity.UserSessionLog;

@@ -1,5 +1,6 @@
 package lk.luminex.asset.employee.entity.Enum;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Designation {
     //All station can check
-    CGE("Commissioner General Of Excise"),
+    /*CGE("Commissioner General Of Excise"),
     ACGE("Additional Commissioner General Of Excise"),
     CE("Commissioner Of Excise"),
     DCL("Deputy Commissioner Of Excise( Legal )"),
@@ -24,7 +25,8 @@ public enum Designation {
     //There is no authority to logo in to the system
     EC("Excise Corporal"),
     EG("Excise Guard"),
-    ED("Excise Driver");
+    ED("Excise Driver"), Owner("");*/
 
     private final String designation;
 }
+

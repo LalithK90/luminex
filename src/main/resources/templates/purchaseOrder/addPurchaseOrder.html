@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>JN_Super</title>
+</head>
+<body>
+<!--Multi CSS-->
+<link media="all" rel="stylesheet" th:href="@{/css/multi.css}" type="text/css"/>
+
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<!--Heading Area -->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--View List Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/purchaseOrder">
+                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
+            </a>
+        </div>
+        <!--Form Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    Purchase Order Management
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--Form Content - start -->
+<div class="container-fluid bg-info">
+    <!--Supplier Search - Start-->
+    <div class="offset-1 flex-column" th:if="${searchAreaShow==true}">
+        <form class="form-inline" id="form" method="POST"
+              th:action="${'/purchaseOrder/find'}" th:object="${purchaseOrder}">
+            <div class="form-row">
+                <label class="mr-5 ml-5" for="searchCriteria">Search By</label>
+                <select class="form-control mr-5 ml-5" id="searchCriteria" required tabindex="1">
+                    <option disabled selected value="">Please Select</option>
+                    <option value="name">Name</option>
+                    <option value="code">Code</option>
+                    <option value="contactOne">Mobile Number</option>
+                </select>
+                <label class="mr-5 ml-5" for="searchValue">Search Value</label>
+                <input class="form-control mr-5 ml-5" id="searchValue" minlength="5" required tabindex="2" type="text">
+                <!--Search Button-->
+                <button class="btn btn-success mr-5 ml-5" id="searchButton" tabindex="3" type="submit">
+                    <i class="fa fa-search " style="font-size: 20px"></i>&nbsp;&nbsp; Search
+                </button>
+            </div>
+        </form>
+    </div>
+    <!--Supplier Search - end-->
+    <!--Supplier List Show - start-->
+    <div class="col-12 flex-column" th:if="${supplierDetailShow==true}">
+        <div th:replace="~{supplier/supplier :: supplierFragment}"></div>
+    </div>
+    <!--Supplier List Show - end-->
+    <!--Supplier Item add- start-->
+    <div class="col-12 flex-column" th:if="${supplierDetailShow==false}">
+        <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12" data-toggle="collapse"
+           href="#hrefCollapse">Show Supplier Details</a>
+        <div class="collapse" id="hrefCollapse">
+            <section th:replace="~{supplier/supplier-detail :: supplierDetailsFragment}"></section>
+        </div>
+        <!--Purchase Order Item add Form - start-->
+        <form class="mb-5" method="POST" th:action="${'/purchaseOrder'}" th:object="${purchaseOrderDetail}">
+            <input th:name="${'purchaseOrder'}" th:value="${supplierDetail.id}" type="hidden">
+            <div class="form-row col-md-6" th:if="${purchaseOrderItemEdit==false}">
+                <div class="col-md-4">
+                    <label class="control-label" for="item">Select Items:</label>
+                </div>
+                <div class="text-left col-md-8">
+                    <select class="form-control" id="item">
+                        <option selected value=""> Please Select</option>
+                        <option th:each="item : ${items}"
+                                th:text="${item.name}"
+                                th:value="${item.id}"
+                        > Please Select
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row col-md-12 col-sm-12 mt-4 text-center">
+                <!--Add new Item-->
+                <table class="table table-striped table-inverse" id="selectedItemInTable">
+                    <legend><strong> <i>Selected Items </i></strong></legend>
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>Index</th>
+                        <th>Item Name</th>
+                        <th>ROP</th>
+                        <th>Price (Rs.)</th>
+                        <th>Quantity</th>
+                        <th>Line Total</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <!--Button-->
+            <div class="form-group col-md-12 col-sm-12 mt-4 text-center flex-column ">
+                <!--Back Button-->
+                <a class="btn btn-dark" href="/supplier" tabindex="11">
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                </a>
+                <!--Save Button-->
+                <button class="btn btn-success ml-5" tabindex="9" type="submit">
+                    <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;Save
+                </button>
+                <!--Cancel Button-->
+                <button class="btn btn-warning ml-5" tabindex="10" type="reset">
+                    <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                </button>
+            </div>
+        </form>
+        <!--Supplier Item add Form - end-->
+    </div>
+</div>
+
+<!--Supplier Item add - end-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    //when change supplier search criteria that value set search value input
+    $(document).ready(function () {
+        $("#searchCriteria").bind("change", function () {
+            $("#searchValue").attr("name", $(this).val());
+        });
+    });
+
+
+</script>
+</body>
+</html>
