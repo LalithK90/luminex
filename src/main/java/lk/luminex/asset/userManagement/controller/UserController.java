@@ -1,13 +1,13 @@
 package lk.luminex.asset.userManagement.controller;
 
 
-import J_N_Super_Pvt_Ltd.asset.employee.entity.Employee;
-import J_N_Super_Pvt_Ltd.asset.employee.entity.Enum.Designation;
-import J_N_Super_Pvt_Ltd.asset.employee.entity.Enum.EmployeeStatus;
-import J_N_Super_Pvt_Ltd.asset.employee.service.EmployeeService;
-import J_N_Super_Pvt_Ltd.asset.userManagement.entity.User;
-import J_N_Super_Pvt_Ltd.asset.userManagement.service.RoleService;
-import J_N_Super_Pvt_Ltd.asset.userManagement.service.UserService;
+import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.employee.entity.Enum.Designation;
+import lk.luminex.asset.employee.entity.Enum.EmployeeStatus;
+import lk.luminex.asset.employee.service.EmployeeService;
+import lk.luminex.asset.userManagement.entity.User;
+import lk.luminex.asset.userManagement.service.RoleService;
+import lk.luminex.asset.userManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

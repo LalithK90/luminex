@@ -1,9 +1,10 @@
 package lk.luminex.asset.supplier.entity;
 
-import J_N_Super_Pvt_Ltd.asset.PurchaseOrder.entity.PurchaseOrder;
-import J_N_Super_Pvt_Ltd.asset.supplier.entity.Enum.ItemSupplierStatus;
-import J_N_Super_Pvt_Ltd.util.audit.AuditEntity;
+
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.luminex.asset.supplier.entity.Enum.ItemSupplierStatus;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.*;
 
 import javax.persistence.*;

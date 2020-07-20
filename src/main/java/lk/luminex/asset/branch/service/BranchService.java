@@ -23,7 +23,7 @@ public class BranchService implements AbstractService<Branch, Integer> {
         this.branchDao = branchDao;
     }
 
-    public Object findAll() {
+    public List<Branch> findAll() {
         return branchDao.findAll();
     }
 

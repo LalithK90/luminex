@@ -1,9 +1,9 @@
 package lk.luminex.asset.message.service;
 
 
-import J_N_Super_Pvt_Ltd.asset.message.dao.EmailMessageDao;
-import J_N_Super_Pvt_Ltd.asset.message.entity.EmailMessage;
-import J_N_Super_Pvt_Ltd.util.interfaces.AbstractService;
+import lk.luminex.asset.message.dao.EmailMessageDao;
+import lk.luminex.asset.message.entity.EmailMessage;
+import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;

@@ -21,11 +21,11 @@ public enum Designation {
     OIC("Chief Inspector Of Excise"),
     IE("Inspector Of Excise"),
     ESM("Excise Sergeant Major"),
-    ES("Excise Sergeant"),
+    ES("Excise Sergeant"),*/
     //There is no authority to logo in to the system
     EC("Excise Corporal"),
     EG("Excise Guard"),
-    ED("Excise Driver"), Owner("");*/
+    ED("Excise Driver"), Owner("");
 
     private final String designation;
 }

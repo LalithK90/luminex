@@ -1,8 +1,8 @@
 package lk.luminex.asset.userManagement.controller;
 
 
-import J_N_Super_Pvt_Ltd.asset.userManagement.entity.Role;
-import J_N_Super_Pvt_Ltd.asset.userManagement.service.RoleService;
+import lk.luminex.asset.userManagement.entity.Role;
+import lk.luminex.asset.userManagement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

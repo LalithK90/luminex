@@ -1,9 +1,9 @@
 package lk.luminex.asset.goodReceivedNote.controller;
 
 
-import J_N_Super_Pvt_Ltd.asset.PurchaseOrder.entity.Enum.PurchaseOrderStatus;
-import J_N_Super_Pvt_Ltd.asset.PurchaseOrder.service.PurchaseOrderService;
-import J_N_Super_Pvt_Ltd.asset.goodReceivedNote.service.GoodReceivedNoteService;
+import lk.luminex.asset.PurchaseOrder.entity.Enum.PurchaseOrderStatus;
+import lk.luminex.asset.PurchaseOrder.service.PurchaseOrderService;
+import lk.luminex.asset.goodReceivedNote.service.GoodReceivedNoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

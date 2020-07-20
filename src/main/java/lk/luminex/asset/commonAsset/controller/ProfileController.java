@@ -3,9 +3,10 @@ package lk.luminex.asset.commonAsset.controller;
 
 
 
-import J_N_Super_Pvt_Ltd.asset.userManagement.entity.PasswordChange;
-import J_N_Super_Pvt_Ltd.asset.userManagement.entity.User;
-import J_N_Super_Pvt_Ltd.asset.userManagement.service.UserService;
+
+import lk.luminex.asset.userManagement.entity.PasswordChange;
+import lk.luminex.asset.userManagement.entity.User;
+import lk.luminex.asset.userManagement.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

@@ -3,6 +3,7 @@ package lk.luminex.asset.item.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.luminex.asset.invoice.entity.InvoiceItemQuantity;
 import lk.luminex.asset.item.entity.Enum.ItemStatus;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.util.audit.AuditEntity;
@@ -48,5 +49,5 @@ public class ItemBatch extends AuditEntity {
     private List<Ledger> ledgers;
 
     @OneToMany(mappedBy = "itemBatch")
-    private List<InvoicetemQuantity> invoiceItemQuantities;
+    private List<InvoiceItemQuantity> invoiceItemQuantities;
 }
