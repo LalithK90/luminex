@@ -1,5 +1,7 @@
 package lk.luminex.asset.userManagement.service;
 
+
+
 import lk.luminex.asset.userManagement.dao.RoleDao;
 import lk.luminex.asset.userManagement.entity.Role;
 import lk.luminex.util.interfaces.AbstractService;
@@ -9,7 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @CacheConfig( cacheNames = {"role"} ) // tells Spring where to store cache for this class
@@ -22,7 +24,7 @@ public class RoleService implements AbstractService<Role, Integer > {
     }
 
     @Cacheable
-    public List< Role > findAll() {
+    public List<Role> findAll() {
         return roleDao.findAll();
     }
 
@@ -46,7 +48,7 @@ public class RoleService implements AbstractService<Role, Integer > {
     }
 
     @Cacheable
-    public List< Role > search(Role role) {
+    public List<Role> search(Role role) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()

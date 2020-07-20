@@ -23,6 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Autowired
     private UserSessionLogService userSessionLogService;
+
     @Autowired
     private UserService userService;
 

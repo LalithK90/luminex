@@ -1,5 +1,7 @@
 package lk.luminex.asset.userManagement.service;
 
+
+
 import lk.luminex.asset.userManagement.dao.UserSessionLogDao;
 import lk.luminex.asset.userManagement.entity.Enum.UserSessionLogStatus;
 import lk.luminex.asset.userManagement.entity.User;
@@ -8,8 +10,7 @@ import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.util.*;
 
 @Service
 @CacheConfig( cacheNames = {"userSessionLog"} )
@@ -23,7 +24,7 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
 
     @Override
     @Cacheable
-    public List< UserSessionLog > findAll() {
+    public List<UserSessionLog> findAll() {
         return userSessionLogDao.findAll();
     }
 
@@ -48,11 +49,11 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
     }
 
     public void delete(UserSessionLog userSessionLog){
-         userSessionLogDao.delete(userSessionLog);
+        userSessionLogDao.delete(userSessionLog);
     }
 
     @Override
-    public List< UserSessionLog > search(UserSessionLog userSessionLog) {
+    public List<UserSessionLog> search(UserSessionLog userSessionLog) {
         return null;
     }
 
@@ -61,3 +62,4 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
         return userSessionLogDao.findByUserAndUserSessionLogStatus(user, userSessionLogStatus);
     }
 }
+
