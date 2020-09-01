@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Designation {
     //All station can check
-    /*CGE("Commissioner General Of Excise"),
+    CGE("Commissioner General Of Excise"),
     ACGE("Additional Commissioner General Of Excise"),
     CE("Commissioner Of Excise"),
     DCL("Deputy Commissioner Of Excise( Legal )"),
@@ -21,7 +21,7 @@ public enum Designation {
     OIC("Chief Inspector Of Excise"),
     IE("Inspector Of Excise"),
     ESM("Excise Sergeant Major"),
-    ES("Excise Sergeant"),*/
+    ES("Excise Sergeant"),
     //There is no authority to logo in to the system
     EC("Excise Corporal"),
     EG("Excise Guard"),

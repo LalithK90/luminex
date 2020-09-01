@@ -1,10 +1,5 @@
 package lk.luminex.asset.userManagement.service;
 
-
-import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.asset.userManagement.dao.UserDao;
-import lk.luminex.asset.userManagement.entity.User;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
@@ -17,7 +12,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"user"} ) // tells Spring where to store cache for this class
-public class UserService implements AbstractService<User, Integer> {
+public class UserService implements AbstractService< User, Integer> {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 

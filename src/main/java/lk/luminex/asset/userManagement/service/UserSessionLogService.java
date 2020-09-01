@@ -1,20 +1,14 @@
 package lk.luminex.asset.userManagement.service;
 
-
-
-import lk.luminex.asset.userManagement.dao.UserSessionLogDao;
-import lk.luminex.asset.userManagement.entity.Enum.UserSessionLogStatus;
-import lk.luminex.asset.userManagement.entity.User;
-import lk.luminex.asset.userManagement.entity.UserSessionLog;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
-import java.util.*;
+
+import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"userSessionLog"} )
-public class UserSessionLogService implements AbstractService<UserSessionLog, Integer > {
+public class UserSessionLogService implements AbstractService< UserSessionLog, Integer > {
     private final UserSessionLogDao userSessionLogDao;
 
     @Autowired

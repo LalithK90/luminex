@@ -1,21 +1,16 @@
 package lk.luminex.asset.userManagement.service;
 
-
-
-import lk.luminex.asset.userManagement.dao.RoleDao;
-import lk.luminex.asset.userManagement.entity.Role;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"role"} ) // tells Spring where to store cache for this class
-public class RoleService implements AbstractService<Role, Integer > {
+public class RoleService implements AbstractService< Role, Integer > {
     private final RoleDao roleDao;
 
     @Autowired

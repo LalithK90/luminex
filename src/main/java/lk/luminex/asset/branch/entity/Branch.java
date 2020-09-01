@@ -2,8 +2,6 @@ package lk.luminex.asset.branch.entity;
 
 
 
-import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,8 +32,8 @@ public class Branch extends AuditEntity {
 
     @Column( unique = true )
     private String email;
-/*
+
     @OneToMany( mappedBy = "branch" )
-    private List<Employee> employees;*/
+    private List< Employee > employees;
 }
 

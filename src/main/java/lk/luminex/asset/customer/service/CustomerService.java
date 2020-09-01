@@ -1,9 +1,7 @@
 package lk.luminex.asset.customer.service;
 
 
-import lk.luminex.asset.customer.dao.CustomerDao;
-import lk.luminex.asset.customer.entity.Customer;
-import lk.luminex.util.interfaces.AbstractService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -13,7 +11,7 @@ import java.util.*;
 
 @Service
 @CacheConfig( cacheNames = "customer" )
-public class CustomerService implements AbstractService<Customer, Integer> {
+public class CustomerService implements AbstractService< Customer, Integer> {
     private final CustomerDao customerDao;
 
     @Autowired
@@ -21,7 +19,7 @@ public class CustomerService implements AbstractService<Customer, Integer> {
         this.customerDao = customerDao;
     }
 
-    public Object findAll() {
+    public List<Customer> findAll() {
         return customerDao.findAll();
     }
 

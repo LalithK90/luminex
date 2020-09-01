@@ -1,13 +1,5 @@
 package lk.luminex.asset.userManagement.controller;
 
-
-import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.asset.employee.entity.Enum.Designation;
-import lk.luminex.asset.employee.entity.Enum.EmployeeStatus;
-import lk.luminex.asset.employee.service.EmployeeService;
-import lk.luminex.asset.userManagement.entity.User;
-import lk.luminex.asset.userManagement.service.RoleService;
-import lk.luminex.asset.userManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +8,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.*;
 
 @Controller
 @RequestMapping( "/user" )

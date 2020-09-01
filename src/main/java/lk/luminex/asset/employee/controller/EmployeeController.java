@@ -1,22 +1,5 @@
 package lk.luminex.asset.employee.controller;
 
-
-
-import lk.luminex.asset.commonAsset.model.Enum.BloodGroup;
-import lk.luminex.asset.commonAsset.model.Enum.CivilStatus;
-import lk.luminex.asset.commonAsset.model.Enum.Gender;
-import lk.luminex.asset.commonAsset.model.Enum.Title;
-import lk.luminex.asset.commonAsset.service.CommonService;
-import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.asset.employee.entity.EmployeeFiles;
-import lk.luminex.asset.employee.entity.Enum.Designation;
-import lk.luminex.asset.employee.entity.Enum.EmployeeStatus;
-import lk.luminex.asset.employee.service.EmployeeFilesService;
-import lk.luminex.asset.employee.service.EmployeeService;
-import lk.luminex.asset.userManagement.entity.User;
-import lk.luminex.asset.userManagement.service.UserService;
-import lk.luminex.util.service.DateTimeAgeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

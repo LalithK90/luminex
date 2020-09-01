@@ -2,15 +2,6 @@ package lk.luminex.asset.commonAsset.service;
 
 
 
-import lk.luminex.asset.employee.controller.EmployeeRestController;
-import lk.luminex.asset.item.entity.Item;
-import lk.luminex.asset.item.service.ItemService;
-import lk.luminex.asset.supplier.entity.Enum.ItemSupplierStatus;
-import lk.luminex.asset.supplier.entity.Supplier;
-import lk.luminex.asset.supplier.entity.SupplierItem;
-import lk.luminex.asset.supplier.service.SupplierItemService;
-import lk.luminex.asset.supplier.service.SupplierService;
-import lk.luminex.util.service.MakeAutoGenerateNumberService;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -33,7 +24,7 @@ public class CommonService {
         this.supplierItemService = supplierItemService;
     }
 
-    public List<Supplier> commonSupplierSearch(Supplier supplier) {
+    public List< Supplier > commonSupplierSearch(Supplier supplier) {
         List<Supplier> suppliers;
         if (supplier.getContactOne() != null) {
             String contactNumber = makeAutoGenerateNumberService.phoneNumberLengthValidator(supplier.getContactOne());
@@ -111,8 +102,8 @@ public class CommonService {
         return mobileTwo;
     }
 
-    public List<Item> activeItemsFromSupplier(Supplier supplier) {
-        List<SupplierItem> supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
+    public List< Item > activeItemsFromSupplier(Supplier supplier) {
+        List< SupplierItem > supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
         List<Item> items = new ArrayList<>();
         for (SupplierItem supplierItem : supplierItems) {
             items.add(supplierItem.getItem());

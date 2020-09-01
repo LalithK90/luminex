@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AbstractService<E, I> {
 
-   Object findAll();
+   List<E> findAll();
 
     E findById(I id);
 

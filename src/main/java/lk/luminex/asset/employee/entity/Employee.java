@@ -1,17 +1,7 @@
 package lk.luminex.asset.employee.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.luminex.asset.commonAsset.model.Enum.BloodGroup;
-import lk.luminex.asset.commonAsset.model.Enum.CivilStatus;
-import lk.luminex.asset.commonAsset.model.Enum.Gender;
-import lk.luminex.asset.commonAsset.model.Enum.Title;
-import lk.luminex.asset.commonAsset.model.FileInfo;
-import lk.luminex.asset.employee.entity.Enum.Designation;
-import lk.luminex.asset.employee.entity.Enum.EmployeeStatus;
-import lk.luminex.asset.message.entity.EmailMessage;
-import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -90,11 +80,8 @@ public class Employee extends AuditEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfAssignment;
 
-   /* @ManyToOne
-    private Branch branch;*/
-
-    @ManyToMany(mappedBy = "employees")
-    private List<EmailMessage> emailMessages;
+    @ManyToOne
+    private Branch branch;
 
     @Transient
     private List<MultipartFile> files = new ArrayList<>();
@@ -103,6 +90,6 @@ public class Employee extends AuditEntity {
     private List<String> removeImages = new ArrayList<>();
 
     @Transient
-    private List<FileInfo> fileInfos = new ArrayList<>();
+    private List< FileInfo > fileInfos = new ArrayList<>();
 
 }

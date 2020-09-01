@@ -1,8 +1,5 @@
 package lk.luminex.asset.userManagement.controller;
 
-
-import lk.luminex.asset.userManagement.entity.Role;
-import lk.luminex.asset.userManagement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,7 +78,7 @@ public class RoleController {
             return "redirect:/role";
         } catch ( Exception e ) {
             ObjectError error = new ObjectError("role",
-                    "This role is already in the System <br/>System message -->" + e.toString());
+                                                "This role is already in the System <br/>System message -->" + e.toString());
             result.addError(error);
             model.addAttribute("addStatus", false);
             model.addAttribute("role", role);

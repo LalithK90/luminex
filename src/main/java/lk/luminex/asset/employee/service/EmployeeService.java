@@ -1,9 +1,5 @@
 package lk.luminex.asset.employee.service;
 
-
-import lk.luminex.asset.employee.dao.EmployeeDao;
-import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
@@ -16,7 +12,7 @@ import javax.transaction.Transactional;
 @Service
 // spring transactional annotation need to tell spring to this method work through the project
 @CacheConfig(cacheNames = "employee")
-public class EmployeeService implements AbstractService<Employee, Integer> {
+public class EmployeeService implements AbstractService< Employee, Integer> {
 
     private final EmployeeDao employeeDao;
 

@@ -3,8 +3,6 @@ package lk.luminex.asset.PurchaseOrder.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.luminex.asset.item.entity.Item;
-import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +18,17 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter("PurchaseOrderItem")
+@JsonFilter( "PurchaseOrderItem" )
 public class PurchaseOrderItem extends AuditEntity {
-    @Column(nullable = false)
+
+    @Column( nullable = false )
     private String quantity;
 
-    private String receivedQuantity;
+    @Column( nullable = false, precision = 10, scale = 2 )
+    private BigDecimal buyingPrice;
+
+    @Column( nullable = false, precision = 10, scale = 2 )
+    private BigDecimal lineTotal;
 
     @ManyToOne
     private PurchaseOrder purchaseOrder;

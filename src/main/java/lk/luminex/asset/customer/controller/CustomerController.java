@@ -2,13 +2,6 @@ package lk.luminex.asset.customer.controller;
 
 
 
-import lk.luminex.asset.commonAsset.model.Enum.Title;
-import lk.luminex.asset.customer.entity.Customer;
-import lk.luminex.asset.customer.service.CustomerService;
-import lk.luminex.util.interfaces.AbstractController;
-import lk.luminex.util.service.EmailService;
-import lk.luminex.util.service.MakeAutoGenerateNumberService;
-import lk.luminex.util.service.TwilioMessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController implements AbstractController<Customer, Integer> {
+public class CustomerController implements AbstractController< Customer, Integer> {
     private final CustomerService customerService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
     private final EmailService emailService;

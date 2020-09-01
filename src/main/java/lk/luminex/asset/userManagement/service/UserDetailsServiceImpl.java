@@ -1,10 +1,5 @@
 package lk.luminex.asset.userManagement.service;
 
-
-
-import lk.luminex.asset.userManagement.CustomerUserDetails;
-import lk.luminex.asset.userManagement.dao.UserDao;
-import lk.luminex.asset.userManagement.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

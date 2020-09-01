@@ -1,7 +1,4 @@
 package lk.luminex.asset.userManagement.entity;
-
-
-import lk.luminex.asset.userManagement.entity.Enum.UserSessionLogStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

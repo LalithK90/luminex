@@ -1,10 +1,5 @@
 package lk.luminex.asset.supplier.service;
 
-
-import lk.luminex.asset.supplier.dao.SupplierDao;
-import lk.luminex.asset.supplier.entity.Enum.ItemSupplierStatus;
-import lk.luminex.asset.supplier.entity.Supplier;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -15,7 +10,7 @@ import java.util.List;
 
 @Service
 @CacheConfig(cacheNames = "supplier")
-public class SupplierService implements AbstractService<Supplier, Integer> {
+public class SupplierService implements AbstractService< Supplier, Integer> {
     private final SupplierDao supplierDao;
 
     @Autowired
@@ -54,5 +49,9 @@ public class SupplierService implements AbstractService<Supplier, Integer> {
 
     public Supplier lastSupplier() {
         return supplierDao.findFirstByOrderByIdDesc();
+    }
+
+    public Supplier findByIdAndItemSupplierStatus(Integer supplierId, ItemSupplierStatus itemSupplierStatus) {
+    return supplierDao.findByIdAndItemSupplierStatus(supplierId,itemSupplierStatus);
     }
 }

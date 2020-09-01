@@ -1,10 +1,5 @@
 package lk.luminex.asset.branch.service;
 
-
-
-import lk.luminex.asset.branch.dao.BranchDao;
-import lk.luminex.asset.branch.entity.Branch;
-import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -15,7 +10,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "branch" )
-public class BranchService implements AbstractService<Branch, Integer> {
+public class BranchService implements AbstractService< Branch, Integer> {
     private final BranchDao branchDao;
 
     @Autowired
