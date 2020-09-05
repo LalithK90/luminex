@@ -2,6 +2,9 @@ package lk.luminex.asset.category.service;
 
 
 
+import lk.luminex.asset.category.dao.CategoryDao;
+import lk.luminex.asset.category.entity.Category;
+import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;

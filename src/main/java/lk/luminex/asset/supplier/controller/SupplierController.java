@@ -1,6 +1,10 @@
 package lk.luminex.asset.supplier.controller;
 
 
+import lk.luminex.asset.supplier.entity.Supplier;
+import lk.luminex.asset.supplier.service.SupplierService;
+import lk.luminex.util.interfaces.AbstractController;
+import lk.luminex.util.service.MakeAutoGenerateNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

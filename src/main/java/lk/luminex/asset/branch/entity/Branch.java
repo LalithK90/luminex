@@ -2,6 +2,8 @@ package lk.luminex.asset.branch.entity;
 
 
 
+import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

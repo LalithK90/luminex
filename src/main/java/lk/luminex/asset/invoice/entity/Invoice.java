@@ -4,6 +4,12 @@ package lk.luminex.asset.invoice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.luminex.asset.customer.entity.Customer;
+import lk.luminex.asset.discountRatio.entity.DiscountRatio;
+import lk.luminex.asset.invoice.entity.Enum.InvoicePrintOrNot;
+import lk.luminex.asset.invoice.entity.Enum.InvoiceValidOrNot;
+import lk.luminex.asset.invoice.entity.Enum.PaymentMethod;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

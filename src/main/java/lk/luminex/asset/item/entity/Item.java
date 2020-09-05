@@ -4,12 +4,12 @@ package lk.luminex.asset.item.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.samarasingherSuper.asset.PurchaseOrder.entity.PurchaseOrderItem;
-import lk.samarasingherSuper.asset.category.entity.Category;
-import lk.samarasingherSuper.asset.item.entity.Enum.ItemStatus;
-import lk.samarasingherSuper.asset.ledger.entity.Ledger;
-import lk.samarasingherSuper.asset.supplierItem.entity.SupplierItem;
-import lk.samarasingherSuper.util.audit.AuditEntity;
+import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrderItem;
+import lk.luminex.asset.category.entity.Category;
+import lk.luminex.asset.item.entity.Enum.ItemStatus;
+import lk.luminex.asset.ledger.entity.Ledger;
+import lk.luminex.asset.supplierItem.entity.SupplierItem;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

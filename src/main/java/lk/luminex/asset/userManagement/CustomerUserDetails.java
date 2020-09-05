@@ -1,5 +1,6 @@
 package lk.luminex.asset.userManagement;
 
+import lk.luminex.asset.userManagement.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

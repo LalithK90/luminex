@@ -1,5 +1,7 @@
 package lk.luminex.asset.userManagement.dao;
 
+import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.userManagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -3,6 +3,8 @@ package lk.luminex.asset.customer.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.luminex.asset.commonAsset.model.Enum.Title;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

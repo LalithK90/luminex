@@ -1,4 +1,7 @@
 package lk.luminex.asset.discountRatio.controller;
+import lk.luminex.asset.discountRatio.entity.DiscountRatio;
+import lk.luminex.asset.discountRatio.entity.Enum.DiscountRatioStatus;
+import lk.luminex.asset.discountRatio.service.DiscountRatioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

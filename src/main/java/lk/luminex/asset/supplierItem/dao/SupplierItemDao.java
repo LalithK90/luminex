@@ -1,5 +1,9 @@
 package lk.luminex.asset.supplierItem.dao;
 
+import lk.luminex.asset.item.entity.Item;
+import lk.luminex.asset.supplier.entity.Supplier;
+import lk.luminex.asset.supplierItem.entity.Enum.ItemSupplierStatus;
+import lk.luminex.asset.supplierItem.entity.SupplierItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

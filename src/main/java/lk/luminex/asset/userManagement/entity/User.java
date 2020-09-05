@@ -5,6 +5,8 @@ package lk.luminex.asset.userManagement.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
+import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

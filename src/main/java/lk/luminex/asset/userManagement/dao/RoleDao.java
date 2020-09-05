@@ -1,5 +1,6 @@
 package lk.luminex.asset.userManagement.dao;
 
+import lk.luminex.asset.userManagement.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,6 +2,9 @@ package lk.luminex.asset.customer.service;
 
 
 
+import lk.luminex.asset.customer.dao.CustomerDao;
+import lk.luminex.asset.customer.entity.Customer;
+import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;

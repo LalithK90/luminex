@@ -2,6 +2,15 @@ package lk.luminex.asset.employee.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.luminex.asset.branch.entity.Branch;
+import lk.luminex.asset.commonAsset.model.Enum.BloodGroup;
+import lk.luminex.asset.commonAsset.model.Enum.CivilStatus;
+import lk.luminex.asset.commonAsset.model.Enum.Gender;
+import lk.luminex.asset.commonAsset.model.Enum.Title;
+import lk.luminex.asset.commonAsset.model.FileInfo;
+import lk.luminex.asset.employee.entity.Enum.Designation;
+import lk.luminex.asset.employee.entity.Enum.EmployeeStatus;
+import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

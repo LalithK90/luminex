@@ -1,5 +1,9 @@
 package lk.luminex.asset.userManagement.service;
 
+import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.userManagement.dao.UserDao;
+import lk.luminex.asset.userManagement.entity.User;
+import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
