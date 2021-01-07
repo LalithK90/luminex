@@ -1,7 +1,7 @@
 package lk.luminex.asset.invoice.controller;
 
 
-import lk.luminex.asset.customer.service.CustomerService;
+import lk.luminex.asset.project.service.ProjectService;
 import lk.luminex.asset.discount_ratio.service.DiscountRatioService;
 import lk.luminex.asset.invoice.entity.Invoice;
 import lk.luminex.asset.invoice.entity.enums.InvoicePrintOrNot;
@@ -28,19 +28,19 @@ import java.util.stream.Collectors;
 public class InvoiceController {
   private final InvoiceService invoiceService;
   private final ItemService itemService;
-  private final CustomerService customerService;
+  private final ProjectService projectService;
   private final LedgerService ledgerService;
   private final DateTimeAgeService dateTimeAgeService;
   private final DiscountRatioService discountRatioService;
   private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
-  public InvoiceController(InvoiceService invoiceService, ItemService itemService, CustomerService customerService,
+  public InvoiceController(InvoiceService invoiceService, ItemService itemService, ProjectService projectService,
                            LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
                            DiscountRatioService discountRatioService,
                            MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
     this.invoiceService = invoiceService;
     this.itemService = itemService;
-    this.customerService = customerService;
+    this.projectService = projectService;
     this.ledgerService = ledgerService;
     this.dateTimeAgeService = dateTimeAgeService;
     this.discountRatioService = discountRatioService;
@@ -69,7 +69,7 @@ public class InvoiceController {
     model.addAttribute("invoice", invoice);
     model.addAttribute("invoicePrintOrNots", InvoicePrintOrNot.values());
     model.addAttribute("paymentMethods", PaymentMethod.values());
-    model.addAttribute("customers", customerService.findAll());
+    model.addAttribute("customers", projectService.findAll());
     model.addAttribute("discountRatios", discountRatioService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
         .fromMethodName(LedgerController.class, "findId", "")
@@ -93,7 +93,7 @@ public class InvoiceController {
   public String viewDetails(@PathVariable Integer id, Model model) {
     Invoice invoice = invoiceService.findById(id);
     model.addAttribute("invoiceDetail", invoice);
-    model.addAttribute("customerDetail", invoice.getCustomer());
+    model.addAttribute("customerDetail", invoice.getProject());
     return "invoice/invoice-detail";
   }
 

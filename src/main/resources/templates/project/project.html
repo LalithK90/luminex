@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
-    <title>customer</title>
+    <title>project</title>
 </head>
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 <!--heading Area-->
 <div class="container-fluid  form-Border">
     <div class="row text-center formManagement border-info">
-        <!--New Customer Button-->
+        <!--New Project Button-->
         <div class="col">
-            <a class="btn btn-success" href="/customer/add" tabindex="1">
+            <a class="btn btn-success" href="/project/add" tabindex="1">
                 <i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New
             </a>
         </div>
@@ -19,7 +19,7 @@
         <div class="col">
             <h2 class="text-white text-center">
                 <strong>
-                    Customer List
+                    Project List
                 </strong>
             </h2>
         </div>
@@ -36,7 +36,7 @@
 <div class="container-fluid bg-primary text-center">
     <!--Table view-->
     <div class="col">
-        <div class="col" id="customerListPresent" th:if="${not #lists.isEmpty(customers)}">
+        <div class="col" id="customerListPresent" th:if="${not #lists.isEmpty(projects)}">
             <table class="table table-hover table-striped" id="myTable">
                 <thead>
                 <tr>
@@ -49,19 +49,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="customer, rowCount : ${customers}">
+                <tr th:each="project, rowCount : ${projects}">
                     <th th:text="${rowCount.count}"></th>
-                    <th th:text="${customer.title}+${'. '}+${customer.name}"></th>
-                    <th th:text="${customer.code}"></th>
-                    <th th:text="${customer.mobile}"></th>
-                    <th th:text="${customer.address}"></th>
+                    <th th:text="${project.title}+${'. '}+${project.name}"></th>
+                    <th th:text="${project.code}"></th>
+                    <th th:text="${project.mobile}"></th>
+                    <th th:text="${project.address}"></th>
                     <th>
-                        <a id="customerView" th:href="${'/customer/' + customer.id}" class="btn btn-primary btn-sm"><i
+                        <a id="customerView" th:href="${'/project/' + project.id}" class="btn btn-primary btn-sm"><i
                                 class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
-                        <a id="customerEdit" th:href="${'/customer/edit/' + customer.id}"
+                        <a id="customerEdit" th:href="${'/project/edit/' + project.id}"
                            class="btn btn-success btn-sm"><i class="fa fa-edit"
                                                              style="font-size: 15px"></i>&nbsp;Edit</a>
-                        <a id="customerRemove" th:href="${'/customer/delete/' + customer.id}"
+                        <a id="customerRemove" th:href="${'/project/delete/' + project.id}"
                            class="btn btn-danger btn-sm">
                             <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
                                 class="fa fa-trash" style="font-size: 15px"></i>
@@ -73,14 +73,14 @@
         </div>
     </div>
     <!--Error-->
-    <div class="row" th:if="${ #lists.isEmpty(customers)}">
+    <div class="row" th:if="${ #lists.isEmpty(projects)}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h3 class="text-center text-danger">
-                    <strong>There is no customer upto now please add customer to the system
+                    <strong>There is no project upto now please add project to the system
                         using "New" button.
                     </strong>
                 </h3>
@@ -92,15 +92,15 @@
             /*active boostrap alert - end*/
         </script>
     </div>
-    <!--Save customer-->
+    <!--Save project-->
     <div class="row" th:if="${customerDetail != null}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <!--save customer include-->
-                <div th:replace="~{customer/customer-detail :: customerDetailsFragment}"></div>
+                <!--save project include-->
+                <div th:replace="~{project/project-detail :: customerDetailsFragment}"></div>
             </div>
         </div>
         <script>

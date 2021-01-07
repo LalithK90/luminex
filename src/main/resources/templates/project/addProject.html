@@ -8,10 +8,10 @@
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 <!--Heading Area-->
 <div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
+    <div class="row text-center ">
         <!--ViewList Button-->
         <div class="col">
-            <a href="/customer" class="btn btn-primary" tabindex="1">
+            <a href="/project" class="btn btn-primary" tabindex="1">
                 <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
             </a>
         </div>
@@ -19,7 +19,7 @@
         <div class="col">
             <h2 class="text-light text-center">
                 <strong>
-                    <span th:text="${addStatus==true?'Add New Customer':'Update Customer Details'}"></span>
+                    <span th:text="${addStatus==true?'Add New Project':'Update Project Details'}"></span>
                 </strong>
             </h2>
         </div>
@@ -34,8 +34,8 @@
 <!--Form Content-->
 <div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/customer/save':'/customer/update'}"
-              th:object="${customer}" method="POST" enctype="multipart/form-data">
+        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/project/save':'/project/update'}"
+              th:object="${project}" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <!--Left Side-->
                 <div class="form-group col-md-6 col-sm-6 text-left flex-column">
@@ -49,7 +49,7 @@
                             <input type="text" data-th-field="*{liveDead}" hidden>
                         </div>
                         <div class="col-md-4">
-                            <label class="control-label" for="code">Customer Code :</label>
+                            <label class="control-label" for="code">Project Code :</label>
                         </div>
                         <div class="col-md-8">
                             <input id="code" th:field="*{code}" class="form-control" type="text" readonly/>
@@ -66,7 +66,7 @@
                                 <option th:each="titles : ${title}"
                                         th:text="${titles.title}"
                                         th:value="${titles}"
-                                        th:selected="${titles==customer.title?'selected':'unselected'}"></option>
+                                        th:selected="${titles==project.title?'selected':'unselected'}"></option>
                             </select>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                 <!--Button-->
                 <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
                     <!--Back Button-->
-                    <a class="btn btn-dark"  tabindex="10" href="/customer">
+                    <a class="btn btn-dark"  tabindex="10" href="/project">
                         <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
                     </a>
                     <!--Save Button-->
