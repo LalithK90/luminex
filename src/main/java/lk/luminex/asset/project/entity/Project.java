@@ -1,4 +1,4 @@
-package lk.luminex.asset.customer.entity;
+package lk.luminex.asset.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
@@ -20,8 +20,8 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter("Customer")
-public class Customer extends AuditEntity {
+@JsonFilter("Project")
+public class Project extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private Title title;
