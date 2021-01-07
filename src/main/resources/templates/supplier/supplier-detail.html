@@ -7,7 +7,7 @@
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 <!--heading Area-->
-<div class="container-fluid bg-dark form-Border">
+<div class="container-fluid ">
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
         <div class="col">
@@ -40,10 +40,10 @@
                 <!--id-->
                 <div class="form-row text-right">
                     <div class="col-md-4">
-                        <label class="control-label" for="id">ID :</label>
+                        <label class="control-label" for="supplier_id">ID :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="id" th:text="${supplierDetail.id}" class="display_detail"></p>
+                        <p id="supplier_id" th:text="${supplierDetail.id}" class="display_detail"></p>
                     </div>
                 </div>
                 <!--Code-->
@@ -162,7 +162,7 @@
     </div>
 </div>
 <!--heading Area-->
-<div class="container-fluid bg-dark form-Border">
+<div class="container-fluid ">
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
         <div class="col">
@@ -187,8 +187,7 @@
     </div>
 </div>
 <!--details-->
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
 <script th:replace="~{fragments/script :: scriptFragment}"></script>
 

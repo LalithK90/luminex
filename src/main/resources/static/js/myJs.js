@@ -14,20 +14,31 @@ $(document).ready(function () {
 
 
     /*//--------------- data table short using - data table plugin ------- start //*/
-    $("#myTable").DataTable({
-        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
-        "ordering": false,
-        stateSave: true,
-    });
+    if ($("#myTable").val() !== null || $("#myTable").val() === undefined) {
+        $("#myTable").DataTable({
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+            "ordering": false,
+            stateSave: true,
+        });
+    }
     /*//--------------- data table short using - data table plugin ------- start //*/
 
-    /* Patient and employee Nic Validation - start*/
-    $("#nic").bind('keyup', function () {
-        let nic = $(this).val();
-        $("#dateOfBirth").val(calculateDateOfBirth(nic));
-        $("#gender").val(calculateGender(nic));
-    });
-    /* Patient and employee Nic Validation - end*/
+    /*When edit employee if there is a nic number need to select relevant gender*/
+    if ($("#nic").val() !== null || $("#nic").val() !== undefined) {
+        $("input:radio[name=gender]").filter(`[value=${calculateGender($("#nic").val())}]`).prop('checked', true);
+    }
+
+
+        /* Patient and employee Nic Validation - start*/
+        $("#nic").bind('keyup', function () {
+            let nic = $(this).val();
+            $("#dateOfBirth").val(calculateDateOfBirth(nic));
+            //access our front-end gender*/
+            $("input:radio[name=gender]").filter(`[value=${calculateGender(nic)}]`).prop('checked', true);
+
+        });
+        /* Patient and employee Nic Validation - end*/
+
     //input type date can not be selected future date
     $('[type="date"]').prop('max', function () {
         return new Date().toJSON().split('T')[0];
@@ -539,22 +550,6 @@ let deleteAllTableRow = function (tableName) {
     }
 };
 
-/*jquery - ui function*/
-//$( "input" ).checkboxradio;
-
-$(function () {
-    $("#").resizable({
-        autoHide: true,
-        aspectRatio: true,
-        ghost: true,
-    });
-});
-
-//$( ".login" ).draggable();
-//$( "#dateOfBirth" ).datepicker;
-//$( document ).tooltip();
-
-
 //password validator user add
 $('#password').keyup(function () {
     $(this).attr('min', 6);
@@ -631,3 +626,5 @@ $(".reveal").on('click', function () {
         $pwd.attr('type', 'password');
     }
 });
+
+

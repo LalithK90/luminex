@@ -99,9 +99,8 @@
     </div>
 </div>
 
-<!--footer include-->
-<footer id="footer" class="page-footer"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<script id="script"></script>
+<div th:replace="~{fragments/script :: scriptFragment}"></div>
 </body>
 </html>

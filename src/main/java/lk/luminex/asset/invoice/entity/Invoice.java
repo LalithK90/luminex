@@ -1,12 +1,15 @@
 package lk.luminex.asset.invoice.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.customer.entity.Customer;
-import lk.luminex.asset.invoice.entity.Enum.InvoicePrintOrNot;
-import lk.luminex.asset.invoice.entity.Enum.PaymentMethod;
+import lk.luminex.asset.discount_ratio.entity.DiscountRatio;
+import lk.luminex.asset.invoice.entity.enums.InvoicePrintOrNot;
+import lk.luminex.asset.invoice.entity.enums.InvoiceValidOrNot;
+import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
+import lk.luminex.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +18,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,14 +38,11 @@ public class Invoice extends AuditEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPrice;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal TotalAmount;
+    private BigDecimal totalAmount;
 
     @Column(precision = 10, scale = 2)
     private BigDecimal discountAmount;
@@ -52,9 +52,16 @@ public class Invoice extends AuditEntity {
 
     @Column(precision = 10, scale = 2)
     private BigDecimal balance;
+     private InvoicePrintOrNot invoicePrintOrNot;
 
     @Enumerated(EnumType.STRING)
-    private InvoicePrintOrNot invoicePrintOrNot;
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private InvoiceValidOrNot invoiceValidOrNot;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
 
     @ManyToOne
     private Customer customer;
@@ -63,7 +70,7 @@ public class Invoice extends AuditEntity {
     private DiscountRatio discountRatio;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "invoice")
-    private List<InvoiceItemQuantity> invoiceItemQuantities;
+    private List< InvoiceLedger > invoiceLedgers;
 
 
 }

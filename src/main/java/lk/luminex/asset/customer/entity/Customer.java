@@ -1,9 +1,8 @@
 package lk.luminex.asset.customer.entity;
 
-
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.luminex.asset.commonAsset.model.Enum.Title;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
+import lk.luminex.asset.common_asset.model.enums.Title;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,4 +45,8 @@ public class Customer extends AuditEntity {
 
     @Column(unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
+
 }

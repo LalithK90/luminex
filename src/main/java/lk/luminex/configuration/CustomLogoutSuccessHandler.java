@@ -1,11 +1,11 @@
 package lk.luminex.configuration;
 
 
-import lk.luminex.asset.userManagement.entity.Enum.UserSessionLogStatus;
-import lk.luminex.asset.userManagement.entity.User;
-import lk.luminex.asset.userManagement.entity.UserSessionLog;
-import lk.luminex.asset.userManagement.service.UserService;
-import lk.luminex.asset.userManagement.service.UserSessionLogService;
+import lk.luminex.asset.user_management.user.entity.User;
+import lk.luminex.asset.user_management.user.service.UserService;
+import lk.luminex.asset.user_management.user_session_log.entity.UserSessionLog;
+import lk.luminex.asset.user_management.user_session_log.entity.enums.UserSessionLogStatus;
+import lk.luminex.asset.user_management.user_session_log.service.UserSessionLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -33,7 +33,8 @@ public class CustomLogoutSuccessHandler extends
         if ( authentication != null && authentication.getDetails() != null ) {
             try {
                 //do some logic here if you want something to be done whenever
-                User authUser =userService.findByUserName(authentication.getName());
+                User authUser =
+                        userService.findByUserName(authentication.getName());
                 UserSessionLog userSessionLog = new UserSessionLog();
                 userSessionLog.setUser(authUser);
                 userSessionLog.setUserSessionLogStatus(UserSessionLogStatus.LOGOUT);

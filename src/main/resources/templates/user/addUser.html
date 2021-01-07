@@ -150,21 +150,13 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-row alert alert-danger text-center">
-                        <strong>Attention !</strong>
-                        If Employee is belong to supper senior category.
-                        <strong>Please select one or two work station </strong>.
-                    </div>
-                </div>
             </div>
             <!--Right Side-->
             <div class="form-group col-md-5 col-sm-7 text-left flex-column">
                 <!--Roles Display-->
                 <div class="form-row">
                     <label class="control-label" for="roles">Roles :</label>
-                    <select id="roles" th:field="*{roles}" class="form-control" size="16" multiple required>
+                    <select id="roles" th:field="*{roles}" class="form-control" size="6" multiple required>
                         <option id="roleList" th:each="role, rowCount : ${roleList}"
                                 th:text="${rowCount.count} +${'. '}+${role.roleName}"
                                 th:value="${role.id}"
@@ -193,8 +185,7 @@
 
 </div>
 
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
 <script th:replace="~{fragments/script :: scriptFragment}"></script>
 
