@@ -1,13 +1,16 @@
 package lk.luminex.asset.payment.service;
 
-import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrder;
+
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.payment.dao.PaymentDao;
 import lk.luminex.asset.payment.entity.Payment;
+import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
 import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,13 +30,17 @@ public class PaymentService implements AbstractService< Payment, Integer > {
     }
 
     public Payment persist(Payment payment) {
+        if(payment.getId()==null){
+            payment.setLiveDead(LiveDead.ACTIVE);}
         return paymentDao.save(payment);
     }
 
     public boolean delete(Integer id) {
+        Payment payment =  paymentDao.getOne(id);
+        payment.setLiveDead(LiveDead.STOP);
+        paymentDao.save(payment);
         return false;
     }
-
     public List< Payment > search(Payment payment) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
@@ -49,5 +56,9 @@ public class PaymentService implements AbstractService< Payment, Integer > {
 
     public Payment lastPayment() {
         return paymentDao.findFirstByOrderByIdDesc();
+    }
+
+  public List< Payment> findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
+  return paymentDao.findByCreatedAtIsBetween(from,to);
     }
 }

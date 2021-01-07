@@ -1,5 +1,6 @@
 package lk.luminex.asset.invoice.service;
 
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.invoice.dao.InvoiceDao;
 import lk.luminex.asset.invoice.entity.Invoice;
 import lk.luminex.util.interfaces.AbstractService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService implements AbstractService< Invoice, Integer > {
@@ -20,7 +22,9 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
 
 
     public List< Invoice > findAll() {
-        return invoiceDao.findAll();
+        return invoiceDao.findAll().stream()
+            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            .collect(Collectors.toList());
     }
 
     public Invoice findById(Integer id) {
@@ -28,13 +32,17 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     }
 
     public Invoice persist(Invoice invoice) {
+        if(invoice.getId()==null){
+            invoice.setLiveDead(LiveDead.ACTIVE);}
         return invoiceDao.save(invoice);
     }
 
     public boolean delete(Integer id) {
+        Invoice invoice =  invoiceDao.getOne(id);
+        invoice.setLiveDead(LiveDead.STOP);
+        invoiceDao.save(invoice);
         return false;
     }
-
     public List< Invoice > search(Invoice invoice) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()

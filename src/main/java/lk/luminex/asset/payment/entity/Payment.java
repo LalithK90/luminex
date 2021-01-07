@@ -1,10 +1,10 @@
 package lk.luminex.asset.payment.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrder;
-import lk.luminex.asset.invoice.entity.Enum.PaymentMethod;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
+import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
+import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +31,9 @@ public class Payment extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;

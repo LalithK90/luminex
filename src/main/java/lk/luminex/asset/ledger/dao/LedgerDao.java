@@ -1,5 +1,6 @@
 package lk.luminex.asset.ledger.dao;
 
+
 import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.ledger.entity.Ledger;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,8 @@ public interface LedgerDao extends JpaRepository< Ledger, Integer> {
 
     Ledger findByItemAndAndExpiredDateAndSellPrice(Item item, LocalDate eDate, BigDecimal sellPrice);
 
-    List< Ledger > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to);
+    List<Ledger> findByExpiredDateBetween(LocalDate from, LocalDate to);
+
+    List< Ledger > findByCreatedAtBetween(LocalDateTime form, LocalDateTime to);
 
 }

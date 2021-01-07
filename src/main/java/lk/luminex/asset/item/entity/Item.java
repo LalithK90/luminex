@@ -2,13 +2,13 @@ package lk.luminex.asset.item.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrderItem;
 import lk.luminex.asset.category.entity.Category;
-import lk.luminex.asset.item.entity.Enum.ItemStatus;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
+import lk.luminex.asset.item.entity.enums.ItemStatus;
 import lk.luminex.asset.ledger.entity.Ledger;
-import lk.luminex.asset.supplierItem.entity.SupplierItem;
+import lk.luminex.asset.purchase_order_item.entity.PurchaseOrderItem;
+import lk.luminex.asset.supplier_item.entity.SupplierItem;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +26,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter( "Item" )
+@JsonFilter("Item")
 public class Item extends AuditEntity {
 
     @Size( min = 5, message = "Your name cannot be accepted" )
@@ -44,11 +44,14 @@ public class Item extends AuditEntity {
     @Enumerated( EnumType.STRING )
     private ItemStatus itemStatus;
 
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
+
     @ManyToOne
     private Category category;
 
     @OneToMany( mappedBy = "item" )
-    private List< SupplierItem > supplierItems;
+    private List< SupplierItem > supplierItem;
 
     @OneToMany( mappedBy = "item" )
     @JsonBackReference

@@ -1,11 +1,10 @@
 package lk.luminex.asset.supplier.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-
-import lk.luminex.asset.PurchaseOrder.entity.PurchaseOrder;
-import lk.luminex.asset.supplierItem.entity.Enum.ItemSupplierStatus;
-import lk.luminex.asset.supplierItem.entity.SupplierItem;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
+import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
+import lk.luminex.asset.supplier_item.entity.SupplierItem;
+import lk.luminex.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +42,9 @@ public class Supplier extends AuditEntity {
 
     @Column( columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NULL", length = 255 )
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
 
     @Enumerated( EnumType.STRING )
     private ItemSupplierStatus itemSupplierStatus;

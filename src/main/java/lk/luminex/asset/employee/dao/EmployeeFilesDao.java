@@ -1,5 +1,6 @@
 package lk.luminex.asset.employee.dao;
 
+
 import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.employee.entity.EmployeeFiles;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,6 @@ public interface EmployeeFilesDao extends JpaRepository< EmployeeFiles, Integer 
     EmployeeFiles findByNewName(String filename);
 
     EmployeeFiles findByNewId(String filename);
+
+    EmployeeFiles findByEmployee(Employee employee);
 }
