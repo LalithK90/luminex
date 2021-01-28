@@ -4,7 +4,7 @@ package lk.luminex.asset.invoice.entity;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.project.entity.Project;
+import lk.luminex.asset.customer.entity.Customer;
 import lk.luminex.asset.discount_ratio.entity.DiscountRatio;
 import lk.luminex.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.luminex.asset.invoice.entity.enums.InvoiceValidOrNot;
@@ -64,7 +64,7 @@ public class Invoice extends AuditEntity {
     private LiveDead liveDead;
 
     @ManyToOne
-    private Project project;
+    private Customer customer;
 
     @ManyToOne
     private DiscountRatio discountRatio;
