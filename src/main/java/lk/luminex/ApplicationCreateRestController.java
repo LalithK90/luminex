@@ -1,5 +1,6 @@
 package lk.luminex;
 
+
 import lk.luminex.asset.common_asset.model.enums.CivilStatus;
 import lk.luminex.asset.common_asset.model.enums.Gender;
 import lk.luminex.asset.common_asset.model.enums.Title;
