@@ -38,7 +38,6 @@ public  class ProjectController implements AbstractController< Project, Integer>
     }
 
     private String commonThings(Model model, Project project, Boolean addState) {
-        model.addAttribute("title", Title.values());
         model.addAttribute("project", project);
         model.addAttribute("addStatus", addState);
         return "project/addCustomer";
@@ -66,10 +65,6 @@ public  class ProjectController implements AbstractController< Project, Integer>
     public String persist(Project project, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
             return commonThings(model, project, true);
-        }
-//phone number length validator
-        if ( project.getPhone() != null) {
-            project.setPhone(makeAutoGenerateNumberService.phoneNumberLengthValidator(project.getPhone()));
         }
 
         redirectAttributes.addFlashAttribute("projectDetail", projectService.persist(project));

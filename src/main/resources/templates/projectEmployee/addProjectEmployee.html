@@ -14,8 +14,8 @@
 
       <!--Form Content-->
       <div class="col-sm-12 flex-column " >
-        <form id="form" class="form-horizontal" data-th-action="${addStatus==true?'/project/save':'/project/update'}"
-              data-th-object="${project}" method="POST" enctype="multipart/form-data" >
+        <form id="form" class="form-horizontal" data-th-action="${'/projectEmployee/save'}"
+              data-th-object="${projectEmployee}" method="POST" >
           <div class="row" >
             <div class="container-fluid " >
               <div class="row text-center formManagement border-info" >
@@ -29,7 +29,7 @@
                 <div class="col" >
                   <h2 class="text-light text-center" >
                     <strong >
-                      <span data-th-text="${addStatus==true?'Add New Customer':'Update Customer Details'}" ></span >
+                      <span data-th-text="${'Add employee to project'}" ></span >
                     </strong >
                   </h2 >
                 </div >
@@ -60,6 +60,7 @@
                   <input id="code" data-th-field="*{code}" class="form-control" type="text" readonly />
                 </div >
               </div >
+              <!--todo need to add employee details show annadnasdsa sdasdda-->
               <!--Name-->
               <div class="form-row text-right" >
                 <div class="col-md-4" >

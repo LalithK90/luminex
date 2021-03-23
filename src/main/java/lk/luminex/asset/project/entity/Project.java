@@ -26,18 +26,11 @@ public class Project extends AuditEntity {
     @Size(min = 5, message = "Your name cannot be accepted")
     private String name;
 
-    @Size(max = 10, min = 9, message = "Mobile number length should be contained 10 and 9")
-    @Column(unique = true)
-    private String phone;
-
     @Column(columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NULL", length = 255)
     private String address;
 
     @Column(unique = true)
     private String code; // ex. {yearLastTwo}{less than ten thousand}
-
-    @Column(unique = true)
-    private String email;
 
     @Enumerated(EnumType.STRING)
     private LiveDead liveDead;

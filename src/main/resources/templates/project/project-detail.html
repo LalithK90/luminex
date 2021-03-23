@@ -11,7 +11,6 @@
   </div >
   <div id="layoutSidenav_content" >
     <main >
-
       <!--heading Area-->
       <div class="container-fluid " >
         <div class="row text-center formManagement border-info" >
@@ -38,7 +37,7 @@
         </div >
       </div >
       <!--details-->
-      <div data-th-fragment="customerDetailsFragment" class="container-fluid " >
+      <div data-th-fragment="projectDetailsFragment" class="container-fluid " >
         <div class="col-sm-12 flex-column " >
           <div class="row" >
             <!--Left Side-->
@@ -66,17 +65,8 @@
                   <label class="control-label" for="name" >Name :</label >
                 </div >
                 <div class="col-md-8" >
-                  <p id="name" data-th-text="${customerDetail.title.title} +${' '} +${customerDetail.name}"
+                  <p id="name" data-th-text="${customerDetail.name}"
                      class="display_detail" ></p >
-                </div >
-              </div >
-              <!--NIC-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="nic" >NIC No :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="nic" data-th-text="${customerDetail.nic}" class="display_detail" ></p >
                 </div >
               </div >
               <!--Address-->
@@ -85,30 +75,12 @@
                   <label class="control-label" for="address" >Address :</label >
                 </div >
                 <div class="col-md-8 text-left" >
-                  <p id="address" class="display_detail "  data-th-utext="${customerDetail.address}" ></p >
-                </div >
-              </div >
-              <!--Mobile-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="mobile" >Mobile No :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="mobile" data-th-text="${customerDetail.mobile}" class="display_detail" ></p >
+                  <p id="address" class="display_detail " data-th-utext="${customerDetail.address}" ></p >
                 </div >
               </div >
             </div >
             <!--Right Side-->
             <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
-              <!--Email-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="email" >Email :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="email" data-th-text="${customerDetail.email}" class="display_detail" ></p >
-                </div >
-              </div >
               <!--Created By-->
               <div class="form-row text-right" >
                 <div class="col-md-4" >
@@ -148,6 +120,43 @@
               </div >
             </div >
           </div >
+        </div >
+      </div >
+      <!--Project Employee-->
+      <div class="container-fluid" >
+        <div class="container" >
+          <div class="col text-center" >
+            <h3 >All employee in this project </h3 >
+          </div >
+          <div class="col" >
+            <a data-th-href="${'/projectEmployee/add/' + customerDetail.id}"
+               class="btn btn-success btn-sm" ><i class="fa fa-plus"
+                                                  style="font-size: 15px" ></i >&nbsp;Add Employee</a >
+          </div >
+        </div >
+        <div class="col" data-th-if="${not #lists.isEmpty(customerDetail.projectEmployees)}" >
+          <table class="table table-hover table-striped" id="myTable" >
+            <thead >
+            <tr >
+              <th > Index</th >
+              <th > Employee Id</th >
+              <th > Calling Name</th >
+              <th > Mobile</th >
+              <th > Designation</th >
+              <th > Status</th >
+            </tr >
+            </thead >
+            <tbody >
+            <tr data-th-each="employee, rowCount : ${customerDetail.projectEmployees}" >
+              <th data-th-text="${rowCount.count}" ></th >
+              <th data-th-text="${employee.code}" ></th >
+              <th data-th-text="${employee.callingName}" ></th >
+              <th data-th-text="${employee.mobileOne}" ></th >
+              <th data-th-text="${employee.designation.designation}" ></th >
+              <th data-th-text="${employee.employeeStatus.employeeStatus}" ></th >
+            </tr >
+            </tbody >
+          </table >
         </div >
       </div >
       <!--Back Button-->

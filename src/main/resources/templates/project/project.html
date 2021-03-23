@@ -41,32 +41,34 @@
       <div class="container-fluid bg-primary text-center" >
         <!--Table view-->
         <div class="col" >
-          <div class="col" id="customerListPresent" data-th-if="${not #lists.isEmpty(customers)}" >
+          <div class="col" id="customerListPresent" data-th-if="${not #lists.isEmpty(projects)}" >
             <table class="table table-hover table-striped" id="myTable" >
               <thead >
               <tr >
                 <th > Index</th >
                 <th > Name</th >
                 <th > Code</th >
-                <th > Mobile</th >
                 <th > Address</th >
                 <th > Modify</th >
               </tr >
               </thead >
               <tbody >
-              <tr data-th-each="project, rowCount : ${customers}" >
+              <tr data-th-each="project, rowCount : ${projects}" >
                 <th data-th-text="${rowCount.count}" ></th >
-                <th data-th-text="${project.title}+${'. '}+${project.name}" ></th >
+                <th data-th-text="${project.name}" ></th >
                 <th data-th-text="${project.code}" ></th >
-                <th data-th-text="${project.mobile}" ></th >
                 <th data-th-text="${project.address}" ></th >
                 <th >
-                  <a id="customerView" data-th-href="${'/project/' + project.id}" class="btn btn-primary btn-sm" ><i
+                  <a data-th-href="${'/project/' + project.id}" class="btn btn-primary btn-sm" ><i
                         class="fa fa-folder-open" style="font-size: 15px" ></i >&nbsp;View</a >
-                  <a id="customerEdit" data-th-href="${'/project/edit/' + project.id}"
+                  <a data-th-href="${'/project/edit/' + project.id}"
                      class="btn btn-success btn-sm" ><i class="fa fa-edit"
                                                         style="font-size: 15px" ></i >&nbsp;Edit</a >
-                  <a  data-th-if="${!#authorization.expression('hasRole(''ROLE_CASHIER'')')}"
+                  <a data-th-href="${'/projectEmployee/add/' + project.id}"
+                     class="btn btn-success btn-sm" ><i class="fa fa-plus"
+                                                        style="font-size: 15px" ></i >&nbsp;Add Employee</a >
+
+                  <a  data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                      data-th-href="${'/project/delete/' + project.id}"
                      class="btn btn-danger btn-sm" >
 
@@ -78,7 +80,7 @@
           </div >
         </div >
         <!--Error-->
-        <div class="row" data-th-if="${ #lists.isEmpty(customers)}" >
+        <div class="row" data-th-if="${ #lists.isEmpty(projects)}" >
           <div class="col-sm-12" >
             <div class="alert alert-warning alert-dismissible fade show" role="alert" >
               <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
@@ -100,7 +102,7 @@
                 <span aria-hidden="true" >&times;</span >
               </button >
               <!--save project include-->
-              <div data-th-replace="~{project/project-detail :: customerDetailsFragment}" ></div >
+              <div data-th-replace="~{project/project-detail :: projectDetailsFragment}" ></div >
             </div >
           </div >
         </div >
