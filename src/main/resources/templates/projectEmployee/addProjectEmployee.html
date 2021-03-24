@@ -12,134 +12,118 @@
   <div id="layoutSidenav_content" >
     <main >
 
-      <!--Form Content-->
-      <div class="col-sm-12 flex-column " >
-        <form id="form" class="form-horizontal" data-th-action="${'/projectEmployee/save'}"
-              data-th-object="${projectEmployee}" method="POST" >
-          <div class="row" >
-            <div class="container-fluid " >
-              <div class="row text-center formManagement border-info" >
-                <!--ViewList Button-->
-                <div class="col" >
-                  <a href="/project" class="btn btn-success" tabindex="1" >
-                    <i class="fa fa-list" style="font-size: 20px" ></i >&nbsp;&nbsp;View List
-                  </a >
-                </div >
-                <!--Form Name-->
-                <div class="col" >
-                  <h2 class="text-light text-center" >
-                    <strong >
-                      <span data-th-text="${'Add employee to project'}" ></span >
-                    </strong >
-                  </h2 >
-                </div >
-                <!--Home Button-->
-                <div class="col" >
-                  <a class="btn btn-success" href="/home" tabindex="2" >
-                    <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp;&nbsp;Home
-                  </a >
-                </div >
-              </div >
-            </div >
-
-            <!--Left Side-->
-            <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
-              <!--Id-->
-              <div id="idStatus" data-th-if="${addStatus==false}" class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="id" >ID :</label >
-                </div >
-                <div class="col-md-8" >
+      <div class="container-fluid " >
+        <div class="row text-center formManagement border-info" >
+          <!--ViewList Button-->
+          <div class="col" >
+            <a href="/project" class="btn btn-success" tabindex="1" >
+              <i class="fa fa-list" style="font-size: 20px" ></i >&nbsp;&nbsp;View List
+            </a >
+          </div >
+          <!--Form Name-->
+          <div class="col" >
+            <h2 class="text-light text-center" >
+              <strong >
+                <span data-th-text="${'Add employee to project'}" ></span >
+              </strong >
+            </h2 >
+          </div >
+          <!--Home Button-->
+          <div class="col" >
+            <a class="btn btn-success" href="/home" tabindex="2" >
+              <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp;&nbsp;Home
+            </a >
+          </div >
+        </div >
+      </div >
+      <div class="container-fluid" >
+        <div class="container" >
+          <div data-th-replace="~{project/projectDetail :: projectDetailsFragment}" ></div >
+        </div >
+        <!--Form Content-->
+        <div class="col-sm-12 flex-column " >
+          <form id="form" class="form-horizontal" data-th-action="${'/projectEmployee/save'}"
+                data-th-object="${projectEmployee}" method="POST" >
+            <div class="row" >
+              <!--Left Side-->
+              <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
+                <!--Id-->
+                <div id="idStatus" data-th-if="${addStatus==false}" class="form-row text-right" >
                   <input id="id" data-th-field="*{id}" class="form-control" type="text" readonly />
                   <input type="text" data-th-field="*{liveDead}" hidden >
                 </div >
-                <div class="col-md-4" >
-                  <label class="control-label" for="code" >Project Code :</label >
+                <!--Name-->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="employee" >Employee :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <select id="employee" >
+                      <option value="" selected > Please Select</option >
+                      <option data-th-each="employee : ${employees}"
+                              data-th-text="${'Register number : '+employee.code}+${' Name : '+employee.name}"
+                              data-th-value="${employee.id}" ></option >
+                    </select >
+                  </div >
                 </div >
-                <div class="col-md-8" >
-                  <input id="code" data-th-field="*{code}" class="form-control" type="text" readonly />
+                <!--Created by and created at-->
+                <div id="updateStatus" data-th-if="${addStatus==false}" >
+                  <!--Created By-->
+                  <div class="form-row text-right" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="createdBy" >Created By :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <input id="createdBy" data-th-field="*{createdBy}" class="form-control" type="text" readonly />
+                    </div >
+                  </div >
+                  <!--Created At-->
+                  <div class="form-row text-right" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="createdAt" >Created At :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <input id="createdAt" data-th-field="*{createdAt}" class="form-control" type="text" readonly />
+                    </div >
+                  </div >
                 </div >
               </div >
-              <!--todo need to add employee details show annadnasdsa sdasdda-->
-              <!--Name-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="name" >Name :</label >
-                </div >
-                <div class="col-md-8" >
-                  <input id="name" data-th-field="*{name}" class="form-control" tabindex="4" type="text" required />
-                  <span id="nameError" data-th-errors="*{name}"
-                        data-th-if="${#fields.hasErrors('name')}" class="error" >Error Name</span >
-                </div >
-              </div >
-            </div >
-            <!--Right Side-->
-            <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
+              <!--Right Side-->
+              <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
+                <!--selected Employee for this project-->
 
-              <!--Address-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="address" >Address :</label >
-                </div >
-                <div class="col-md-8" >
-                  <textarea id="address" data-th-field="*{address}" class="form-control" tabindex="7" rows="3"
-                            style="font-size: medium" ></textarea >
-                  <span class="error" data-th-errors="*{address}"
-                        data-th-if="${#fields.hasErrors('address')}" id="addressError" >Error Address</span >
-                </div >
               </div >
-              <!--Created by and created at-->
-              <div id="updateStatus" data-th-if="${addStatus==false}" >
-                <!--Created By-->
-                <div class="form-row text-right" >
-                  <div class="col-md-4" >
-                    <label class="control-label" for="createdBy" >Created By :</label >
-                  </div >
-                  <div class="col-md-8" >
-                    <input id="createdBy" data-th-field="*{createdBy}" class="form-control" type="text" readonly />
-                  </div >
-                </div >
-                <!--Created At-->
-                <div class="form-row text-right" >
-                  <div class="col-md-4" >
-                    <label class="control-label" for="createdAt" >Created At :</label >
-                  </div >
-                  <div class="col-md-8" >
-                    <input id="createdAt" data-th-field="*{createdAt}" class="form-control" type="text" readonly />
-                  </div >
-                </div >
+              <!--Button-->
+              <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+                <!--Back Button-->
+                <a class="btn btn-dark" tabindex="10" href="/project" >
+                  <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+                </a >
+                <!--Save Button-->
+                <button class="btn btn-success ml-5" type="submit" tabindex="8" >
+                  <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span id="submit"
+                                                                                         data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
+                </button >
+                <!--Cancel Button-->
+                <button class="btn btn-warning ml-5" type="reset" tabindex="9" >
+                  <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                </button >
+              </div >
+              <!--Error-->
+              <div class="form-row" >
+                <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}"
+                       data-th-text="'Errors: '" >Errors: </label >
+                <ul >
+                  <li id="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" class="error" ></li >
+                </ul >
               </div >
             </div >
-            <!--Button-->
-            <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-              <!--Back Button-->
-              <a class="btn btn-dark" tabindex="10" href="/project" >
-                <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
-              </a >
-              <!--Save Button-->
-              <button class="btn btn-success ml-5" type="submit" tabindex="8" >
-                <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span id="submit"
-                                                                                       data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
-              </button >
-              <!--Cancel Button-->
-              <button class="btn btn-warning ml-5" type="reset" tabindex="9" >
-                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-              </button >
-            </div >
-            <!--Error-->
-            <div class="form-row" >
-              <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
-              <ul >
-                <li id="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" class="error" ></li >
-              </ul >
-            </div >
-          </div >
-        </form >
-      </div >
+          </form >
+        </div >
     </main >
     <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
     <!--script include-->
-    <script data-th-replace="~{fragments/script :: scriptFragment}" ></script >
+    <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
   </div >
 </div >
 </body >

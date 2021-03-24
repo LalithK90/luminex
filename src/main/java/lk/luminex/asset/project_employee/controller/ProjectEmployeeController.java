@@ -46,7 +46,7 @@ public class ProjectEmployeeController {
         }
       }
     }
-
+model.addAttribute("projectDetail", project);
     model.addAttribute("employees", employees.stream().distinct().collect(Collectors.toList()));
     return "projectEmployee/addProjectEmployee";
   }

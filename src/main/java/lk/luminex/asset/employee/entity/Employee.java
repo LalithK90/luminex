@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -82,7 +83,7 @@ public class Employee extends AuditEntity {
     private LocalDate dateOfAssignment;
 
     @OneToMany(mappedBy = "employee")
-    private LIst< ProjectEmployee > projectEmployees;
+    private List< ProjectEmployee > projectEmployees;
 
 
     @Transient
