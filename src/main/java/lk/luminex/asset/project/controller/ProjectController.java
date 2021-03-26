@@ -40,7 +40,7 @@ public  class ProjectController implements AbstractController< Project, Integer>
     private String commonThings(Model model, Project project, Boolean addState) {
         model.addAttribute("project", project);
         model.addAttribute("addStatus", addState);
-        return "project/addCustomer";
+        return "project/addProject";
     }
 
     @GetMapping
@@ -65,6 +65,15 @@ public  class ProjectController implements AbstractController< Project, Integer>
     public String persist(Project project, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
             return commonThings(model, project, true);
+        }
+
+        if ( project.getId() == null ) {
+            Project lastProject = projectService.lastProject();
+            if ( lastProject.getCode() == null ) {
+                project.setCode("LMP" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+            } else {
+                project.setCode("LMP" + makeAutoGenerateNumberService.numberAutoGen(lastProject.getCode().substring(3)).toString());
+            }
         }
 
         redirectAttributes.addFlashAttribute("projectDetail", projectService.persist(project));

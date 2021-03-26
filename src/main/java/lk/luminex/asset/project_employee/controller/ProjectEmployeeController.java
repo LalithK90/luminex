@@ -5,6 +5,7 @@ import lk.luminex.asset.employee.service.EmployeeService;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.project.service.ProjectService;
 import lk.luminex.asset.project_employee.entity.ProjectEmployee;
+import lk.luminex.asset.project_employee.entity.enums.ProjectEmployeeStatus;
 import lk.luminex.asset.project_employee.service.ProjectEmployeeService;
 import org.hibernate.criterion.ProjectionList;
 import org.springframework.stereotype.Controller;
@@ -41,13 +42,14 @@ public class ProjectEmployeeController {
 
     for ( Employee employee : employeeService.findAll() ) {
       for ( ProjectEmployee projectEmployee : project.getProjectEmployees() ) {
-        if ( !projectEmployee.getEmployee().equals(employee) ) {
+        if ( !projectEmployee.getEmployee().equals(employee) || (projectEmployee.getEmployee().equals(employee) && projectEmployee.getProjectEmployeeStatus().equals(ProjectEmployeeStatus.REMOVE)) ) {
           employees.add(employee);
         }
       }
     }
-model.addAttribute("projectDetail", project);
+    model.addAttribute("projectDetail", project);
     model.addAttribute("employees", employees.stream().distinct().collect(Collectors.toList()));
+    model.addAttribute("project", project);
     return "projectEmployee/addProjectEmployee";
   }
 

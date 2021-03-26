@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ProjectEmployeeStatus {
   SUP("Supervisor"),
   ENG("Engineer"),
-  WORK("Worker");
+  WORK("Worker"),
+  REMOVE("Remove");
 
   private final String projectEmployeeStatus;
 

@@ -72,12 +72,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-  /*  http.csrf().disable();
+    http.csrf().disable();
     http.authorizeRequests().antMatchers("/").permitAll();
-*/
-    // For developing easy to give permission all lin
-// {"ADMIN","PROCUREMENT_MANAGER","CASHIER","MANAGER","HR_MANAGER","ACCOUNT_MANAGER"}
 
+    // For developing easy to give permission all lin
+// {"ADMIN","PROCUREMENT_MANAGER","SUPERVISOR","MANAGER","HR_MANAGER","ACCOUNT_MANAGER","ENGINNER"}
+
+/*
     http.authorizeRequests(
         authorizeRequests ->
             authorizeRequests
@@ -129,6 +130,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Cross site disable
         .csrf(AbstractHttpConfigurer::disable)
         .exceptionHandling();
+*/
 
   }
 }

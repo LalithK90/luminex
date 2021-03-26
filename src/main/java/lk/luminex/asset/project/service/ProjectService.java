@@ -57,7 +57,8 @@ public class ProjectService implements AbstractService< Project, Integer> {
         return projectDao.findAll(customerExample);
     }
 
-    public Project lastCustomer(){
+    public Project lastProject(){
         return projectDao.findFirstByOrderByIdDesc();
     }
+
 }
