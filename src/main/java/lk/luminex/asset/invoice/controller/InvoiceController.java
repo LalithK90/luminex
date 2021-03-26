@@ -140,14 +140,6 @@ public class InvoiceController {
       ledger.setQuantity(String.valueOf(availableQuantity - sellQuantity));
       ledgerService.persist(ledger);
     }
-    if ( saveInvoice.getProject() != null ) {
-      try {
-        String mobileNumber = saveInvoice.getProject().getMobile().substring(1, 10);
-        twilioMessageService.sendSMS("+94"+mobileNumber, "Thank You Come Again \n Samarasinghe Super ");
-      } catch ( Exception e ) {
-        e.printStackTrace();
-      }
-    }
     return "redirect:/invoice/fileView/"+saveInvoice.getId();
   }
 

@@ -6,11 +6,7 @@
 </head >
 <body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-<div id="layoutSidenav" >
-  <div data-th-replace="~{fragments/sideNav :: sideNavFragment}" >
-  </div >
-  <div id="layoutSidenav_content" >
-    <main >
+
       <!--Employee find-->
       <div class="container-fluid " id="employeeFindForm" data-th-if="${employeeDetailShow==false}" >
         <div class="col-sm-12 flex-column " >
@@ -186,12 +182,11 @@
 
 
       </div >
-    </main >
+
     <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
     <!--script include-->
     <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-  </div >
-</div >
+
 <script >
     $(".alert").alert();
 </script >

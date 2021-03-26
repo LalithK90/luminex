@@ -9,11 +9,7 @@
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 <link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
 <link data-th-href="@{/css/modal.css}" media="all" rel="stylesheet" type="text/css" />
-<div id="layoutSidenav" >
-  <div data-th-replace="~{fragments/sideNav :: sideNavFragment}" >
-  </div >
-  <div id="layoutSidenav_content" >
-    <main >
+
 
 
       <!--Creates the popup body-->
@@ -363,9 +359,7 @@
           </form >
         </div >
       </div >
-    </main >
-  </div >
-</div >
+
 <input type="hidden" data-th-value="${ledgerItemURL}" id="ledgerItemURL" >
 <!--/* footer is */-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >

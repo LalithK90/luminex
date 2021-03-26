@@ -7,11 +7,7 @@
 </head>
 <body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-<div id="layoutSidenav" >
-    <div data-th-replace="~{fragments/sideNav :: sideNavFragment}" >
-    </div >
-    <div id="layoutSidenav_content" >
-        <main >
+
 <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12" data-toggle="collapse"
    href="#hrefCollapse">Show Purchase Order Detail's - Purchase Order Code :
     <span data-th-text="${purchaseOrderDetail.code}"></span></a>
@@ -94,13 +90,12 @@
         </div>
     </form>
 </div>
-        </main>
+
 <!--/* footer is */-->
-<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<div data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <!--/* script is included */-->
-<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
-    </div>
-</div>
+<div data-th-replace="~{fragments/script :: scriptFragment}"></div>
+
 <script>
     function dateMatch(obj) {
         let selectedFiledId = obj.getAttribute('id').slice(2);

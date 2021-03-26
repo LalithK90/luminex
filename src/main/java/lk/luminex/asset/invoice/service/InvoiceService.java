@@ -112,7 +112,7 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     PdfPCell cell2;
     if ( invoice.getProject() != null ) {
       cell2 =
-          new PdfPCell(new Phrase("Name : " + invoice.getProject().getTitle().getTitle() + " " + invoice.getProject().getName(), secondaryFont));
+          new PdfPCell(new Phrase("Name : " + invoice.getProject().getName(), secondaryFont));
     } else {
       cell2 = new PdfPCell(new Phrase("Name : Anonymous Customer ", secondaryFont));
     }
