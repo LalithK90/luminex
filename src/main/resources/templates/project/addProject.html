@@ -65,6 +65,20 @@
                   data-th-if="${#fields.hasErrors('name')}" class="error" >Error Name</span >
           </div >
         </div >
+        <!--projectStatus-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="employee" >Employee :</label >
+          </div >
+          <div class="col-md-8" >
+            <select id="employee"  data-th-field="*{projectStatus}">
+              <option value="" selected > Please Select</option >
+              <option data-th-each="projectStatus : ${projectStatuses}"
+                      data-th-text="${projectStatus.projectStatus}"
+                      data-th-value="${projectStatus}" ></option >
+            </select >
+          </div >
+        </div >
       </div >
       <!--Right Side-->
       <div class="form-group col-md-6 col-sm-6 text-right flex-column" >

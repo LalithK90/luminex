@@ -41,10 +41,15 @@ public class ProjectEmployeeController {
     List< Employee > employees = new ArrayList<>();
 
     for ( Employee employee : employeeService.findAll() ) {
-      for ( ProjectEmployee projectEmployee : project.getProjectEmployees() ) {
-        if ( !projectEmployee.getEmployee().equals(employee) || (projectEmployee.getEmployee().equals(employee) && projectEmployee.getProjectEmployeeStatus().equals(ProjectEmployeeStatus.REMOVE)) ) {
-          employees.add(employee);
+      if ( !project.getProjectEmployees().isEmpty() ) {
+        for ( ProjectEmployee projectEmployee : project.getProjectEmployees() ) {
+          if ( !projectEmployee.getEmployee().equals(employee) || (projectEmployee.getEmployee().equals(employee) && projectEmployee.getProjectEmployeeStatus().equals(ProjectEmployeeStatus.REMOVE)) ) {
+            employees.add(employee);
+          }
         }
+      } else {
+        employees.addAll(employeeService.findAll());
+        break;
       }
     }
     model.addAttribute("projectDetail", project);
