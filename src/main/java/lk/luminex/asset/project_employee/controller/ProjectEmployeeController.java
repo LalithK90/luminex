@@ -10,9 +10,7 @@ import lk.luminex.asset.project_employee.service.ProjectEmployeeService;
 import org.hibernate.criterion.ProjectionList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +55,20 @@ public class ProjectEmployeeController {
     model.addAttribute("project", project);
     return "projectEmployee/addProjectEmployee";
   }
+
+  @PostMapping( "/save" )
+  public String persist(@ModelAttribute Project project) {
+    project.getProjectEmployees().forEach(projectEmployeeService::persist);
+    return "redirect:/project";
+  }
+
+
+  @GetMapping( "/edit/{id}" )
+  public String addEdit(@PathVariable( "id" ) Integer id, Model model) {
+    model.addAttribute("project", projectService.findById(id));
+    model.addAttribute("projectEmployeeStatuses", ProjectEmployeeStatus.values());
+    return "projectEmployee/editProjectEmployee";
+  }
+
 
 }

@@ -76,7 +76,7 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     return invoiceDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
   }
 
-  public ByteArrayInputStream createPDF(Integer id) throws DocumentException {
+/*  public ByteArrayInputStream createPDF(Integer id) throws DocumentException {
     Invoice invoice = invoiceDao.getOne(id);
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -277,5 +277,5 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     paragraph.setAlignment(Element.ALIGN_LEFT);
     paragraph.setIndentationLeft(50);
     paragraph.setIndentationRight(50);
-  }
+  }*/
 }

@@ -3,7 +3,6 @@ package lk.luminex.asset.invoice.controller;
 
 import com.itextpdf.text.DocumentException;
 import lk.luminex.asset.project.service.ProjectService;
-import lk.luminex.asset.discount_ratio.service.DiscountRatioService;
 import lk.luminex.asset.invoice.entity.Invoice;
 import lk.luminex.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.luminex.asset.invoice.entity.enums.InvoiceValidOrNot;
@@ -40,20 +39,18 @@ public class InvoiceController {
   private final ProjectService projectService;
   private final LedgerService ledgerService;
   private final DateTimeAgeService dateTimeAgeService;
-  private final DiscountRatioService discountRatioService;
   private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
   private final TwilioMessageService twilioMessageService;
 
   public InvoiceController(InvoiceService invoiceService, ProjectService projectService,
                            LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
-                           DiscountRatioService discountRatioService,
+
                            MakeAutoGenerateNumberService makeAutoGenerateNumberService,
                            TwilioMessageService twilioMessageService) {
     this.invoiceService = invoiceService;
     this.projectService = projectService;
     this.ledgerService = ledgerService;
     this.dateTimeAgeService = dateTimeAgeService;
-    this.discountRatioService = discountRatioService;
     this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
     this.twilioMessageService = twilioMessageService;
   }
@@ -61,7 +58,7 @@ public class InvoiceController {
   @GetMapping
   public String invoice(Model model) {
     model.addAttribute("invoices",
-    invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
+                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
@@ -70,7 +67,7 @@ public class InvoiceController {
   public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("invoices",
-            invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
@@ -79,17 +76,16 @@ public class InvoiceController {
     model.addAttribute("invoice", invoice);
     model.addAttribute("invoicePrintOrNots", InvoicePrintOrNot.values());
     model.addAttribute("paymentMethods", PaymentMethod.values());
-    model.addAttribute("customers", projectService.findAll());
-    model.addAttribute("discountRatios", discountRatioService.findAll());
+    model.addAttribute("projects", projectService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
-            .fromMethodName(LedgerController.class, "findId", "")
-            .build()
-            .toString());
+        .fromMethodName(LedgerController.class, "findId", "")
+        .build()
+        .toString());
     //send not expired and not zero quantity
     model.addAttribute("ledgers", ledgerService.findAll()
-            .stream()
-            .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
-            .collect(Collectors.toList()));
+        .stream()
+        .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
+        .collect(Collectors.toList()));
     return "invoice/addInvoice";
   }
 
@@ -123,9 +119,9 @@ public class InvoiceController {
       }
     }
     invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
-    List<InvoiceLedger> invoiceLedgers = new ArrayList<>();
-
-    invoice.getInvoiceLedgers().forEach(x-> {
+    List< InvoiceLedger > invoiceLedgers = new ArrayList<>();
+//todo
+    invoice.getInvoiceLedgers().forEach(x -> {
       x.setInvoice(invoice);
       invoiceLedgers.add(x);
     });
@@ -140,7 +136,7 @@ public class InvoiceController {
       ledger.setQuantity(String.valueOf(availableQuantity - sellQuantity));
       ledgerService.persist(ledger);
     }
-    return "redirect:/invoice/fileView/"+saveInvoice.getId();
+    return "redirect:/project";
   }
 
 
@@ -152,7 +148,7 @@ public class InvoiceController {
     return "redirect:/invoice";
   }
 
-  @GetMapping(value = "/file/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+ /* @GetMapping(value = "/file/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
   public ResponseEntity< InputStreamResource > invoicePrint(@PathVariable("id")Integer id) throws DocumentException {
     var headers = new HttpHeaders();
     headers.add("Content-Disposition", "inline; filename=invoice.pdf");
@@ -174,6 +170,6 @@ public class InvoiceController {
         .fromMethodName(InvoiceController.class, "getInvoiceForm")
         .toUriString());
     return "invoice/pdfSilentPrint";
-  }
+  }*/
 
 }

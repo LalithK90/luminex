@@ -287,7 +287,7 @@
                   <select id="project " data-th-field="*{project}" class="form-control"
                           tabindex="9" >
                     <option value="" >Please select</option >
-                    <option data-th-each="project : ${customers}"
+                    <option data-th-each="project : ${projects}"
                             data-th-text="${project.name+'  '+project.mobile}"
                             data-th-value="${project.id}" >
                       Please select
@@ -367,6 +367,7 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
+    /*todo so many thing to remove*/
     //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
     $("#close, .popup-overlay body").on("click", function () {
         $(".popup-overlay, .popup-content").removeClass("active");

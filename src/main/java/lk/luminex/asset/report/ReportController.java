@@ -92,7 +92,7 @@ public class ReportController {
                      startDateTime, endDateTime);
   }
   private void commonInvoices(List< Invoice > invoices, Model model) {
-    // invoice count
+   /* // invoice count
     int invoiceTotalCount = invoices.size();
     model.addAttribute("invoiceTotalCount", invoiceTotalCount);
     //|-> card
@@ -116,7 +116,7 @@ public class ReportController {
       invoiceCashAmount.set(addAmount);
     });
     model.addAttribute("invoiceCashCount", invoiceCashCount);
-    model.addAttribute("invoiceCashAmount", invoiceCashAmount.get());
+    model.addAttribute("invoiceCashAmount", invoiceCashAmount.get());*/
 
   }
 
