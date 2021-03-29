@@ -176,7 +176,7 @@
 </div >
 <!--Payment History -->
 <div class="form-group col-md-12 col-sm-12 text-center flex-column"
-     data-th-if="${ #lists.isEmpty(purchaseOrderDetail.payments)}" >
+     data-th-if="${not #lists.isEmpty(purchaseOrderDetail.payments)}" >
   <div class="form-row" >
     <label class="control-label text-capitalize font-weight-bold" >Payment History :</label >
   </div >
