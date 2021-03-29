@@ -25,7 +25,7 @@
 <!--Custom search -->
 <div class="container-fluid" >
   <div class="row" >
-    <!--Custom Invoice search-->
+    <!--Custom Order search-->
     <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
             data-target="#dataTargetCollapse"
             aria-expanded="false" aria-controls="dataTargetCollapse"
@@ -55,7 +55,7 @@
     </div >
   </div >
 </div >
-<!--Invoice Total amount and Cashier -->
+<!--Order Total amount and Cashier -->
 <div class="container-fluid" >
   <div class="container" >
     <h3 >Cashier name and her / his collect total amount</h3 >
@@ -67,16 +67,16 @@
         <tr >
           <th > Index</th >
           <th > Cashier Name</th >
-          <th >Invoice Count</th >
-          <th >Total Invoice Value</th >
+          <th >Order Count</th >
+          <th >Total Order Value</th >
         </tr >
         </thead >
         <tbody >
-        <tr data-th-each="invoice, rowCount : ${invoiceByCashierAndTotalAmount}" >
+        <tr data-th-each="order, rowCount : ${orderByCashierAndTotalAmount}" >
           <th data-th-text="${rowCount.count}" ></th >
-          <th data-th-text="${invoice.name}" ></th >
-          <th data-th-text="${invoice.count}" ></th >
-          <th data-th-text="${invoice.total}" ></th >
+          <th data-th-text="${order.name}" ></th >
+          <th data-th-text="${order.count}" ></th >
+          <th data-th-text="${order.total}" ></th >
         </tr >
         </tbody >
       </table >

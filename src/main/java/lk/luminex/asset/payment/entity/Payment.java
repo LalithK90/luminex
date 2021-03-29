@@ -3,7 +3,7 @@ package lk.luminex.asset.payment.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
+import lk.luminex.asset.payment.entity.enums.PaymentMethod;
 import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;

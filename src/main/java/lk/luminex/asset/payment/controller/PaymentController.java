@@ -5,7 +5,7 @@ import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.good_received_note.entity.GoodReceivedNote;
 import lk.luminex.asset.good_received_note.entity.enums.GoodReceivedNoteState;
 import lk.luminex.asset.good_received_note.service.GoodReceivedNoteService;
-import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
+import lk.luminex.asset.payment.entity.enums.PaymentMethod;
 import lk.luminex.asset.payment.entity.Payment;
 import lk.luminex.asset.payment.service.PaymentService;
 import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
