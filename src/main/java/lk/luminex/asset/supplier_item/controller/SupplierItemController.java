@@ -128,6 +128,7 @@ public class SupplierItemController {
     for ( SupplierItem supplierItem : supplierItems ) {
       SupplierItem supplierItemOne = new SupplierItem();
       supplierItemOne.setItemSupplierStatus(supplierItemOne.getItemSupplierStatus());
+      supplierItemOne.setItemSupplierStatus(supplierItemOne.getItemSupplierStatus());
       if ( supplierItem.getId() != null ) {
         supplierItemOne.setId(supplierItem.getId());
       }
