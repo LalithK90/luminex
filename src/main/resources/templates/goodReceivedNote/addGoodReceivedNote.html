@@ -24,8 +24,6 @@
                     <th>Index</th>
                     <th>Item Name</th>
                     <th>Request Quantity</th>
-                    <th>Manufacture Date</th>
-                    <th>Expire Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,19 +44,6 @@
                                data-th-value="${purchaseOrderItem.quantity}"
                                data-th-name="${'ledgers[__${index.index}__].quantity'}"
                                readonly required>
-                        <!--sell price-->
-                        <input type="text" class="form-control"
-                               data-th-name="${'ledgers[__${index.index}__].sellPrice'}"
-                               data-th-value="${purchaseOrderItem.item.sellPrice}"
-                               hidden required>
-                    </td>
-                    <td>
-                        <input type="date" class="form-control " onchange="dateMatch(this)"
-                               data-th-name="${'ledgers[__${index.index}__].manufactureDate'}" data-th-id="${'md'+index.count}" required>
-                    </td>
-                    <td>
-                        <input type="date" class="form-control " onchange="dateMatch(this)"
-                               data-th-name="${'ledgers[__${index.index}__].expiredDate'}" data-th-id="${'ed'+index.count}" required>
                     </td>
                 </tr>
                 </tbody>
