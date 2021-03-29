@@ -3,7 +3,7 @@ package lk.luminex.asset.invoice_ledger.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.invoice.entity.Invoice;
+import lk.luminex.asset.order.entity.Order;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,8 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter("InvoiceLedger")
-public class InvoiceLedger extends AuditEntity {
+@JsonFilter("OrderLedger")
+public class OrderLedger extends AuditEntity {
 
     @Column(nullable = false)
     private String quantity;
@@ -38,6 +38,6 @@ public class InvoiceLedger extends AuditEntity {
     private Ledger ledger;
 
     @ManyToOne
-    private Invoice invoice;
+    private Order order;
 
 }
