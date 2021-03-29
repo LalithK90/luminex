@@ -28,9 +28,6 @@ public class SupplierItem extends AuditEntity {
   @Enumerated( EnumType.STRING )
   private ItemSupplierStatus itemSupplierStatus;
 
-  @Enumerated( EnumType.STRING )
-  private LiveDead liveDead;
-
   @ManyToOne( cascade = CascadeType.MERGE )
   private Item item;
 

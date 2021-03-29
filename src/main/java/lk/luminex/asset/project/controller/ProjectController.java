@@ -73,7 +73,7 @@ public class ProjectController implements AbstractController< Project, Integer >
 
     if ( project.getId() == null ) {
       Project lastProject = projectService.lastProject();
-      if ( lastProject.getCode() == null ) {
+      if ( lastProject == null ) {
         project.setCode("LMP" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
         project.setCode("LMP" + makeAutoGenerateNumberService.numberAutoGen(lastProject.getCode().substring(3)).toString());

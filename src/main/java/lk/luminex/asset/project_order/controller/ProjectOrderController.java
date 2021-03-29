@@ -71,7 +71,7 @@ public class ProjectOrderController {
         .toString());
     //send not expired and not zero quantity
     model.addAttribute("ledgers", ledgerService.findAll());
-    return "projectOrder/addOrder";
+    return "projectOrder/addProjectOrder";
   }
 
   @GetMapping( "/add/{id}" )
