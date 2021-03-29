@@ -1,6 +1,6 @@
-package lk.luminex.asset.invoice_ledger.dao;
+package lk.luminex.asset.order_ledger.dao;
 
-import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -50,8 +50,8 @@ public class OrderService implements AbstractService< Order, Integer > {
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< Order > invoiceExample = Example.of(order, matcher);
-    return orderDao.findAll(invoiceExample);
+    Example< Order > orderExample = Example.of(order, matcher);
+    return orderDao.findAll(orderExample);
 
   }
 
@@ -68,7 +68,7 @@ public class OrderService implements AbstractService< Order, Integer > {
   }
 
 /*  public ByteArrayInputStream createPDF(Integer id) throws DocumentException {
-    Order invoice = invoiceDao.getOne(id);
+    Order order = orderDao.getOne(id);
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Document document = new Document(PageSize.A4, 15, 15, 45, 30);
@@ -87,23 +87,23 @@ public class OrderService implements AbstractService< Order, Integer > {
     paragraph.setSpacingAfter(10);
     document.add(paragraph);
 
-//customer details and invoice main details
+//customer details and order main details
     float[] columnWidths = {200f, 200f};//column amount{column 1 , column 2 }
     PdfPTable mainTable = new PdfPTable(columnWidths);
     // add cell to table
-    PdfPCell cell = new PdfPCell(new Phrase("Date : \t" + invoice.getCreatedAt().format(DateTimeFormatter.ofPattern(
+    PdfPCell cell = new PdfPCell(new Phrase("Date : \t" + order.getCreatedAt().format(DateTimeFormatter.ofPattern(
         "yyyy-MM-dd HH:mm:ss")), secondaryFont));
     pdfCellBodyCommonStyle(cell);
     mainTable.addCell(cell);
 
-    PdfPCell cell1 = new PdfPCell(new Phrase("Order Number : " + invoice.getCode(), secondaryFont));
+    PdfPCell cell1 = new PdfPCell(new Phrase("Order Number : " + order.getCode(), secondaryFont));
     pdfCellBodyCommonStyle(cell1);
     mainTable.addCell(cell1);
 
     PdfPCell cell2;
-    if ( invoice.getProject() != null ) {
+    if ( order.getProject() != null ) {
       cell2 =
-          new PdfPCell(new Phrase("Name : " + invoice.getProject().getName(), secondaryFont));
+          new PdfPCell(new Phrase("Name : " + order.getProject().getName(), secondaryFont));
     } else {
       cell2 = new PdfPCell(new Phrase("Name : Anonymous Customer ", secondaryFont));
     }
@@ -140,99 +140,99 @@ public class OrderService implements AbstractService< Order, Integer > {
     pdfCellHeaderCommonStyle(lineTotalHeader);
     ledgerItemDisplay.addCell(lineTotalHeader);
 
-    for ( int i = 0; i < invoice.getOrderLedgers().size(); i++ ) {
+    for ( int i = 0; i < order.getOrderLedgers().size(); i++ ) {
       PdfPCell index = new PdfPCell(new Paragraph(Integer.toString(i), tableHeader));
       pdfCellBodyCommonStyle(index);
       ledgerItemDisplay.addCell(index);
 
-      PdfPCell itemName = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLedger().getItem().getName(), tableHeader));
+      PdfPCell itemName = new PdfPCell(new Paragraph(order.getOrderLedgers().get(i).getLedger().getItem().getName(), tableHeader));
       pdfCellBodyCommonStyle(itemName);
       ledgerItemDisplay.addCell(itemName);
 
-      PdfPCell unitPrice = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLedger().getSellPrice().toString(), tableHeader));
+      PdfPCell unitPrice = new PdfPCell(new Paragraph(order.getOrderLedgers().get(i).getLedger().getSellPrice().toString(), tableHeader));
       pdfCellBodyCommonStyle(unitPrice);
       ledgerItemDisplay.addCell(unitPrice);
 
-      PdfPCell quantity = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getQuantity(), tableHeader));
+      PdfPCell quantity = new PdfPCell(new Paragraph(order.getOrderLedgers().get(i).getQuantity(), tableHeader));
       pdfCellBodyCommonStyle(quantity);
       ledgerItemDisplay.addCell(quantity);
 
-      PdfPCell lineTotal = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLineTotal().toString(), tableHeader));
+      PdfPCell lineTotal = new PdfPCell(new Paragraph(order.getOrderLedgers().get(i).getLineTotal().toString(), tableHeader));
       pdfCellBodyCommonStyle(lineTotal);
       ledgerItemDisplay.addCell(lineTotal);
     }
 
     document.add(ledgerItemDisplay);
 
-    PdfPTable invoiceTable = new PdfPTable(new float[]{3f, 1f});
+    PdfPTable orderTable = new PdfPTable(new float[]{3f, 1f});
 
     PdfPCell totalAmount = new PdfPCell(new Phrase("\nTotal Amount(Rs.) : ", secondaryFont));
     commonStyleForPdfPCellLastOne(totalAmount);
-    invoiceTable.addCell(totalAmount);
+    orderTable.addCell(totalAmount);
 
-    PdfPCell totalAmountRs = new PdfPCell(new Phrase("---------------\n" + invoice.getTotalPrice().setScale(2, BigDecimal.ROUND_CEILING).toString(), secondaryFont));
+    PdfPCell totalAmountRs = new PdfPCell(new Phrase("---------------\n" + order.getTotalPrice().setScale(2, BigDecimal.ROUND_CEILING).toString(), secondaryFont));
     commonStyleForPdfPCellLastOne(totalAmountRs);
-    invoiceTable.addCell(totalAmountRs);
+    orderTable.addCell(totalAmountRs);
 
     PdfPCell paymentMethodOnBill = new PdfPCell(new Phrase("\nPayment Method : ", secondaryFont));
     commonStyleForPdfPCellLastOne(paymentMethodOnBill);
-    invoiceTable.addCell(paymentMethodOnBill);
+    orderTable.addCell(paymentMethodOnBill);
 
-    PdfPCell paymentMethodOnBillState = new PdfPCell(new Phrase("========\n" + invoice.getPaymentMethod().getPaymentMethod(), secondaryFont));
+    PdfPCell paymentMethodOnBillState = new PdfPCell(new Phrase("========\n" + order.getPaymentMethod().getPaymentMethod(), secondaryFont));
     commonStyleForPdfPCellLastOne(paymentMethodOnBillState);
-    invoiceTable.addCell(paymentMethodOnBillState);
+    orderTable.addCell(paymentMethodOnBillState);
 
-    PdfPCell discountRadioAndAmount = new PdfPCell(new Phrase("Discount ( " + invoice.getDiscountRatio().getAmount() + "% ) (Rs.) : ", secondaryFont));
+    PdfPCell discountRadioAndAmount = new PdfPCell(new Phrase("Discount ( " + order.getDiscountRatio().getAmount() + "% ) (Rs.) : ", secondaryFont));
     commonStyleForPdfPCellLastOne(discountRadioAndAmount);
-    invoiceTable.addCell(discountRadioAndAmount);
+    orderTable.addCell(discountRadioAndAmount);
 
-    PdfPCell discountRadioAndAmountRs = new PdfPCell(new Phrase(invoice.getDiscountAmount().toString(), secondaryFont));
+    PdfPCell discountRadioAndAmountRs = new PdfPCell(new Phrase(order.getDiscountAmount().toString(), secondaryFont));
     commonStyleForPdfPCellLastOne(discountRadioAndAmountRs);
-    invoiceTable.addCell(discountRadioAndAmountRs);
+    orderTable.addCell(discountRadioAndAmountRs);
 
     PdfPCell amount = new PdfPCell(new Phrase("Amount (Rs.) : ", highLiltedFont));
     commonStyleForPdfPCellLastOne(amount);
-    invoiceTable.addCell(amount);
+    orderTable.addCell(amount);
 
-    PdfPCell amountRs = new PdfPCell(new Phrase(invoice.getTotalAmount().toString(), highLiltedFont));
+    PdfPCell amountRs = new PdfPCell(new Phrase(order.getTotalAmount().toString(), highLiltedFont));
     commonStyleForPdfPCellLastOne(amountRs);
-    invoiceTable.addCell(amountRs);
+    orderTable.addCell(amountRs);
 
 
-    if (invoice.getPaymentMethod().equals(PaymentMethod.CASH)) {
+    if (order.getPaymentMethod().equals(PaymentMethod.CASH)) {
       PdfPCell amountTendered = new PdfPCell(new Phrase("Tender Amount (Rs.) : ", secondaryFont));
       commonStyleForPdfPCellLastOne(amountTendered);
-      invoiceTable.addCell(amountTendered);
+      orderTable.addCell(amountTendered);
 
-      PdfPCell amountTenderedRs = new PdfPCell(new Phrase(invoice.getAmountTendered().toString(), secondaryFont));
+      PdfPCell amountTenderedRs = new PdfPCell(new Phrase(order.getAmountTendered().toString(), secondaryFont));
       commonStyleForPdfPCellLastOne(amountTenderedRs);
-      invoiceTable.addCell(amountTenderedRs);
+      orderTable.addCell(amountTenderedRs);
 
       PdfPCell balance = new PdfPCell(new Phrase("Balance (Rs.) : ", highLiltedFont));
       commonStyleForPdfPCellLastOne(balance);
-      invoiceTable.addCell(balance);
+      orderTable.addCell(balance);
 
-      PdfPCell balanceRs = new PdfPCell(new Phrase(invoice.getBalance().toString(), highLiltedFont));
+      PdfPCell balanceRs = new PdfPCell(new Phrase(order.getBalance().toString(), highLiltedFont));
       commonStyleForPdfPCellLastOne(balanceRs);
-      invoiceTable.addCell(balanceRs);
+      orderTable.addCell(balanceRs);
 
     } else {
       PdfPCell bank = new PdfPCell(new Phrase("Bank Name : ", secondaryFont));
       commonStyleForPdfPCellLastOne(bank);
-      invoiceTable.addCell(bank);
+      orderTable.addCell(bank);
 
-      PdfPCell bankName = new PdfPCell(new Phrase(invoice.getBankName(), secondaryFont));
+      PdfPCell bankName = new PdfPCell(new Phrase(order.getBankName(), secondaryFont));
       commonStyleForPdfPCellLastOne(bankName);
-      invoiceTable.addCell(bankName);
+      orderTable.addCell(bankName);
     }
 
-    document.add(invoiceTable);
+    document.add(orderTable);
 
-    Paragraph remarks = new Paragraph("Remarks : " + invoice.getRemarks(), secondaryFont);
+    Paragraph remarks = new Paragraph("Remarks : " + order.getRemarks(), secondaryFont);
     commonStyleForParagraphTwo(remarks);
     document.add(remarks);
 
-    Paragraph message = new Paragraph("\nWe will not accept return without invoiced. \n\n ------------------------------------\n            ( " + invoice.getCreatedBy() + " )", secondaryFont);
+    Paragraph message = new Paragraph("\nWe will not accept return without orderd. \n\n ------------------------------------\n            ( " + order.getCreatedBy() + " )", secondaryFont);
     commonStyleForParagraphTwo(message);
     document.add(message);
 

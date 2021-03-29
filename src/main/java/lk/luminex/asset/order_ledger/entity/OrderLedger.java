@@ -1,4 +1,4 @@
-package lk.luminex.asset.invoice_ledger.entity;
+package lk.luminex.asset.order_ledger.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;

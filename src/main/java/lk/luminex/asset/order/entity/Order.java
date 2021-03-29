@@ -3,7 +3,7 @@ package lk.luminex.asset.order.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import lk.luminex.asset.order.entity.enums.OrderState;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.util.audit.AuditEntity;
@@ -38,15 +38,13 @@ public class Order extends AuditEntity {
   @Enumerated(EnumType.STRING)
   private OrderState orderState;
 
-
   @Enumerated( EnumType.STRING )
   private LiveDead liveDead;
 
   @ManyToOne
   private Project project;
 
-  @OneToMany( cascade = CascadeType.PERSIST, mappedBy = "invoice" )
+  @OneToMany( cascade = CascadeType.PERSIST, mappedBy = "order" )
   private List< OrderLedger > orderLedgers;
-
 
 }

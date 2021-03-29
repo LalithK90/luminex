@@ -11,5 +11,5 @@ public enum OrderState {
   CANCELED("Canceled"),
   PENDING("Approved");
 
-  private final String invoiceState;
+  private final String orderState;
 }

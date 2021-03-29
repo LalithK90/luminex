@@ -276,54 +276,11 @@
               </div >
             </div >
             <hr >
-            <!--project list-->
-            <div class="form-group" >
-              <!--Customers-->
-              <div class="form-row text-right" >
-                <div class="col-md-2" >
-                  <label class="control-label" for="project " >Customer :</label >
-                </div >
-                <div class="col-md-10" >
-                  <select id="project " data-th-field="*{project}" class="form-control"
-                          tabindex="9" >
-                    <option value="" >Please select</option >
-                    <option data-th-each="project : ${projects}"
-                            data-th-text="${project.name+'  '+project.mobile}"
-                            data-th-value="${project.id}" >
-                      Please select
-                    </option >
-                  </select >
-                </div >
-              </div >
-            </div >
-            <hr >
             <!--remarks and order print or not-->
             <div class="form-group" >
               <div class="form-row" >
-                <div class="col-md-6" >
-                  <!--order print or not-->
-                  <div class="form-row text-right" >
-                    <div class="col-md-4" >
-                      <label data-th-for="${invoicePrintOrNot}" >Order Print or Not:</label >
-                    </div >
-                    <div class="col-md-8 text-left" >
-                      <div class="custom-control custom-checkbox custom-control-inline "
-                           data-th-each="invoicePrintOrNot,index : ${invoicePrintOrNots}" >
-                        <input class="custom-control-input"
-                               data-th-name="${'invoicePrintOrNot'}"
-                               data-th-value="${invoicePrintOrNot}"
-                               data-th-id="${index.index}+${invoicePrintOrNot}" type="radio"
-                        />
-                        <label class="custom-control-label"
-                               data-th-for="${index.index}+${invoicePrintOrNot}"
-                               data-th-text="${invoicePrintOrNot.invoicePrintOrNot}" > radio
-                        </label >
-                      </div >
-                    </div >
-                  </div >
-                </div >
                 <!--Remarks-->
-                <div class="col-md-6" >
+                <div class="col-md-12" >
                   <div class="form-row text-right" >
                     <div class="col-md-4" >
                       <label for="remarks" >Remarks :</label ></div >

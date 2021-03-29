@@ -1,10 +1,10 @@
 package lk.luminex.asset.order.controller;
 
 
-import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import lk.luminex.asset.order.entity.Order;
+import lk.luminex.asset.order.entity.enums.OrderState;
 import lk.luminex.asset.project.service.ProjectService;
-import lk.luminex.asset.payment.entity.enums.PaymentMethod;
 import lk.luminex.asset.order.service.OrderService;
 import lk.luminex.asset.ledger.controller.LedgerController;
 import lk.luminex.asset.ledger.entity.Ledger;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping( "/invoice" )
+@RequestMapping( "/order" )
 public class OrderController {
   private final OrderService orderService;
   private final ProjectService projectService;
@@ -48,26 +48,24 @@ public class OrderController {
   }
 
   @GetMapping
-  public String invoice(Model model) {
-    model.addAttribute("invoices",
+  public String order(Model model) {
+    model.addAttribute("orders",
                        orderService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
     model.addAttribute("firstOrderMessage", true);
-    return "invoice/invoice";
+    return "order/order";
   }
 
   @GetMapping( "/search" )
-  public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
+  public String orderSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
-    model.addAttribute("invoices",
+    model.addAttribute("orders",
                        orderService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
     model.addAttribute("firstOrderMessage", true);
-    return "invoice/invoice";
+    return "order/order";
   }
 
   private String common(Model model, Order order) {
-    model.addAttribute("invoice", order);
-    model.addAttribute("invoicePrintOrNots", OrderPrintOrNot.values());
-    model.addAttribute("paymentMethods", PaymentMethod.values());
+    model.addAttribute("order", order);
     model.addAttribute("projects", projectService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
         .fromMethodName(LedgerController.class, "findId", "")
@@ -78,20 +76,21 @@ public class OrderController {
         .stream()
         .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
         .collect(Collectors.toList()));
-    return "invoice/addOrder";
+    return "order/addOrder";
   }
 
-  @GetMapping( "/add" )
-  public String getOrderForm(Model model) {
+  @GetMapping( "/add/{id}" )
+  public String getOrderForm(@PathVariable( "id" ) Integer id, Model model) {
+    model.addAttribute("projectDetail", projectService.findById(id));
     return common(model, new Order());
   }
 
   @GetMapping( "/{id}" )
   public String viewDetails(@PathVariable Integer id, Model model) {
     Order order = orderService.findById(id);
-    model.addAttribute("invoiceDetail", order);
+    model.addAttribute("orderDetail", order);
     model.addAttribute("customerDetail", order.getProject());
-    return "invoice/invoice-detail";
+    return "order/order-detail";
   }
 
   @PostMapping
@@ -102,22 +101,23 @@ public class OrderController {
     if ( order.getId() == null ) {
       if ( orderService.findByLastOrder() == null ) {
         //need to generate new one
-        order.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        order.setCode("LCPO" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
 
         //if there is customer in db need to get that customer's code and increase its value
         String previousCode = orderService.findByLastOrder().getCode().substring(4);
-        order.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        order.setCode("LCPO" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
-    order.setOrderValidOrNot(OrderValidOrNot.VALID);
+
     List< OrderLedger > orderLedgers = new ArrayList<>();
-//todo
+
     order.getOrderLedgers().forEach(x -> {
       x.setOrder(order);
       orderLedgers.add(x);
     });
     order.setOrderLedgers(orderLedgers);
+    order.setOrderState(OrderState.PENDING);
     Order saveOrder = orderService.persist(order);
 
     for ( OrderLedger orderLedger : saveOrder.getOrderLedgers() ) {
@@ -135,33 +135,10 @@ public class OrderController {
   @GetMapping( "/remove/{id}" )
   public String removeOrder(@PathVariable( "id" ) Integer id) {
     Order order = orderService.findById(id);
-    order.setOrderValidOrNot(OrderValidOrNot.NOTVALID);
+    order.setOrderState(OrderState.CANCELED);
     orderService.persist(order);
-    return "redirect:/invoice";
+    return "redirect:/order";
   }
 
- /* @GetMapping(value = "/file/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-  public ResponseEntity< InputStreamResource > invoicePrint(@PathVariable("id")Integer id) throws DocumentException {
-    var headers = new HttpHeaders();
-    headers.add("Content-Disposition", "inline; filename=invoice.pdf");
-    InputStreamResource pdfFile = new InputStreamResource(invoiceService.createPDF(id));
-
-    return ResponseEntity
-        .ok()
-        .headers(headers)
-        .contentType(MediaType.APPLICATION_PDF)
-        .body(pdfFile);
-  }
-
-  @GetMapping("/fileView/{id}")
-  public String fileRequest(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
-    model.addAttribute("pdfFile",MvcUriComponentsBuilder
-        .fromMethodName(OrderController.class, "invoicePrint", id)
-        .toUriString());
-    model.addAttribute("redirectUrl",MvcUriComponentsBuilder
-        .fromMethodName(OrderController.class, "getOrderForm")
-        .toUriString());
-    return "invoice/pdfSilentPrint";
-  }*/
 
 }

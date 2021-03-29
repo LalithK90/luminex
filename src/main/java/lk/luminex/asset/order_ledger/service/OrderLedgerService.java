@@ -1,7 +1,7 @@
-package lk.luminex.asset.invoice_ledger.service;
+package lk.luminex.asset.order_ledger.service;
 
-import lk.luminex.asset.invoice_ledger.dao.OrderLedgerDao;
-import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order_ledger.dao.OrderLedgerDao;
+import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

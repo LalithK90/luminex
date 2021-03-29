@@ -7,8 +7,8 @@ import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.order.entity.Order;
 import lk.luminex.asset.payment.entity.enums.PaymentMethod;
 import lk.luminex.asset.order.service.OrderService;
-import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
-import lk.luminex.asset.invoice_ledger.service.OrderLedgerService;
+import lk.luminex.asset.order_ledger.entity.OrderLedger;
+import lk.luminex.asset.order_ledger.service.OrderLedgerService;
 import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.payment.entity.Payment;
 import lk.luminex.asset.payment.service.PaymentService;
@@ -53,11 +53,11 @@ public class ReportController {
 
   private String commonAll(List< Payment > payments, List< Order > orders, Model model, String message,
                            LocalDateTime startDateTime, LocalDateTime endDateTime) {
-    //according to payment type -> invoice
+    //according to payment type -> order
     commonOrders(orders, model);
     //according to payment type -> payment
     commonPayment(payments, model);
-    // invoice count by cashier
+    // order count by cashier
     commonPerCashier(orders, model);
     // payment count by account department
     commonPerAccountUser(payments, model);
@@ -92,31 +92,31 @@ public class ReportController {
                      startDateTime, endDateTime);
   }
   private void commonOrders(List< Order > orders, Model model) {
-   /* // invoice count
-    int invoiceTotalCount = invoices.size();
-    model.addAttribute("invoiceTotalCount", invoiceTotalCount);
+   /* // order count
+    int orderTotalCount = orders.size();
+    model.addAttribute("orderTotalCount", orderTotalCount);
     //|-> card
-    List< Order > invoiceCards =
-        invoices.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
-    int invoiceCardCount = invoiceCards.size();
-    AtomicReference< BigDecimal > invoiceCardAmount = new AtomicReference<>(BigDecimal.ZERO);
-    invoiceCards.forEach(x -> {
-      BigDecimal addAmount = operatorService.addition(invoiceCardAmount.get(), x.getTotalAmount());
-      invoiceCardAmount.set(addAmount);
+    List< Order > orderCards =
+        orders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
+    int orderCardCount = orderCards.size();
+    AtomicReference< BigDecimal > orderCardAmount = new AtomicReference<>(BigDecimal.ZERO);
+    orderCards.forEach(x -> {
+      BigDecimal addAmount = operatorService.addition(orderCardAmount.get(), x.getTotalAmount());
+      orderCardAmount.set(addAmount);
     });
-    model.addAttribute("invoiceCardCount", invoiceCardCount);
-    model.addAttribute("invoiceCardAmount", invoiceCardAmount.get());
+    model.addAttribute("orderCardCount", orderCardCount);
+    model.addAttribute("orderCardAmount", orderCardAmount.get());
     //|-> cash
-    List< Order > invoiceCash =
-        invoices.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
-    int invoiceCashCount = invoiceCash.size();
-    AtomicReference< BigDecimal > invoiceCashAmount = new AtomicReference<>(BigDecimal.ZERO);
-    invoiceCash.forEach(x -> {
-      BigDecimal addAmount = operatorService.addition(invoiceCashAmount.get(), x.getTotalAmount());
-      invoiceCashAmount.set(addAmount);
+    List< Order > orderCash =
+        orders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
+    int orderCashCount = orderCash.size();
+    AtomicReference< BigDecimal > orderCashAmount = new AtomicReference<>(BigDecimal.ZERO);
+    orderCash.forEach(x -> {
+      BigDecimal addAmount = operatorService.addition(orderCashAmount.get(), x.getTotalAmount());
+      orderCashAmount.set(addAmount);
     });
-    model.addAttribute("invoiceCashCount", invoiceCashCount);
-    model.addAttribute("invoiceCashAmount", invoiceCashAmount.get());*/
+    model.addAttribute("orderCashCount", orderCashCount);
+    model.addAttribute("orderCashAmount", orderCashAmount.get());*/
 
   }
 
@@ -200,7 +200,7 @@ public class ReportController {
   }
 
   private void commonPerCashier(List< Order > orders, Model model) {
-    List< NameCount > invoiceByCashierAndTotalAmount = new ArrayList<>();
+    List< NameCount > orderByCashierAndTotalAmount = new ArrayList<>();
 //name, count, total
     HashSet< String > createdByAll = new HashSet<>();
     orders.forEach(x -> createdByAll.add(x.getCreatedBy()));
@@ -218,9 +218,9 @@ public class ReportController {
         cashierTotalCount.set(addAmount);
       });
       nameCount.setTotal(cashierTotalCount.get());
-      invoiceByCashierAndTotalAmount.add(nameCount);
+      orderByCashierAndTotalAmount.add(nameCount);
     });
-    model.addAttribute("invoiceByCashierAndTotalAmount", invoiceByCashierAndTotalAmount);
+    model.addAttribute("orderByCashierAndTotalAmount", orderByCashierAndTotalAmount);
   }
 
   @GetMapping( "/perCashier" )
@@ -293,14 +293,14 @@ public class ReportController {
   }
 
   private void commonPerItem(LocalDateTime startDateTime, LocalDateTime endDateTime, Model model) {
-    HashSet< Item > invoiceItems = new HashSet<>();
+    HashSet< Item > orderItems = new HashSet<>();
 
     List< ParameterCount > itemNameAndItemCount = new ArrayList<>();
 
     List< OrderLedger > orderLedgers = orderLedgerService.findByCreatedAtIsBetween(startDateTime, endDateTime);
-    orderLedgers.forEach(x -> invoiceItems.add(x.getLedger().getItem()));
+    orderLedgers.forEach(x -> orderItems.add(x.getLedger().getItem()));
 
-    invoiceItems.forEach(x -> {
+    orderItems.forEach(x -> {
       ParameterCount parameterCount = new ParameterCount();
       parameterCount.setName(x.getName());
       parameterCount.setCount((int) orderLedgers
