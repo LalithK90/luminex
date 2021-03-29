@@ -1,8 +1,8 @@
-package lk.luminex.asset.order.service;
+package lk.luminex.asset.project_order.service;
 
-import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.order.dao.OrderDao;
-import lk.luminex.asset.order.entity.Order;
+import lk.luminex.asset.project_order.dao.ProjectOrderDao;
+import lk.luminex.asset.project_order.entity.ProjectOrder;
+import lk.luminex.asset.project_order.entity.enums.OrderState;
 import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -10,61 +10,55 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class OrderService implements AbstractService< Order, Integer > {
-  private final OrderDao orderDao;
+public class ProjectOrderService implements AbstractService< ProjectOrder, Integer > {
+  private final ProjectOrderDao projectOrderDao;
 
-  public OrderService(OrderDao orderDao) {
-    this.orderDao = orderDao;
+  public ProjectOrderService(ProjectOrderDao projectOrderDao) {
+    this.projectOrderDao = projectOrderDao;
   }
 
 
-  public List< Order > findAll() {
-    return orderDao.findAll().stream()
-        .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
-        .collect(Collectors.toList());
+  public List< ProjectOrder > findAll() {
+    return projectOrderDao.findAll();
   }
 
-  public Order findById(Integer id) {
-    return orderDao.getOne(id);
+  public ProjectOrder findById(Integer id) {
+    return projectOrderDao.getOne(id);
   }
 
-  public Order persist(Order order) {
-    if ( order.getId() == null ) {
-      order.setLiveDead(LiveDead.ACTIVE);
-    }
-    return orderDao.save(order);
+  public ProjectOrder persist(ProjectOrder projectOrder) {
+    return projectOrderDao.save(projectOrder);
   }
 
   public boolean delete(Integer id) {
-    Order order = orderDao.getOne(id);
-    order.setLiveDead(LiveDead.STOP);
-    orderDao.save(order);
+    ProjectOrder projectOrder = projectOrderDao.getOne(id);
+    projectOrder.setOrderState(OrderState.CANCELED);
+    projectOrderDao.save(projectOrder);
     return false;
   }
 
-  public List< Order > search(Order order) {
+  public List< ProjectOrder > search(ProjectOrder projectOrder) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< Order > orderExample = Example.of(order, matcher);
-    return orderDao.findAll(orderExample);
+    Example< ProjectOrder > orderExample = Example.of(projectOrder, matcher);
+    return projectOrderDao.findAll(orderExample);
 
   }
 
-  public List< Order > findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
-    return orderDao.findByCreatedAtIsBetween(from, to);
+  public List< ProjectOrder > findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
+    return projectOrderDao.findByCreatedAtIsBetween(from, to);
   }
 
-  public Order findByLastOrder() {
-    return orderDao.findFirstByOrderByIdDesc();
+  public ProjectOrder findByLastOrder() {
+    return projectOrderDao.findFirstByOrderByIdDesc();
   }
 
-  public List< Order > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime from, LocalDateTime to, String userName) {
-    return orderDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
+  public List< ProjectOrder > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime from, LocalDateTime to, String userName) {
+    return projectOrderDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
   }
 
 /*  public ByteArrayInputStream createPDF(Integer id) throws DocumentException {

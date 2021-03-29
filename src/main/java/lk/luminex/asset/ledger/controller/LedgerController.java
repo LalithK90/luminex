@@ -46,16 +46,7 @@ public class LedgerController {
     return "ledger/ledger";
   }
 
-  //near expired date
-  @PostMapping( "/expiredDate" )
-  public String expiredDate(@ModelAttribute TwoDate twoDate, Model model) {
-    model.addAttribute("title",
-                       "All items on given date range start at " + twoDate.getStartDate() + " end at " + twoDate.getEndDate());
-    model.addAttribute("ledgers",
-                       ledgerService.findByExpiredDateBetween(twoDate.getStartDate(), twoDate.getEndDate()));
-    model.addAttribute("twoDate", new TwoDate());
-    return "ledger/ledger";
-  }
+
 
   @GetMapping( "/{id}" )
   @ResponseBody

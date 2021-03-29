@@ -156,20 +156,14 @@ public class SupplierItemController {
     purchaseOrderItemLedger.setRop(supplierItem.getItem().getRop());
     purchaseOrderItemLedger.setPrice(supplierItem.getPrice());
 
-    //comparing to learn comparator
-    Comparator< Ledger > ledgerComparator = Comparator.comparing(AuditEntity::getId);
-    List< Ledger > ledgers =
-        ledgerDao.findByItem(supplierItem.getItem())
-            .stream()
-            .sorted(ledgerComparator)
-            .collect(Collectors.toList());
+    Ledger ledger =
+        ledgerDao.findByItem(supplierItem.getItem());
 
-    if ( ledgers.size() != 0 ) {
-      purchaseOrderItemLedger.setAvailableQuantity(ledgers.get(0).getQuantity());
+    if ( ledger != null ) {
+      purchaseOrderItemLedger.setAvailableQuantity(ledger.getQuantity());
     } else {
       purchaseOrderItemLedger.setAvailableQuantity(String.valueOf(0));
     }
-
 
     return purchaseOrderItemLedger;
   }
