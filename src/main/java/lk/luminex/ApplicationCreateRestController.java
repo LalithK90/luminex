@@ -1,7 +1,9 @@
 package lk.luminex;
 
+
 import lk.luminex.asset.common_asset.model.enums.CivilStatus;
 import lk.luminex.asset.common_asset.model.enums.Gender;
+import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.common_asset.model.enums.Title;
 import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.employee.entity.enums.Designation;
@@ -36,7 +38,7 @@ public class ApplicationCreateRestController {
     @GetMapping("/select/user")
     public String saveUser() {
         //roles list start
-        String[] roles = {"ADMIN"};
+        String[] roles = {"ADMIN","PROCUREMENT_MANAGER","SUPERVISOR","MANAGER","HR_MANAGER","ACCOUNT_MANAGER","ENGINNER"};
         for (String s : roles) {
             Role role = new Role();
             role.setRoleName(s);
@@ -50,6 +52,7 @@ public class ApplicationCreateRestController {
         employee.setCallingName("Admin");
         employee.setName("908670000V");
         employee.setMobileOne("0750000000");
+        employee.setLiveDead(LiveDead.STOP);
         employee.setTitle(Title.MR);
         employee.setGender(Gender.MALE);
         employee.setDesignation(Designation.ADMIN);

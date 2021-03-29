@@ -5,17 +5,15 @@
   <meta charset="UTF-8" >
   <title >Thymeleaf Springboot </title >
 </head >
-<body >
-<!--/* Nav bar is included */-->
+<body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-
 <div class="container-fluid" >
   <!--selected ledger items-->
   <div class="form-group" >
     <div class="form-row" >
       <div class="container" >
         <div class="col" >
-          <table class="table table-hover table-striped text-white" id="myTable" >
+          <table class="table table-hover table-striped" id="myTable" >
             <thead >
             <tr >
               <th >Index</th >
@@ -27,19 +25,19 @@
             </tr >
             </thead >
             <tbody >
-            <tr data-th-each="invoiceLedger, index : ${invoiceDetail.invoiceLedgers}">
-              <td data-th-text="${index.count}"></td>
-              <td data-th-text="${invoiceLedger.ledger.item.name}"></td>
-              <td data-th-text="${invoiceLedger.ledger.expiredDate}"></td>
-              <td data-th-text="${invoiceLedger.quantity}"></td>
-              <td data-th-text="${invoiceLedger.sellPrice}"></td>
-              <td class="lineTotal"  data-th-text="${invoiceLedger.lineTotal}"></td>
-            </tr>
+            <tr data-th-each="invoiceLedger, index : ${invoiceDetail.invoiceLedgers}" >
+              <td data-th-text="${index.count}" ></td >
+              <td data-th-text="${invoiceLedger.ledger.item.name}" ></td >
+              <td data-th-text="${invoiceLedger.ledger.expiredDate}" ></td >
+              <td data-th-text="${invoiceLedger.quantity}" ></td >
+              <td data-th-text="${invoiceLedger.sellPrice}" ></td >
+              <td class="lineTotal" data-th-text="${invoiceLedger.lineTotal}" ></td >
+            </tr >
             </tbody >
             <tfoot >
             <tr >
               <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
-              <th ><p id="total"></p>
+              <th ><p id="total" ></p >
               </th >
             </tr >
             </tfoot >
@@ -60,7 +58,7 @@
             <label data-th-for="${paymentMethod}" >Payment Method:</label >
           </div >
           <div class="col-md-8 text-left" >
-            <p data-th-text="${invoiceDetail.paymentMethod.paymentMethod}"> </p>
+            <p data-th-text="${invoiceDetail.paymentMethod.paymentMethod}" ></p >
           </div >
         </div >
       </div >
@@ -71,7 +69,8 @@
             <label class="control-label" for="discountRatio" >Discount Ratio :</label >
           </div >
           <div class="col-md-8" >
-            <p id="discountRatio" data-th-text="${invoiceDetail.discountRatio.name}+${' '}+${invoiceDetail.discountRatio.amount}"> </p>
+            <p id="discountRatio"
+               data-th-text="${invoiceDetail.discountRatio.name}+${' '}+${invoiceDetail.discountRatio.amount}" ></p >
           </div >
         </div >
       </div >
@@ -84,7 +83,7 @@
             <label class="control-label" for="totalAmount" >Total Amount :</label >
           </div >
           <div class="col-md-8" >
-            <p id="totalAmount" data-th-text="${invoiceDetail.totalAmount}"> </p>
+            <p id="totalAmount" data-th-text="${invoiceDetail.totalAmount}" ></p >
           </div >
         </div >
       </div >
@@ -95,7 +94,7 @@
             <label class="control-label" for="discountAmount" >Discount Amount :</label >
           </div >
           <div class="col-md-8" >
-            <p id="discountAmount" data-th-text="${invoiceDetail.discountAmount}"> </p>
+            <p id="discountAmount" data-th-text="${invoiceDetail.discountAmount}" ></p >
           </div >
         </div >
       </div >
@@ -109,7 +108,7 @@
             <label class="control-label" for="amountTendered" >Amount Tendered :</label >
           </div >
           <div class="col-md-8" >
-            <p id="amountTendered" data-th-text="${invoiceDetail.amountTendered}"> </p>
+            <p id="amountTendered" data-th-text="${invoiceDetail.amountTendered}" ></p >
           </div >
         </div >
       </div >
@@ -120,7 +119,7 @@
             <label class="control-label" for="balance" >Balance :</label >
           </div >
           <div class="col-md-8" >
-            <p id="balance" data-th-text="${invoiceDetail.balance}"> </p>
+            <p id="balance" data-th-text="${invoiceDetail.balance}" ></p >
           </div >
         </div >
       </div >
@@ -134,7 +133,7 @@
             <label class="control-label" for="bankName" >Bank Name Tendered :</label >
           </div >
           <div class="col-md-8" >
-            <p id="bankName" data-th-text="${invoiceDetail.bankName}"> </p>
+            <p id="bankName" data-th-text="${invoiceDetail.bankName}" ></p >
           </div >
         </div >
       </div >
@@ -145,7 +144,7 @@
             <label class="control-label" for="cardNumber" >Card Number :</label >
           </div >
           <div class="col-md-8" >
-            <p id="cardNumber" data-th-text="${invoiceDetail.cardNumber}"> </p>
+            <p id="cardNumber" data-th-text="${invoiceDetail.cardNumber}" ></p >
           </div >
         </div >
       </div >
@@ -155,7 +154,7 @@
   <!--project -->
   <div class="form-group" >
     <!--Customers-->
-      <div data-th-replace="~{project/project-detail :: customerDetailsFragment}" ></div >
+    <div data-th-replace="~{project/project-detail :: customerDetailsFragment}" ></div >
   </div >
   <hr >
   <!--remarks and invoice print or not-->
@@ -168,7 +167,7 @@
             <label data-th-for="${invoicePrintOrNot}" >Invoice Print or Not:</label >
           </div >
           <div class="col-md-8 text-left" >
-            <p data-th-text="${invoiceDetail.invoicePrintOrNot.invoicePrintOrNot}"></p>
+            <p data-th-text="${invoiceDetail.invoicePrintOrNot.invoicePrintOrNot}" ></p >
           </div >
         </div >
       </div >
@@ -197,19 +196,21 @@
   </div >
 </div >
 
-
 <!--/* footer is */-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--/* script is included */-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <script >
-  $(document).ready(function (){
-      let total = 0;
-     $(".lineTotal").html().forEach(
-         x=>{total += parseFloat(x);}
-     )
-      $("#total").val(total);
-  });
+    $(document).ready(function () {
+        let total = 0;
+        $(".lineTotal").html().forEach(
+            x => {
+                total += parseFloat(x);
+            }
+        )
+        $("#total").val(total);
+    });
 </script >
+
 </body >
 </html >

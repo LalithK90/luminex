@@ -1,5 +1,6 @@
 package lk.luminex.asset.supplier.controller;
 
+
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.supplier.entity.Supplier;
 import lk.luminex.asset.supplier.service.SupplierService;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/supplier")
-public  class SupplierController implements AbstractController<Supplier, Integer> {
+public  class SupplierController implements AbstractController< Supplier, Integer> {
     private final SupplierService supplierService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
@@ -36,8 +37,8 @@ public  class SupplierController implements AbstractController<Supplier, Integer
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("suppliers", supplierService.findAll().stream()
-            .filter(x-> LiveDead.ACTIVE.equals(x.getLiveDead()))
-            .collect(Collectors.toList()));
+                .filter(x-> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList()));
         return "supplier/supplier";
     }
 
@@ -69,12 +70,12 @@ public  class SupplierController implements AbstractController<Supplier, Integer
 
             if (DBSupplier == null) {
                 //need to generate new one
-                supplier.setCode("SSMS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                supplier.setCode("SSCS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
-                System.out.println("last supplier not null");
+
                 //if there is supplier in db need to get that supplier's code and increase its value
                 String previousCode = DBSupplier.getCode().substring(4);
-                supplier.setCode("SSMS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                supplier.setCode("SSCS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
             //send welcome message and email
             if (supplier.getEmail() != null) {

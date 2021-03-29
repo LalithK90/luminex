@@ -8,6 +8,7 @@ import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.common_asset.model.enums.Title;
 import lk.luminex.asset.employee.entity.enums.Designation;
 import lk.luminex.asset.employee.entity.enums.EmployeeStatus;
+import lk.luminex.asset.project_employee.entity.ProjectEmployee;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -79,6 +81,9 @@ public class Employee extends AuditEntity {
 
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private LocalDate dateOfAssignment;
+
+    @OneToMany(mappedBy = "employee")
+    private List< ProjectEmployee > projectEmployees;
 
 
     @Transient

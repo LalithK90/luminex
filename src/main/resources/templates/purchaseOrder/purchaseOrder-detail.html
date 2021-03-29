@@ -4,9 +4,8 @@
   <meta charset="UTF-8" >
   <title >item-detail</title >
 </head >
-<body >
+<body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-
 <!--heading Area-->
 <div class="container-fluid " >
   <div class="row text-center formManagement border-info" >
@@ -30,12 +29,10 @@
   </div >
 </div >
 <!--details-->
-<div data-th-fragment="purchaseOrderDetailsFragment" class="container-fluid bg-info formBorder" >
+<div data-th-fragment="purchaseOrderDetailsFragment" class="container-fluid  " id="purchaseOrder" >
   <div class="col-sm-12 flex-column " >
     <div class="row" >
-      <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12" data-toggle="collapse"
-         href="#supplierDetail" >Supplier Detail's</a >
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column collapse" id="supplierDetail" >
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " id="supplierDetail" >
         <div class="row " >
           <!--Left Side-->
           <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
@@ -102,6 +99,24 @@
           </div >
           <!--Right Side-->
           <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
+            <!--owner name-->
+            <div class="form-row text-right" >
+              <div class="col-md-4" >
+                <label class="control-label" for="mainCategory" >Form :</label >
+              </div >
+              <div class="col-md-8" >
+                <p >Samarasinghe Super</p >
+              </div >
+            </div >
+            <!--owner address-->
+            <div class="form-row text-right" >
+              <div class="col-md-4" >
+                <label class="control-label" for="subCategory" >Address :</label >
+              </div >
+              <div class="col-md-8" >
+                <p > Ragama Road <br > Kadawatha</p >
+              </div >
+            </div >
             <!--Created By-->
             <div class="form-row text-right" >
               <div class="col-md-4" >
@@ -123,27 +138,6 @@
                    class="display_detail" ></p >
               </div >
             </div >
-            <!--Updated by-->
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="updatedBy" >Updated By :</label >
-              </div >
-              <div class="col-md-8" >
-                <p id="updatedBy" data-th-text="${purchaseOrderDetail.updatedBy}"
-                   class="display_detail" ></p >
-              </div >
-            </div >
-            <!--Updated at-->
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="updatedAt" >Updated At :</label >
-              </div >
-              <div class="col-md-8" >
-                <p id="updatedAt"
-                   data-th-text="${#temporals.format(purchaseOrderDetail.updatedAt, 'dd-MM-yyyy HH:mm')}"
-                   class="display_detail" ></p >
-              </div >
-            </div >
           </div >
         </div >
       </div >
@@ -153,7 +147,7 @@
           <label class="control-label text-capitalize font-weight-bold" >Selected Items :</label >
         </div >
         <div class="container-fluid table-responsive" >
-          <table class="table table-striped " id="myTable" >
+          <table class="table table-striped " >
             <thead >
             <tr >
               <th >Index</th >
@@ -181,12 +175,13 @@
   </div >
 </div >
 <!--Payment History -->
-<div class="form-group col-md-12 col-sm-12 text-center flex-column" data-th-if="${ #lists.isEmpty(purchaseOrderDetail.payments)}">
+<div class="form-group col-md-12 col-sm-12 text-center flex-column"
+     data-th-if="${ #lists.isEmpty(purchaseOrderDetail.payments)}" >
   <div class="form-row" >
     <label class="control-label text-capitalize font-weight-bold" >Payment History :</label >
   </div >
   <div class="container-fluid table-responsive" >
-    <table class="table table-striped " id="myTable" >
+    <table class="table table-striped " >
       <thead >
       <tr >
         <th >Index</th >
@@ -223,6 +218,8 @@
     </div >
   </div >
 </div >
+
+
 <!--Back Button-->
 <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
   <a href="/purchaseOrder" >
@@ -230,11 +227,20 @@
       <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp; &nbsp;Back
     </button >
   </a >
+  <button class="btn btn-success" type="button" id="btnPrintResult" >
+    <i class="fa fa-save" style="font-size: 20px" ></i > Print
+  </button >
 </div >
 
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
 
+    $("#btnPrintResult").click(function () {
+        $("#purchaseOrder").addClass("mt-3 pt-3")
+        printContent("purchaseOrder")
+    })
+</script >
 </body >
 </html >

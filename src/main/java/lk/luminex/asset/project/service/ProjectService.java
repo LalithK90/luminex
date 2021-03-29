@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@CacheConfig( cacheNames = "customer" )
+@CacheConfig( cacheNames = "project" )
 public class ProjectService implements AbstractService< Project, Integer> {
     private final ProjectDao projectDao;
 
@@ -57,7 +57,8 @@ public class ProjectService implements AbstractService< Project, Integer> {
         return projectDao.findAll(customerExample);
     }
 
-    public Project lastCustomer(){
+    public Project lastProject(){
         return projectDao.findFirstByOrderByIdDesc();
     }
+
 }
