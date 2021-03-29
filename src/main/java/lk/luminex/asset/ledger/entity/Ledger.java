@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.good_received_note.entity.GoodReceivedNote;
-import lk.luminex.asset.invoice_ledger.entity.InvoiceLedger;
+import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
 import lk.luminex.asset.item.entity.Item;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -52,7 +52,7 @@ public class Ledger extends AuditEntity {
 
 
     @OneToMany(mappedBy = "ledger")
-    private List< InvoiceLedger > invoiceLedgers;
+    private List< OrderLedger > orderLedgers;
 
 
 }

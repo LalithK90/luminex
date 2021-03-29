@@ -4,11 +4,11 @@ import lk.luminex.asset.common_asset.model.NameCount;
 import lk.luminex.asset.common_asset.model.ParameterCount;
 import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.asset.invoice.entity.Invoice;
-import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
-import lk.luminex.asset.invoice.service.InvoiceService;
-import lk.luminex.asset.invoice_ledger.entity.InvoiceLedger;
-import lk.luminex.asset.invoice_ledger.service.InvoiceLedgerService;
+import lk.luminex.asset.order.entity.Order;
+import lk.luminex.asset.payment.entity.enums.PaymentMethod;
+import lk.luminex.asset.order.service.OrderService;
+import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.invoice_ledger.service.OrderLedgerService;
 import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.payment.entity.Payment;
 import lk.luminex.asset.payment.service.PaymentService;
@@ -36,29 +36,29 @@ import java.util.stream.Collectors;
 @RequestMapping( "/report" )
 public class ReportController {
   private final PaymentService paymentService;
-  private final InvoiceService invoiceService;
+  private final OrderService orderService;
   private final OperatorService operatorService;
   private final DateTimeAgeService dateTimeAgeService;
   private final UserService userService;
-  private final InvoiceLedgerService invoiceLedgerService;
+  private final OrderLedgerService orderLedgerService;
 
-  public ReportController(PaymentService paymentService, InvoiceService invoiceService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, InvoiceLedgerService invoiceLedgerService) {
+  public ReportController(PaymentService paymentService, OrderService orderService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, OrderLedgerService orderLedgerService) {
     this.paymentService = paymentService;
-    this.invoiceService = invoiceService;
+    this.orderService = orderService;
     this.operatorService = operatorService;
     this.dateTimeAgeService = dateTimeAgeService;
     this.userService = userService;
-    this.invoiceLedgerService = invoiceLedgerService;
+    this.orderLedgerService = orderLedgerService;
   }
 
-  private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
+  private String commonAll(List< Payment > payments, List< Order > orders, Model model, String message,
                            LocalDateTime startDateTime, LocalDateTime endDateTime) {
     //according to payment type -> invoice
-    commonInvoices(invoices, model);
+    commonOrders(orders, model);
     //according to payment type -> payment
     commonPayment(payments, model);
     // invoice count by cashier
-    commonPerCashier(invoices, model);
+    commonPerCashier(orders, model);
     // payment count by account department
     commonPerAccountUser(payments, model);
     // item count according to item
@@ -69,34 +69,34 @@ public class ReportController {
   }
 
   @GetMapping( "/manager" )
-  public String getAllInvoiceAndPayment(Model model) {
+  public String getAllOrderAndPayment(Model model) {
     LocalDate localDate = LocalDate.now();
     String message = "This report is belongs to " + localDate.toString();
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
 
     return commonAll(paymentService.findByCreatedAtIsBetween(startDateTime, endDateTime),
-                     invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
+                     orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
 
   }
 
   @PostMapping( "/manager/search" )
-  public String getAllInvoiceAndPaymentBetweenTwoDate(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
+  public String getAllOrderAndPaymentBetweenTwoDate(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
     String message =
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString();
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
     return commonAll(paymentService.findByCreatedAtIsBetween(startDateTime, endDateTime),
-                     invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
+                     orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
   }
-  private void commonInvoices(List< Invoice > invoices, Model model) {
+  private void commonOrders(List< Order > orders, Model model) {
    /* // invoice count
     int invoiceTotalCount = invoices.size();
     model.addAttribute("invoiceTotalCount", invoiceTotalCount);
     //|-> card
-    List< Invoice > invoiceCards =
+    List< Order > invoiceCards =
         invoices.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
     int invoiceCardCount = invoiceCards.size();
     AtomicReference< BigDecimal > invoiceCardAmount = new AtomicReference<>(BigDecimal.ZERO);
@@ -107,7 +107,7 @@ public class ReportController {
     model.addAttribute("invoiceCardCount", invoiceCardCount);
     model.addAttribute("invoiceCardAmount", invoiceCardAmount.get());
     //|-> cash
-    List< Invoice > invoiceCash =
+    List< Order > invoiceCash =
         invoices.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
     int invoiceCashCount = invoiceCash.size();
     AtomicReference< BigDecimal > invoiceCashAmount = new AtomicReference<>(BigDecimal.ZERO);
@@ -127,8 +127,8 @@ public class ReportController {
         "you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
-    commonInvoices(invoiceService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
-                                                                       SecurityContextHolder.getContext().getAuthentication().getName()), model);
+    commonOrders(orderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
+                                                                     SecurityContextHolder.getContext().getAuthentication().getName()), model);
     model.addAttribute("message", message);
     return "report/cashierReport";
   }
@@ -139,8 +139,8 @@ public class ReportController {
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
-    commonInvoices(invoiceService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
-                                                                       SecurityContextHolder.getContext().getAuthentication().getName()), model);
+    commonOrders(orderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
+                                                                     SecurityContextHolder.getContext().getAuthentication().getName()), model);
     model.addAttribute("message", message);
     return "report/cashierReport";
   }
@@ -199,21 +199,21 @@ public class ReportController {
     return "report/paymentReport";
   }
 
-  private void commonPerCashier(List< Invoice > invoices, Model model) {
+  private void commonPerCashier(List< Order > orders, Model model) {
     List< NameCount > invoiceByCashierAndTotalAmount = new ArrayList<>();
 //name, count, total
     HashSet< String > createdByAll = new HashSet<>();
-    invoices.forEach(x -> createdByAll.add(x.getCreatedBy()));
+    orders.forEach(x -> createdByAll.add(x.getCreatedBy()));
 
     createdByAll.forEach(x -> {
       NameCount nameCount = new NameCount();
       Employee employee = userService.findByUserName(x).getEmployee();
       nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
       AtomicReference< BigDecimal > cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
-      List< Invoice > cashierInvoice =
-          invoices.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
-      nameCount.setCount(cashierInvoice.size());
-      cashierInvoice.forEach(a -> {
+      List< Order > cashierOrder =
+          orders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
+      nameCount.setCount(cashierOrder.size());
+      cashierOrder.forEach(a -> {
         BigDecimal addAmount = operatorService.addition(cashierTotalCount.get(), a.getTotalAmount());
         cashierTotalCount.set(addAmount);
       });
@@ -229,7 +229,7 @@ public class ReportController {
     String message = "This report is belongs to " + localDate.toString();
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
-    commonPerCashier(invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+    commonPerCashier(orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
     model.addAttribute("message", message);
     return "report/perCashierReport";
   }
@@ -240,7 +240,7 @@ public class ReportController {
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
-    commonPerCashier(invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+    commonPerCashier(orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
     model.addAttribute("message", message);
     return "report/perCashierReport";
   }
@@ -297,13 +297,13 @@ public class ReportController {
 
     List< ParameterCount > itemNameAndItemCount = new ArrayList<>();
 
-    List< InvoiceLedger > invoiceLedgers = invoiceLedgerService.findByCreatedAtIsBetween(startDateTime, endDateTime);
-    invoiceLedgers.forEach(x -> invoiceItems.add(x.getLedger().getItem()));
+    List< OrderLedger > orderLedgers = orderLedgerService.findByCreatedAtIsBetween(startDateTime, endDateTime);
+    orderLedgers.forEach(x -> invoiceItems.add(x.getLedger().getItem()));
 
     invoiceItems.forEach(x -> {
       ParameterCount parameterCount = new ParameterCount();
       parameterCount.setName(x.getName());
-      parameterCount.setCount((int) invoiceLedgers
+      parameterCount.setCount((int) orderLedgers
           .stream()
           .filter(a -> a.getLedger().getItem().equals(x))
           .count());

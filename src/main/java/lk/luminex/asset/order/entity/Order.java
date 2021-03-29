@@ -1,10 +1,10 @@
-package lk.luminex.asset.invoice.entity;
+package lk.luminex.asset.order.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.invoice.entity.enums.InvoiceValidOrNot;
-import lk.luminex.asset.invoice_ledger.entity.InvoiceLedger;
+import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order.entity.enums.OrderState;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter( "Invoice" )
-public class Invoice extends AuditEntity {
+@JsonFilter( "Order" )
+public class Order extends AuditEntity {
 
   private String remarks;
 
@@ -35,8 +35,9 @@ public class Invoice extends AuditEntity {
   @Column( nullable = false, precision = 10, scale = 2 )
   private BigDecimal totalAmount;
 
-  @Enumerated( EnumType.STRING )
-  private InvoiceValidOrNot invoiceValidOrNot;
+  @Enumerated(EnumType.STRING)
+  private OrderState orderState;
+
 
   @Enumerated( EnumType.STRING )
   private LiveDead liveDead;
@@ -45,7 +46,7 @@ public class Invoice extends AuditEntity {
   private Project project;
 
   @OneToMany( cascade = CascadeType.PERSIST, mappedBy = "invoice" )
-  private List< InvoiceLedger > invoiceLedgers;
+  private List< OrderLedger > orderLedgers;
 
 
 }

@@ -11,18 +11,18 @@
 
 <div class="container" >
   <div class="row" >
-    <!--Custom Invoice search-->
+    <!--Custom Order search-->
     <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
             data-target="#dataTargetCollapse"
             aria-expanded="false" aria-controls="dataTargetCollapse"
-    > Custom Invoice Search
+    > Custom Order Search
     </button >
     <div class="collapse mx-auto" id="dataTargetCollapse" >
       <div class="container-fluid text-center" >
         <div class="row" >
           <div class="col-sm-6 col-sm-offset-3" >
             <h4 class="text-info" ><b > Custom Search</b ></h4 >
-            <form class="form-inline" data-th-action="@{/invoice/search}" data-th-method="POST" >
+            <form class="form-inline" data-th-action="@{/order/search}" data-th-method="POST" >
               <div class="form-group" >
                 <label for="startDate" >FROM :</label >
                 <input class="form-control" id="startDate" name="startDate" type="date" />
@@ -40,12 +40,12 @@
       </div >
     </div >
   </div >
-  <!--There is message about invoice count-->
-  <div class="row" data-th-if="${firstInvoiceMessage}" >
+  <!--There is message about order count-->
+  <div class="row" data-th-if="${firstOrderMessage}" >
     <div class="col-sm-12 mt-4" >
       <div class="form-group text-left col-sm-2" >
-        <a class="btn btn-primary" href="/invoice/add" ><span
-              class="glyphicon glyphicon-list-alt" ></span >&nbsp; New Invoice</a >
+        <a class="btn btn-primary" href="/order/add" ><span
+              class="glyphicon glyphicon-list-alt" ></span >&nbsp; New Order</a >
       </div >
       <div class="alert alert-warning col-sm-8" role="alert" >
         <strong >Following table show details belongs to there month. if you need to more please
@@ -53,12 +53,12 @@
                  using above method</strong >
       </div >
       <div class="form-group text-right col-sm-2" >
-        <a class="btn btn-info" href="/invoice/search" ><span
-              class="glyphicon glyphicon-search" ></span >&nbsp; Search Invoice</a >
+        <a class="btn btn-info" href="/order/search" ><span
+              class="glyphicon glyphicon-search" ></span >&nbsp; Search Order</a >
       </div >
     </div >
   </div >
-  <!--List all invoice-->
+  <!--List all order-->
   <div class="row" >
     <div class="table-responsive mt-4" >
       <table class="table table-hover" id="myTable" >
@@ -68,24 +68,24 @@
           <th >Number</th >
           <th > Amount</th >
           <th > Created By</th >
-          <th > Date of Invoice</th >
+          <th > Date of Order</th >
           <th >View</th >
-          <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Invoice
+          <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Order
           </th >
         </tr >
         </thead >
         <tbody >
-        <tr data-th-each="invoice, rowCount : ${invoices}" >
+        <tr data-th-each="order, rowCount : ${orders}" >
           <th data-th-text="${rowCount.count}" ></th >
-          <th data-th-text="${invoice.code}" ></th >
-          <th data-th-text="${invoice.totalAmount}" ></th >
-          <th data-th-text="${invoice.createdBy}" ></th >
-          <th data-th-text="${{invoice.createdAt}}" ></th >
-          <th ><a class="btn btn-success" data-th-href="${'/invoice/'+ invoice.id}" ><i
+          <th data-th-text="${order.code}" ></th >
+          <th data-th-text="${order.totalAmount}" ></th >
+          <th data-th-text="${order.createdBy}" ></th >
+          <th data-th-text="${{order.createdAt}}" ></th >
+          <th ><a class="btn btn-success" data-th-href="${'/order/'+ order.id}" ><i
                 class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
           </th >
           <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
-                class="btn btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}" >Delete</a >
+                class="btn btn-danger" data-th-href="${'/order/remove/' + order.id}" >Delete</a >
           </th >
         </tr >
         </tbody >

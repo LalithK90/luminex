@@ -1,83 +1,74 @@
-package lk.luminex.asset.invoice.service;
+package lk.luminex.asset.order.service;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.invoice.dao.InvoiceDao;
-import lk.luminex.asset.invoice.entity.Invoice;
-import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
+import lk.luminex.asset.order.dao.OrderDao;
+import lk.luminex.asset.order.entity.Order;
 import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class InvoiceService implements AbstractService< Invoice, Integer > {
-  private final InvoiceDao invoiceDao;
+public class OrderService implements AbstractService< Order, Integer > {
+  private final OrderDao orderDao;
 
-  public InvoiceService(InvoiceDao invoiceDao) {
-    this.invoiceDao = invoiceDao;
+  public OrderService(OrderDao orderDao) {
+    this.orderDao = orderDao;
   }
 
 
-  public List< Invoice > findAll() {
-    return invoiceDao.findAll().stream()
+  public List< Order > findAll() {
+    return orderDao.findAll().stream()
         .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
         .collect(Collectors.toList());
   }
 
-  public Invoice findById(Integer id) {
-    return invoiceDao.getOne(id);
+  public Order findById(Integer id) {
+    return orderDao.getOne(id);
   }
 
-  public Invoice persist(Invoice invoice) {
-    if ( invoice.getId() == null ) {
-      invoice.setLiveDead(LiveDead.ACTIVE);
+  public Order persist(Order order) {
+    if ( order.getId() == null ) {
+      order.setLiveDead(LiveDead.ACTIVE);
     }
-    return invoiceDao.save(invoice);
+    return orderDao.save(order);
   }
 
   public boolean delete(Integer id) {
-    Invoice invoice = invoiceDao.getOne(id);
-    invoice.setLiveDead(LiveDead.STOP);
-    invoiceDao.save(invoice);
+    Order order = orderDao.getOne(id);
+    order.setLiveDead(LiveDead.STOP);
+    orderDao.save(order);
     return false;
   }
 
-  public List< Invoice > search(Invoice invoice) {
+  public List< Order > search(Order order) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< Invoice > invoiceExample = Example.of(invoice, matcher);
-    return invoiceDao.findAll(invoiceExample);
+    Example< Order > invoiceExample = Example.of(order, matcher);
+    return orderDao.findAll(invoiceExample);
 
   }
 
-  public List< Invoice > findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
-    return invoiceDao.findByCreatedAtIsBetween(from, to);
+  public List< Order > findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
+    return orderDao.findByCreatedAtIsBetween(from, to);
   }
 
-  public Invoice findByLastInvoice() {
-    return invoiceDao.findFirstByOrderByIdDesc();
+  public Order findByLastOrder() {
+    return orderDao.findFirstByOrderByIdDesc();
   }
 
-  public List< Invoice > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime from, LocalDateTime to, String userName) {
-    return invoiceDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
+  public List< Order > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime from, LocalDateTime to, String userName) {
+    return orderDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
   }
 
 /*  public ByteArrayInputStream createPDF(Integer id) throws DocumentException {
-    Invoice invoice = invoiceDao.getOne(id);
+    Order invoice = invoiceDao.getOne(id);
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Document document = new Document(PageSize.A4, 15, 15, 45, 30);
@@ -105,7 +96,7 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     pdfCellBodyCommonStyle(cell);
     mainTable.addCell(cell);
 
-    PdfPCell cell1 = new PdfPCell(new Phrase("Invoice Number : " + invoice.getCode(), secondaryFont));
+    PdfPCell cell1 = new PdfPCell(new Phrase("Order Number : " + invoice.getCode(), secondaryFont));
     pdfCellBodyCommonStyle(cell1);
     mainTable.addCell(cell1);
 
@@ -149,24 +140,24 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     pdfCellHeaderCommonStyle(lineTotalHeader);
     ledgerItemDisplay.addCell(lineTotalHeader);
 
-    for ( int i = 0; i < invoice.getInvoiceLedgers().size(); i++ ) {
+    for ( int i = 0; i < invoice.getOrderLedgers().size(); i++ ) {
       PdfPCell index = new PdfPCell(new Paragraph(Integer.toString(i), tableHeader));
       pdfCellBodyCommonStyle(index);
       ledgerItemDisplay.addCell(index);
 
-      PdfPCell itemName = new PdfPCell(new Paragraph(invoice.getInvoiceLedgers().get(i).getLedger().getItem().getName(), tableHeader));
+      PdfPCell itemName = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLedger().getItem().getName(), tableHeader));
       pdfCellBodyCommonStyle(itemName);
       ledgerItemDisplay.addCell(itemName);
 
-      PdfPCell unitPrice = new PdfPCell(new Paragraph(invoice.getInvoiceLedgers().get(i).getLedger().getSellPrice().toString(), tableHeader));
+      PdfPCell unitPrice = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLedger().getSellPrice().toString(), tableHeader));
       pdfCellBodyCommonStyle(unitPrice);
       ledgerItemDisplay.addCell(unitPrice);
 
-      PdfPCell quantity = new PdfPCell(new Paragraph(invoice.getInvoiceLedgers().get(i).getQuantity(), tableHeader));
+      PdfPCell quantity = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getQuantity(), tableHeader));
       pdfCellBodyCommonStyle(quantity);
       ledgerItemDisplay.addCell(quantity);
 
-      PdfPCell lineTotal = new PdfPCell(new Paragraph(invoice.getInvoiceLedgers().get(i).getLineTotal().toString(), tableHeader));
+      PdfPCell lineTotal = new PdfPCell(new Paragraph(invoice.getOrderLedgers().get(i).getLineTotal().toString(), tableHeader));
       pdfCellBodyCommonStyle(lineTotal);
       ledgerItemDisplay.addCell(lineTotal);
     }

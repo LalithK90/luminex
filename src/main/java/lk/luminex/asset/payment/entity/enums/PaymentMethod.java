@@ -1,4 +1,4 @@
-package lk.luminex.asset.invoice.entity.enums;
+package lk.luminex.asset.payment.entity.enums;
 
 
 import lombok.AllArgsConstructor;

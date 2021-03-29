@@ -25,13 +25,13 @@
             </tr >
             </thead >
             <tbody >
-            <tr data-th-each="invoiceLedger, index : ${invoiceDetail.invoiceLedgers}" >
+            <tr data-th-each="orderLedger, index : ${invoiceDetail.orderLedgers}" >
               <td data-th-text="${index.count}" ></td >
-              <td data-th-text="${invoiceLedger.ledger.item.name}" ></td >
-              <td data-th-text="${invoiceLedger.ledger.expiredDate}" ></td >
-              <td data-th-text="${invoiceLedger.quantity}" ></td >
-              <td data-th-text="${invoiceLedger.sellPrice}" ></td >
-              <td class="lineTotal" data-th-text="${invoiceLedger.lineTotal}" ></td >
+              <td data-th-text="${orderLedger.ledger.item.name}" ></td >
+              <td data-th-text="${orderLedger.ledger.expiredDate}" ></td >
+              <td data-th-text="${orderLedger.quantity}" ></td >
+              <td data-th-text="${orderLedger.sellPrice}" ></td >
+              <td class="lineTotal" data-th-text="${orderLedger.lineTotal}" ></td >
             </tr >
             </tbody >
             <tfoot >
@@ -157,14 +157,14 @@
     <div data-th-replace="~{project/project-detail :: customerDetailsFragment}" ></div >
   </div >
   <hr >
-  <!--remarks and invoice print or not-->
+  <!--remarks and order print or not-->
   <div class="form-group" >
     <div class="form-row" >
       <div class="col-md-6" >
-        <!--invoice print or not-->
+        <!--order print or not-->
         <div class="form-row text-right" >
           <div class="col-md-4" >
-            <label data-th-for="${invoicePrintOrNot}" >Invoice Print or Not:</label >
+            <label data-th-for="${invoicePrintOrNot}" >Order Print or Not:</label >
           </div >
           <div class="col-md-8 text-left" >
             <p data-th-text="${invoiceDetail.invoicePrintOrNot.invoicePrintOrNot}" ></p >
@@ -189,7 +189,7 @@
     <!--Button-->
     <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
       <!--Back Button-->
-      <a class="btn btn-dark" href="/invoice" tabindex="14" >
+      <a class="btn btn-dark" href="/order" tabindex="14" >
         <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
       </a >
     </div >

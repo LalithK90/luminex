@@ -1,31 +1,23 @@
-package lk.luminex.asset.invoice.controller;
+package lk.luminex.asset.order.controller;
 
 
-import com.itextpdf.text.DocumentException;
+import lk.luminex.asset.invoice_ledger.entity.OrderLedger;
+import lk.luminex.asset.order.entity.Order;
 import lk.luminex.asset.project.service.ProjectService;
-import lk.luminex.asset.invoice.entity.Invoice;
-import lk.luminex.asset.invoice.entity.enums.InvoicePrintOrNot;
-import lk.luminex.asset.invoice.entity.enums.InvoiceValidOrNot;
-import lk.luminex.asset.invoice.entity.enums.PaymentMethod;
-import lk.luminex.asset.invoice.service.InvoiceService;
-import lk.luminex.asset.invoice_ledger.entity.InvoiceLedger;
+import lk.luminex.asset.payment.entity.enums.PaymentMethod;
+import lk.luminex.asset.order.service.OrderService;
 import lk.luminex.asset.ledger.controller.LedgerController;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.asset.ledger.service.LedgerService;
 import lk.luminex.util.service.DateTimeAgeService;
 import lk.luminex.util.service.MakeAutoGenerateNumberService;
 import lk.luminex.util.service.TwilioMessageService;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,20 +26,20 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping( "/invoice" )
-public class InvoiceController {
-  private final InvoiceService invoiceService;
+public class OrderController {
+  private final OrderService orderService;
   private final ProjectService projectService;
   private final LedgerService ledgerService;
   private final DateTimeAgeService dateTimeAgeService;
   private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
   private final TwilioMessageService twilioMessageService;
 
-  public InvoiceController(InvoiceService invoiceService, ProjectService projectService,
-                           LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
+  public OrderController(OrderService orderService, ProjectService projectService,
+                         LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
 
-                           MakeAutoGenerateNumberService makeAutoGenerateNumberService,
-                           TwilioMessageService twilioMessageService) {
-    this.invoiceService = invoiceService;
+                         MakeAutoGenerateNumberService makeAutoGenerateNumberService,
+                         TwilioMessageService twilioMessageService) {
+    this.orderService = orderService;
     this.projectService = projectService;
     this.ledgerService = ledgerService;
     this.dateTimeAgeService = dateTimeAgeService;
@@ -58,8 +50,8 @@ public class InvoiceController {
   @GetMapping
   public String invoice(Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
-    model.addAttribute("firstInvoiceMessage", true);
+                       orderService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
+    model.addAttribute("firstOrderMessage", true);
     return "invoice/invoice";
   }
 
@@ -67,14 +59,14 @@ public class InvoiceController {
   public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
-    model.addAttribute("firstInvoiceMessage", true);
+                       orderService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+    model.addAttribute("firstOrderMessage", true);
     return "invoice/invoice";
   }
 
-  private String common(Model model, Invoice invoice) {
-    model.addAttribute("invoice", invoice);
-    model.addAttribute("invoicePrintOrNots", InvoicePrintOrNot.values());
+  private String common(Model model, Order order) {
+    model.addAttribute("invoice", order);
+    model.addAttribute("invoicePrintOrNots", OrderPrintOrNot.values());
     model.addAttribute("paymentMethods", PaymentMethod.values());
     model.addAttribute("projects", projectService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
@@ -86,51 +78,51 @@ public class InvoiceController {
         .stream()
         .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
         .collect(Collectors.toList()));
-    return "invoice/addInvoice";
+    return "invoice/addOrder";
   }
 
   @GetMapping( "/add" )
-  public String getInvoiceForm(Model model) {
-    return common(model, new Invoice());
+  public String getOrderForm(Model model) {
+    return common(model, new Order());
   }
 
   @GetMapping( "/{id}" )
   public String viewDetails(@PathVariable Integer id, Model model) {
-    Invoice invoice = invoiceService.findById(id);
-    model.addAttribute("invoiceDetail", invoice);
-    model.addAttribute("customerDetail", invoice.getProject());
+    Order order = orderService.findById(id);
+    model.addAttribute("invoiceDetail", order);
+    model.addAttribute("customerDetail", order.getProject());
     return "invoice/invoice-detail";
   }
 
   @PostMapping
-  public String persistInvoice(@Valid @ModelAttribute Invoice invoice, BindingResult bindingResult, Model model) {
+  public String persistOrder(@Valid @ModelAttribute Order order, BindingResult bindingResult, Model model) {
     if ( bindingResult.hasErrors() ) {
-      return common(model, invoice);
+      return common(model, order);
     }
-    if ( invoice.getId() == null ) {
-      if ( invoiceService.findByLastInvoice() == null ) {
+    if ( order.getId() == null ) {
+      if ( orderService.findByLastOrder() == null ) {
         //need to generate new one
-        invoice.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        order.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
 
         //if there is customer in db need to get that customer's code and increase its value
-        String previousCode = invoiceService.findByLastInvoice().getCode().substring(4);
-        invoice.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        String previousCode = orderService.findByLastOrder().getCode().substring(4);
+        order.setCode("SSCI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
-    invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
-    List< InvoiceLedger > invoiceLedgers = new ArrayList<>();
+    order.setOrderValidOrNot(OrderValidOrNot.VALID);
+    List< OrderLedger > orderLedgers = new ArrayList<>();
 //todo
-    invoice.getInvoiceLedgers().forEach(x -> {
-      x.setInvoice(invoice);
-      invoiceLedgers.add(x);
+    order.getOrderLedgers().forEach(x -> {
+      x.setOrder(order);
+      orderLedgers.add(x);
     });
-    invoice.setInvoiceLedgers(invoiceLedgers);
-    Invoice saveInvoice = invoiceService.persist(invoice);
+    order.setOrderLedgers(orderLedgers);
+    Order saveOrder = orderService.persist(order);
 
-    for ( InvoiceLedger invoiceLedger : saveInvoice.getInvoiceLedgers() ) {
-      Ledger ledger = ledgerService.findById(invoiceLedger.getLedger().getId());
-      String quantity = invoiceLedger.getQuantity();
+    for ( OrderLedger orderLedger : saveOrder.getOrderLedgers() ) {
+      Ledger ledger = ledgerService.findById(orderLedger.getLedger().getId());
+      String quantity = orderLedger.getQuantity();
       int availableQuantity = Integer.parseInt(ledger.getQuantity());
       int sellQuantity = Integer.parseInt(quantity);
       ledger.setQuantity(String.valueOf(availableQuantity - sellQuantity));
@@ -141,10 +133,10 @@ public class InvoiceController {
 
 
   @GetMapping( "/remove/{id}" )
-  public String removeInvoice(@PathVariable( "id" ) Integer id) {
-    Invoice invoice = invoiceService.findById(id);
-    invoice.setInvoiceValidOrNot(InvoiceValidOrNot.NOTVALID);
-    invoiceService.persist(invoice);
+  public String removeOrder(@PathVariable( "id" ) Integer id) {
+    Order order = orderService.findById(id);
+    order.setOrderValidOrNot(OrderValidOrNot.NOTVALID);
+    orderService.persist(order);
     return "redirect:/invoice";
   }
 
@@ -164,10 +156,10 @@ public class InvoiceController {
   @GetMapping("/fileView/{id}")
   public String fileRequest(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
     model.addAttribute("pdfFile",MvcUriComponentsBuilder
-        .fromMethodName(InvoiceController.class, "invoicePrint", id)
+        .fromMethodName(OrderController.class, "invoicePrint", id)
         .toUriString());
     model.addAttribute("redirectUrl",MvcUriComponentsBuilder
-        .fromMethodName(InvoiceController.class, "getInvoiceForm")
+        .fromMethodName(OrderController.class, "getOrderForm")
         .toUriString());
     return "invoice/pdfSilentPrint";
   }*/
