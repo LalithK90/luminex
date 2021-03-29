@@ -18,7 +18,7 @@
     <div class="col" >
       <h2 class="text-light text-center" >
         <strong >
-          <span data-th-text="${Add New Project'}" ></span >
+          <span data-th-text="${'Add New Project'}" ></span >
         </strong >
       </h2 >
     </div >
@@ -68,15 +68,21 @@
         <!--projectStatus-->
         <div class="form-row text-right" >
           <div class="col-md-4" >
-            <label class="control-label" for="employee" >Employee :</label >
+            <label class="control-label" for="gender" >Project Status :</label >
           </div >
           <div class="col-md-8" >
-            <select id="employee"  data-th-field="*{projectStatus}">
-              <option value="" selected > Please Select</option >
-              <option data-th-each="projectStatus : ${projectStatuses}"
-                      data-th-text="${projectStatus.projectStatus}"
-                      data-th-value="${projectStatus}" ></option >
-            </select >
+            <div class="custom-control custom-checkbox custom-control-inline "
+                 data-th-each="projectStatus,index : ${projectStatuses}" >
+              <input class="custom-control-input gender" required
+                     data-th-name="${'projectStatus'}"
+                     data-th-value="${projectStatus}"
+                     data-th-id="${index.index}+${projectStatus}" type="radio"
+                     data-th-checked="${projectStatus==projectStatus}" />
+              <label class="custom-control-label"
+                     data-th-for="${index.index}+${projectStatus}"
+                     data-th-text="${projectStatus.projectStatus}" > radio
+              </label >
+            </div >
           </div >
         </div >
       </div >

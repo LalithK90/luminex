@@ -101,18 +101,6 @@
                           data-th-if="${#fields.hasErrors('rop')}" class="error" >Error ROP</span >
                   </div >
                 </div >
-                <!--Sell Price-->
-                <div class="form-row text-right" >
-                  <div class="col-md-4" >
-                    <label class="control-label" for="sellPrice" >Sell Price :</label >
-                  </div >
-                  <div class="col-md-4" >
-                    <input id="sellPrice" data-th-field="*{sellPrice}" class="form-control" tabindex="8" type="number"
-                           required />
-                    <span data-th-errors="*{sellPrice}"
-                          data-th-if="${#fields.hasErrors('sellPrice')}" class="error" >Error ROP</span >
-                  </div >
-                </div >
                 <!--Created by and created at-->
                 <div id="updateStatus" data-th-if="${addStatus==false}" >
                   <!--hidden url -->

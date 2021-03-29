@@ -6,174 +6,174 @@
 </head >
 <body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-      <!--heading Area-->
-      <div class="container-fluid " >
-        <div class="row text-center formManagement border-info" >
-          <!--ViewList Button-->
-          <div class="col" >
-            <a href="/project" class="btn btn-primary" tabindex="1" >
-              <i class="fa fa-list" style="font-size: 20px" ></i >&nbsp;&nbsp;View List
-            </a >
+<!--heading Area-->
+<div class="container-fluid " >
+  <div class="row text-center formManagement border-info" >
+    <!--ViewList Button-->
+    <div class="col" >
+      <a href="/project" class="btn btn-primary" tabindex="1" >
+        <i class="fa fa-list" style="font-size: 20px" ></i >&nbsp;&nbsp;View List
+      </a >
+    </div >
+    <!--Project Name-->
+    <div class="col" >
+      <h2 class="text-light text-center" >
+        <strong >
+          <span data-th-text="${projectDetail.name}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <!--Project Name-->
+    <div class="col" >
+      <h2 class="text-light text-center" >
+        <strong >
+          <span data-th-text="${projectDetail.projectStatus.projectStatus}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <!--Home Button-->
+    <div class="col" >
+      <a class="btn btn-primary" href="/home" tabindex="2" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+<!--details-->
+<div data-th-fragment="projectDetailsFragment" class="container-fluid " >
+  <div class="col-sm-12 flex-column " >
+    <div class="row" >
+      <!--Left Side-->
+      <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
+        <!--id-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="id" >ID :</label >
           </div >
-          <!--Customer Name-->
-          <div class="col" >
-            <h2 class="text-light text-center" >
-              <strong >
-                <span data-th-text="${projectDetail.name}" ></span >
-              </strong >
-            </h2 >
+          <div class="col-md-8" >
+            <p id="id" data-th-text="${projectDetail.id}" class="display_detail" ></p >
           </div >
-          <!--Customer Name-->
-          <div class="col" >
-            <h2 class="text-light text-center" >
-              <strong >
-                <span data-th-text="${projectDetail.projectStatus.projectStatus}" ></span >
-              </strong >
-            </h2 >
+        </div >
+        <!--Code-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="departmentIdNumber" >Project Code :</label >
           </div >
-          <!--Home Button-->
-          <div class="col" >
-            <a class="btn btn-primary" href="/home" tabindex="2" >
-              <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp;&nbsp;Home
-            </a >
+          <div class="col-md-8" >
+            <p id="departmentIdNumber" data-th-text="${projectDetail.code}" class="display_detail" ></p ></div >
+        </div >
+        <!--Name-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="name" >Name :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="name" data-th-text="${projectDetail.name}"
+               class="display_detail" ></p >
+          </div >
+        </div >
+        <!--Address-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="address" >Address :</label >
+          </div >
+          <div class="col-md-8 text-left" >
+            <p id="address" class="display_detail " data-th-utext="${projectDetail.address}" ></p >
           </div >
         </div >
       </div >
-      <!--details-->
-      <div data-th-fragment="projectDetailsFragment" class="container-fluid " >
-        <div class="col-sm-12 flex-column " >
-          <div class="row" >
-            <!--Left Side-->
-            <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
-              <!--id-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="id" >ID :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="id" data-th-text="${projectDetail.id}" class="display_detail" ></p >
-                </div >
-              </div >
-              <!--Code-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="departmentIdNumber" >Customer Code :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="departmentIdNumber" data-th-text="${projectDetail.code}" class="display_detail" ></p ></div >
-              </div >
-              <!--Name-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="name" >Name :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="name" data-th-text="${projectDetail.name}"
-                     class="display_detail" ></p >
-                </div >
-              </div >
-              <!--Address-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="address" >Address :</label >
-                </div >
-                <div class="col-md-8 text-left" >
-                  <p id="address" class="display_detail " data-th-utext="${projectDetail.address}" ></p >
-                </div >
-              </div >
-            </div >
-            <!--Right Side-->
-            <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
-              <!--Created By-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="createdBy" >Created By :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="createdBy" data-th-text="${projectDetail.createdBy}" class="display_detail" ></p >
-                </div >
-              </div >
-              <!--Created at-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="createdAt" >Created At :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="createdAt" data-th-text="${#temporals.format(projectDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
-                     class="display_detail" ></p >
-                </div >
-              </div >
-              <!--Updated by-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="updatedBy" >Updated By :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="updatedBy" data-th-text="${projectDetail.updatedBy}" class="display_detail" ></p >
-                </div >
-              </div >
-              <!--Updated at-->
-              <div class="form-row text-right" >
-                <div class="col-md-4" >
-                  <label class="control-label" for="updatedAt" >Updated At :</label >
-                </div >
-                <div class="col-md-8" >
-                  <p id="updatedAt" data-th-text="${{projectDetail.updatedAt}}" class="display_detail" ></p >
-                </div >
-              </div >
-            </div >
+      <!--Right Side-->
+      <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
+        <!--Created By-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="createdBy" >Created By :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="createdBy" data-th-text="${projectDetail.createdBy}" class="display_detail" ></p >
+          </div >
+        </div >
+        <!--Created at-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="createdAt" >Created At :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="createdAt" data-th-text="${#temporals.format(projectDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+               class="display_detail" ></p >
+          </div >
+        </div >
+        <!--Updated by-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="updatedBy" >Updated By :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="updatedBy" data-th-text="${projectDetail.updatedBy}" class="display_detail" ></p >
+          </div >
+        </div >
+        <!--Updated at-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="updatedAt" >Updated At :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="updatedAt" data-th-text="${{projectDetail.updatedAt}}" class="display_detail" ></p >
           </div >
         </div >
       </div >
-      <!--Project Employee-->
-      <div class="container-fluid" >
-        <div class="container" >
-          <div class="col text-center" >
-            <h3 >All employee in this project </h3 >
-          </div >
-          <div class="col" >
-            <a data-th-href="${'/projectEmployee/add/' + projectDetail.id}"
-               class="btn btn-success btn-sm" ><i class="fa fa-plus"
-                                                  style="font-size: 15px" ></i >&nbsp;Add Employee</a >
-          </div >
-        </div >
-        <div class="col" data-th-if="${not #lists.isEmpty(projectDetail.projectEmployees)}" >
-          <table class="table table-hover table-striped" id="myTable" >
-            <thead >
-            <tr >
-              <th > Index</th >
-              <th > Employee Id</th >
-              <th > Calling Name</th >
-              <th > Mobile</th >
-              <th > Designation</th >
-              <th > Status</th >
-            </tr >
-            </thead >
-            <tbody >
-            <tr data-th-each="employee, rowCount : ${projectDetail.projectEmployees}" >
-              <th data-th-text="${rowCount.count}" ></th >
-              <th data-th-text="${employee.code}" ></th >
-              <th data-th-text="${employee.callingName}" ></th >
-              <th data-th-text="${employee.mobileOne}" ></th >
-              <th data-th-text="${employee.designation.designation}" ></th >
-              <th data-th-text="${employee.employeeStatus.employeeStatus}" ></th >
-            </tr >
-            </tbody >
-          </table >
-        </div >
-      </div >
-      <!--Back Button-->
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-        <a href="/project" >
-          <button class="btn btn-dark" type="button" tabindex="3" >
-            <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp; &nbsp;Back
-          </button >
-        </a >
-      </div >
+    </div >
+  </div >
+</div >
+<!--Project Employee-->
+<div class="container-fluid" >
+  <div class="container" >
+    <div class="col text-center" >
+      <h3 >All employee in this project </h3 >
+    </div >
+    <div class="col" >
+      <a data-th-href="${'/projectEmployee/add/' + projectDetail.id}"
+         class="btn btn-success btn-sm" ><i class="fa fa-plus"
+                                            style="font-size: 15px" ></i >&nbsp;Add Employee</a >
+    </div >
+  </div >
+  <div class="col" data-th-if="${not #lists.isEmpty(projectDetail.projectEmployees)}" >
+    <table class="table table-hover table-striped" id="myTable" >
+      <thead >
+      <tr >
+        <th > Index</th >
+        <th > Employee Id</th >
+        <th > Calling Name</th >
+        <th > Mobile</th >
+        <th > Designation</th >
+        <th > Status</th >
+      </tr >
+      </thead >
+      <tbody >
+      <tr data-th-each="employee, rowCount : ${projectDetail.projectEmployees}" >
+        <th data-th-text="${rowCount.count}" ></th >
+        <th data-th-text="${employee.code}" ></th >
+        <th data-th-text="${employee.callingName}" ></th >
+        <th data-th-text="${employee.mobileOne}" ></th >
+        <th data-th-text="${employee.designation.designation}" ></th >
+        <th data-th-text="${employee.employeeStatus.employeeStatus}" ></th >
+      </tr >
+      </tbody >
+    </table >
+  </div >
+</div >
+<!--Back Button-->
+<div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+  <a href="/project" >
+    <button class="btn btn-dark" type="button" tabindex="3" >
+      <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp; &nbsp;Back
+    </button >
+  </a >
+</div >
 
-    <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
-    <!--script include-->
-    <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 
 </body >
 </html >

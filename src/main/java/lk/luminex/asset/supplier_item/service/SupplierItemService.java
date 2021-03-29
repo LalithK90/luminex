@@ -39,7 +39,6 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
   public SupplierItem persist(SupplierItem supplierItem) {
     //if item is new supplier should be save as currently buying item
     if ( supplierItem.getId() == null ) {
-      supplierItem.setLiveDead(LiveDead.ACTIVE);
       supplierItem.setItemSupplierStatus(ItemSupplierStatus.CURRENTLY_BUYING);
     }
     //if item buying price was changed (increase/decrease) by supplier,
@@ -60,7 +59,7 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
 
   public boolean delete(Integer id) {
     SupplierItem supplierItem = supplierItemDao.getOne(id);
-    supplierItem.setLiveDead(LiveDead.STOP);
+    supplierItem.setItemSupplierStatus(ItemSupplierStatus.STOPPED);
     supplierItemDao.save(supplierItem);
     return false;
   }
