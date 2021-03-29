@@ -4,9 +4,9 @@ import lk.luminex.asset.common_asset.model.NameCount;
 import lk.luminex.asset.common_asset.model.ParameterCount;
 import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.employee.entity.Employee;
-import lk.luminex.asset.order.entity.Order;
+import lk.luminex.asset.project_order.entity.ProjectOrder;
 import lk.luminex.asset.payment.entity.enums.PaymentMethod;
-import lk.luminex.asset.order.service.OrderService;
+import lk.luminex.asset.project_order.service.ProjectOrderService;
 import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import lk.luminex.asset.order_ledger.service.OrderLedgerService;
 import lk.luminex.asset.item.entity.Item;
@@ -36,29 +36,29 @@ import java.util.stream.Collectors;
 @RequestMapping( "/report" )
 public class ReportController {
   private final PaymentService paymentService;
-  private final OrderService orderService;
+  private final ProjectOrderService projectOrderService;
   private final OperatorService operatorService;
   private final DateTimeAgeService dateTimeAgeService;
   private final UserService userService;
   private final OrderLedgerService orderLedgerService;
 
-  public ReportController(PaymentService paymentService, OrderService orderService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, OrderLedgerService orderLedgerService) {
+  public ReportController(PaymentService paymentService, ProjectOrderService projectOrderService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, OrderLedgerService orderLedgerService) {
     this.paymentService = paymentService;
-    this.orderService = orderService;
+    this.projectOrderService = projectOrderService;
     this.operatorService = operatorService;
     this.dateTimeAgeService = dateTimeAgeService;
     this.userService = userService;
     this.orderLedgerService = orderLedgerService;
   }
 
-  private String commonAll(List< Payment > payments, List< Order > orders, Model model, String message,
+  private String commonAll(List< Payment > payments, List< ProjectOrder > projectOrders, Model model, String message,
                            LocalDateTime startDateTime, LocalDateTime endDateTime) {
     //according to payment type -> order
-    commonOrders(orders, model);
+    commonOrders(projectOrders, model);
     //according to payment type -> payment
     commonPayment(payments, model);
     // order count by cashier
-    commonPerCashier(orders, model);
+/*    commonPerCashier(projectOrders, model);*/
     // payment count by account department
     commonPerAccountUser(payments, model);
     // item count according to item
@@ -76,7 +76,7 @@ public class ReportController {
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
 
     return commonAll(paymentService.findByCreatedAtIsBetween(startDateTime, endDateTime),
-                     orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
+                     projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
 
   }
@@ -88,16 +88,16 @@ public class ReportController {
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
     return commonAll(paymentService.findByCreatedAtIsBetween(startDateTime, endDateTime),
-                     orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
+                     projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
   }
-  private void commonOrders(List< Order > orders, Model model) {
+  private void commonOrders(List< ProjectOrder > projectOrders, Model model) {
    /* // order count
-    int orderTotalCount = orders.size();
+    int orderTotalCount = projectOrders.size();
     model.addAttribute("orderTotalCount", orderTotalCount);
     //|-> card
     List< Order > orderCards =
-        orders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
+        projectOrders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
     int orderCardCount = orderCards.size();
     AtomicReference< BigDecimal > orderCardAmount = new AtomicReference<>(BigDecimal.ZERO);
     orderCards.forEach(x -> {
@@ -108,7 +108,7 @@ public class ReportController {
     model.addAttribute("orderCardAmount", orderCardAmount.get());
     //|-> cash
     List< Order > orderCash =
-        orders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
+        projectOrders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
     int orderCashCount = orderCash.size();
     AtomicReference< BigDecimal > orderCashAmount = new AtomicReference<>(BigDecimal.ZERO);
     orderCash.forEach(x -> {
@@ -127,8 +127,8 @@ public class ReportController {
         "you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
-    commonOrders(orderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
-                                                                     SecurityContextHolder.getContext().getAuthentication().getName()), model);
+    commonOrders(projectOrderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
+                                                                          SecurityContextHolder.getContext().getAuthentication().getName()), model);
     model.addAttribute("message", message);
     return "report/cashierReport";
   }
@@ -139,8 +139,8 @@ public class ReportController {
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
-    commonOrders(orderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
-                                                                     SecurityContextHolder.getContext().getAuthentication().getName()), model);
+    commonOrders(projectOrderService.findByCreatedAtIsBetweenAndCreatedBy(startDateTime, endDateTime,
+                                                                          SecurityContextHolder.getContext().getAuthentication().getName()), model);
     model.addAttribute("message", message);
     return "report/cashierReport";
   }
@@ -199,11 +199,11 @@ public class ReportController {
     return "report/paymentReport";
   }
 
-  private void commonPerCashier(List< Order > orders, Model model) {
+/*  private void commonPerCashier(List< Order > projectOrders, Model model) {
     List< NameCount > orderByCashierAndTotalAmount = new ArrayList<>();
 //name, count, total
     HashSet< String > createdByAll = new HashSet<>();
-    orders.forEach(x -> createdByAll.add(x.getCreatedBy()));
+    projectOrders.forEach(x -> createdByAll.add(x.getCreatedBy()));
 
     createdByAll.forEach(x -> {
       NameCount nameCount = new NameCount();
@@ -211,7 +211,7 @@ public class ReportController {
       nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
       AtomicReference< BigDecimal > cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
       List< Order > cashierOrder =
-          orders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
+          projectOrders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
       nameCount.setCount(cashierOrder.size());
       cashierOrder.forEach(a -> {
         BigDecimal addAmount = operatorService.addition(cashierTotalCount.get(), a.getTotalAmount());
@@ -243,7 +243,7 @@ public class ReportController {
     commonPerCashier(orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
     model.addAttribute("message", message);
     return "report/perCashierReport";
-  }
+  }*/
 
   private void commonPerAccountUser(List< Payment > payments, Model model) {
     List< NameCount > paymentByUserAndTotalAmount = new ArrayList<>();

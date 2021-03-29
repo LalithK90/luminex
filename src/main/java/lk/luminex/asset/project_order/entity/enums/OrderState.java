@@ -1,4 +1,4 @@
-package lk.luminex.asset.order.entity.enums;
+package lk.luminex.asset.project_order.entity.enums;
 
 
 import lombok.AllArgsConstructor;

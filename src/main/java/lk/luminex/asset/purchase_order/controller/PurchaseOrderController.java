@@ -13,6 +13,7 @@ import lk.luminex.asset.purchase_order_item.service.PurchaseOrderItemService;
 import lk.luminex.asset.supplier.entity.Supplier;
 import lk.luminex.asset.supplier.service.SupplierService;
 import lk.luminex.asset.supplier_item.controller.SupplierItemController;
+import lk.luminex.asset.supplier_item.service.SupplierItemService;
 import lk.luminex.util.service.EmailService;
 import lk.luminex.util.service.MakeAutoGenerateNumberService;
 import lk.luminex.util.service.TwilioMessageService;
@@ -38,11 +39,12 @@ public class PurchaseOrderController {
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
     private final EmailService emailService;
     private final TwilioMessageService twilioMessageService;
+    private final SupplierItemService supplierItemService;
 
     public PurchaseOrderController(PurchaseOrderService purchaseOrderService,
                                    PurchaseOrderItemService purchaseOrderItemService, SupplierService supplierService
-            , CommonService commonService, ItemService itemService, MakeAutoGenerateNumberService makeAutoGenerateNumberService, EmailService emailService,
-                                   TwilioMessageService twilioMessageService) {
+        , CommonService commonService, ItemService itemService, MakeAutoGenerateNumberService makeAutoGenerateNumberService, EmailService emailService,
+                                   TwilioMessageService twilioMessageService, SupplierItemService supplierItemService) {
         this.purchaseOrderService = purchaseOrderService;
       this.purchaseOrderItemService = purchaseOrderItemService;
       this.supplierService = supplierService;
@@ -51,6 +53,7 @@ public class PurchaseOrderController {
       this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
         this.emailService = emailService;
         this.twilioMessageService = twilioMessageService;
+        this.supplierItemService = supplierItemService;
     }
 
     @GetMapping
@@ -119,7 +122,7 @@ public class PurchaseOrderController {
                         .append("\t\t\t\t\t")
                         .append(purchaseOrderItem.getQuantity())
                         .append("\t\t\t\t\t")
-                        .append(item.getSellPrice())
+                        .append(supplierItemService.findBySupplierAndItem(purchaseOrderSaved.getSupplier(),item).getPrice())
                         .append("\t\t\t\t\t")
                         .append(purchaseOrderItem.getLineTotal())
                         .append("\n");

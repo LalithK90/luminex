@@ -12,7 +12,7 @@
    href="#hrefCollapse">Show Purchase Order Detail's - Purchase Order Code :
     <span data-th-text="${purchaseOrderDetail.code}"></span></a>
 <div class="collapse" id="hrefCollapse">
-    <!--purchase order details-->
+    <!--purchase projectOrder details-->
     <section data-th-replace="~{purchaseOrder/purchaseOrder-detail :: purchaseOrderDetailsFragment}"></section>
 </div>
 <div class="container-fluid">
@@ -71,7 +71,7 @@
         </div>
         <!--total price-->
         <input type="hidden" data-th-name="${'totalAmount'}" data-th-value="${purchaseOrderDetail.price}">
-        <!--purchase order-->
+        <!--purchase projectOrder-->
         <input type="hidden" data-th-name="${'purchaseOrder.id'}" data-th-value="${purchaseOrderDetail.id}">
         <!--Button-->
         <div class="form-group col-md-12 col-sm-12 mt-4 text-center flex-column ">

@@ -72,11 +72,11 @@
         </tr >
         </thead >
         <tbody >
-        <tr data-th-each="order, rowCount : ${orderByCashierAndTotalAmount}" >
+        <tr data-th-each="projectOrder, rowCount : ${orderByCashierAndTotalAmount}" >
           <th data-th-text="${rowCount.count}" ></th >
-          <th data-th-text="${order.name}" ></th >
-          <th data-th-text="${order.count}" ></th >
-          <th data-th-text="${order.total}" ></th >
+          <th data-th-text="${projectOrder.name}" ></th >
+          <th data-th-text="${projectOrder.count}" ></th >
+          <th data-th-text="${projectOrder.total}" ></th >
         </tr >
         </tbody >
       </table >

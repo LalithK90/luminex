@@ -31,15 +31,6 @@ public class Ledger extends AuditEntity {
     @NotEmpty
     private String quantity;
 
-    @Column( nullable = false, precision = 10, scale = 2 )
-    private BigDecimal sellPrice;
-
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private LocalDate manufactureDate;
-
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private LocalDate expiredDate;
-
     @Enumerated( EnumType.STRING)
     private LiveDead liveDead;
 
@@ -49,7 +40,6 @@ public class Ledger extends AuditEntity {
     @ManyToOne
     @JsonIgnore
     private GoodReceivedNote goodReceivedNote;
-
 
     @OneToMany(mappedBy = "ledger")
     private List< OrderLedger > orderLedgers;

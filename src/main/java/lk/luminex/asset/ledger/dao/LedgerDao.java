@@ -13,11 +13,7 @@ import java.util.List;
 
 @Repository
 public interface LedgerDao extends JpaRepository< Ledger, Integer> {
-    List<Ledger> findByItem(Item item);
-
-    Ledger findByItemAndAndExpiredDateAndSellPrice(Item item, LocalDate eDate, BigDecimal sellPrice);
-
-    List<Ledger> findByExpiredDateBetween(LocalDate from, LocalDate to);
+    Ledger findByItem(Item item);
 
     List< Ledger > findByCreatedAtBetween(LocalDateTime form, LocalDateTime to);
 
