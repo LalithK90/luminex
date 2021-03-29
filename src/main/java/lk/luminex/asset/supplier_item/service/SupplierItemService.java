@@ -98,8 +98,9 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
     return supplierItemDao.findByItemAndSupplier(item, supplier);
   }
 
-  public SupplierItem findBySupplierAndItemItemSupplierStatus(Supplier supplier, Item item,
+  public SupplierItem findBySupplierAndItemAndItemSupplierStatus(Supplier supplier, Item item,
                                                               ItemSupplierStatus itemSupplierStatus) {
     return supplierItemDao.findBySupplierAndItemAndItemSupplierStatus(supplier, item, itemSupplierStatus);
   }
+
 }
