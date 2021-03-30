@@ -61,4 +61,7 @@ public class ProjectOrderService implements AbstractService< ProjectOrder, Integ
     return projectOrderDao.findByCreatedAtIsBetweenAndCreatedBy(from, to, userName);
   }
 
+  public List< ProjectOrder> findByCreatedAtIsBetweenAndOrderState(LocalDateTime from, LocalDateTime to, OrderState orderState) {
+  return projectOrderDao.findByCreatedAtIsBetweenAndOrderState(from,to,orderState);
+  }
 }

@@ -3,13 +3,11 @@ $(document).ready(function () {
     document.getElementById("currentYear").innerHTML = new Date().getFullYear();
 
     /*//Nav bar properties - start//*/
-    /*//Nav bar properties - start//*/
     $('ul.navbar-nav li.dropdown').hover(function () {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(10);
     }, function () {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(10);
     });
-    /*//Nav bar properties - end//*/
     /*//Nav bar properties - end//*/
 
 

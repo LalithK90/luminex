@@ -350,6 +350,11 @@
 <script >
     $(document).ready(function () {
         imageSrcAttributeCheck();
+
+        $('[type="date"]').prop('max', function () {
+            return new Date().toJSON().split('T')[0];
+        });
+
     });
 
     function readURL(input) {
@@ -364,7 +369,7 @@
                 reader.readAsDataURL(input.files[0]);
             } else {
                 swal({
-                    title: "Select file size was too large select less than 1MB file",
+                    title: "Select file size was too large select less than 10MB file",
                     icon: "warning",
                 });
             }
@@ -385,6 +390,7 @@
             $("#image").toggle('hide');
         }
     }
+
 </script >
 </body >
 </html >
