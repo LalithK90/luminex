@@ -56,7 +56,7 @@
             <div class="col-md-8" >
               <select id="employee" >
                 <option value="" selected > Please Select</option >
-                <option data-th-each="employee : ${employees}"
+                <option data-th-if="${employee != null}"  data-th-each="employee : ${employees}"
                         data-th-text="${'Register number : '+employee.code}+${' Name : '+employee.name}"
                         data-th-value="${employee.id}" ></option >
               </select >
@@ -104,18 +104,20 @@
           </div >
         </div >
         <!--Right Side-->
-        <div class="col-md-6 col-sm-6 text-right" >
+        <div class="col-md-6 col-sm-6 text-center" >
           <h4 >Already Employee for this project</h4 >
           <div class="container-fluid" >
             <table class="table table-striped table-inverse " id="allSelectedEmployee" >
               <thead class="thead-inverse" >
               <tr >
+                <th >Index</th >
                 <th >Name</th >
                 <th >Position</th >
               </tr >
               </thead >
               <tbody >
-              <tr data-th-each="projectEmployee : ${project.projectEmployees}" >
+              <tr data-th-each="projectEmployee, index : ${project.projectEmployees}" >
+                <td data-th-text="${index.count}" ></td >
                 <td data-th-text="${projectEmployee.employee.name}" ></td >
                 <td data-th-text="${projectEmployee.projectEmployeeStatus.projectEmployeeStatus}" ></td >
               </tr >
@@ -180,23 +182,24 @@
     function addEmployees() {
         let html = "";
         for (let i = 0; i < selectedEmployees.length; i++) {
-            html += addEmployeeSelected(selectedEmployees[i].id, selectedEmployees[i].name);
+            html += addEmployeeSelected(i, selectedEmployees[i].id, selectedEmployees[i].name);
         }
         $("#selectedEmployee tbody ").html(html);
     }
 
-    function addEmployeeSelected(id, name) {
-        let selectedEmployeeTrLength = $("#selectedEmployee tr").length - 1;
+    function addEmployeeSelected(i, id, name) {
+        let selectedEmployeeTrLength = i;
         let project_id = $("#projectId").val();
         return `
                 <tr >
                   <td >
                  <span id="en${selectedEmployeeTrLength}">${name}</span>
-                  <input id="ei${selectedEmployeeTrLength}" type="text" name="project[${selectedEmployeeTrLength}].employee.id" value="${id}" hidden required>
-                  <input type="text" name="project[${selectedEmployeeTrLength}].project.id" value="${project_id}" hidden required>
+                  <input id="ei${selectedEmployeeTrLength}" type="text" name="projectEmployees[${selectedEmployeeTrLength}].employee.id" value="${id}" hidden required>
+                  <input type="text" name="projectEmployees[${selectedEmployeeTrLength}].project.id" value="${project_id}" hidden required>
                   </td >
                   <td >
-                  <select class="form-control" name="project[${selectedEmployeeTrLength}].projectEmployeeStatus" required>
+                  <select class="form-control" name="projectEmployees[${selectedEmployeeTrLength}].projectEmployeeStatus" required>
+                  <option value="">Select One</option>
                   <option value="SUP">Supervisor</option>
                   <option value="ENG">Engineer</option>
                   <option value="WORK">Worker</option>
