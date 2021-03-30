@@ -156,6 +156,8 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
+
+    let selectedEmployees = [];
     $(document).ready(function () {
         $("#employee").select2({
             data: $(this).val()
@@ -165,13 +167,28 @@
             addEmployeeSelected(employeeId, employeeName);
             let selectedItemId = `#employee option[value='${employeeId}']`;
             $(selectedItemId).remove();
+
+            let selectedEmployee = {};
+            selectedEmployee.id = employeeId;
+            selectedEmployee.name = employeeName;
+            selectedEmployees.push(selectedEmployee);
+
+            addEmployees();
         });
     });
+
+    function addEmployees() {
+        let html = "";
+        for (let i = 0; i < selectedEmployees.length; i++) {
+            html += addEmployeeSelected(selectedEmployees[i].id, selectedEmployees[i].name);
+        }
+        $("#selectedEmployee tbody ").html(html);
+    }
 
     function addEmployeeSelected(id, name) {
         let selectedEmployeeTrLength = $("#selectedEmployee tr").length - 1;
         let project_id = $("#projectId").val();
-        let html = `
+        return `
                 <tr >
                   <td >
                  <span id="en${selectedEmployeeTrLength}">${name}</span>
@@ -189,7 +206,6 @@
                   <button type="button" id="rm${selectedEmployeeTrLength}" class="btn btn-danger" onclick="removeEmployee(this)">Remove</button>
                   </td >
                 </tr >`;
-        $("#selectedEmployee tbody ").html(html);
     }
 
     function removeEmployee(obj) {
