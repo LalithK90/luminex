@@ -21,6 +21,8 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping( "/projectOrder" )
@@ -55,7 +57,7 @@ public class ProjectOrderController {
 
   @GetMapping( "/search" )
   public String projectOrderSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
-                              @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+                                   @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("projectOrders",
                        projectOrderService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
     model.addAttribute("firstOrderMessage", true);
@@ -70,7 +72,8 @@ public class ProjectOrderController {
         .build()
         .toString());
     //send not expired and not zero quantity
-    model.addAttribute("ledgers", ledgerService.findAll());
+    model.addAttribute("ledgers",
+                       ledgerService.findAll().stream().filter(x -> 0 < Integer.parseInt(x.getQuantity())).collect(Collectors.toList()));
     return "projectOrder/addProjectOrder";
   }
 
@@ -89,10 +92,12 @@ public class ProjectOrderController {
   }
 
   @PostMapping
-  public String persistOrder(@Valid @ModelAttribute ProjectOrder projectOrder, BindingResult bindingResult, Model model) {
+  public String persistOrder(@Valid @ModelAttribute ProjectOrder projectOrder, BindingResult bindingResult,
+                             Model model) {
     if ( bindingResult.hasErrors() ) {
       return common(model, projectOrder);
     }
+
     if ( projectOrder.getId() == null ) {
       if ( projectOrderService.findByLastOrder() == null ) {
         //need to generate new one
