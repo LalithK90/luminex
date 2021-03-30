@@ -17,27 +17,22 @@
   <div class="popup-content" >
     <div class="form-row" >
       <!--item name-->
-      <div class="form-group col-md-6" >
+      <div class="form-group col-md-12" >
         <label for="itemName" class="text-dark" >Item Name :</label >
         <input id="itemName" class="form-control" type="text" readonly />
+        <input id="ledgerId" class="form-control" type="text" hidden />
       </div >
+    </div >
+    <div class="form-row" >
       <!--Available Quantity-->
       <div class="form-group col-md-6" >
         <label for="abQuantity" class="text-dark" >Available Quantity :</label >
         <input id="abQuantity" class="form-control" type="text" readonly />
       </div >
-    </div >
-    <div class="form-row" >
       <!--Request -->
       <div class="form-group col-md-6" >
         <label for="requestCount" class="text-dark" >Request Count :</label >
         <input id="requestCount" class="form-control" type="number" step="1" />
-      </div >
-      <!--Total -->
-      <div class="form-group col-md-6" >
-        <label for="totalModal" class="text-dark" >Total:</label >
-        <input id="totalModal" class="form-control" type="number" step="0.01" readonly />
-        <input id="ledgerId" class="form-control" type="hidden" hidden />
       </div >
     </div >
     <!--button area-->
@@ -125,7 +120,7 @@
         </div >
       </div >
       <hr >
-      <input data-th-name="${'name'}" data-th-value="${projectDetail.id}" placeholder="Total Price" hidden required>
+      <input data-th-name="${'project.id'}" data-th-value="${projectDetail.id}" placeholder="Total Price" hidden required>
       <hr >
       <!--remarks and projectOrder print or not-->
       <div class="form-group" >
@@ -217,6 +212,7 @@
         $("#ledgerId").val(resp.id);
         $("#itemName").val(resp.item.name);
         $("#abQuantity").val(resp.quantity);
+
         $(".popup-overlay, .popup-content").addClass("active");
         addButtonDisable();
     }
@@ -265,7 +261,7 @@
                           <input type="number" id="aq${id}" class="form-control" value="${orderLedger.quantity}" readonly>
                           </th >
                           <th >
-                          <input type="number" id="rq${id}" class="form-control" value="${orderLedger.requestCount}" readonly>
+                          <input type="number" id="rq${id}" class="form-control" name="orderLedgers[${id}].quantity" value="${orderLedger.requestCount}" readonly>
                           </th>
                           <th>
                           <button type="button" id="rm${id}" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
@@ -289,13 +285,7 @@
         totalPrice();
     }
 
-    //calculate line total
-    function lineTotalCalculateByLine(obj) {
-        let selectedFiledId = obj.getAttribute('id').slice(2);
-        let price = $(`#sp${selectedFiledId}`).val();
-        $(`#lt${selectedFiledId}`).val(price * obj.value);
-        totalPrice();
-    }
+
 
     function totalPrice() {
         let lineTotal = document.getElementsByClassName("lineTotal");

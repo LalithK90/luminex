@@ -170,7 +170,10 @@ public class ProjectOrderController {
   public String persistOrder(@Valid @ModelAttribute ProjectOrder projectOrder, BindingResult bindingResult,
                              Model model) {
     if ( bindingResult.hasErrors() ) {
-      return common(model, projectOrder);
+   bindingResult.getAllErrors().forEach(System.out::println);
+      projectOrder.setProject(projectService.findById(projectOrder.getProject().getId()));
+    //  return common(model, projectOrder);
+
     }
 
     if ( projectOrder.getId() == null ) {
@@ -203,7 +206,7 @@ public class ProjectOrderController {
       ledger.setQuantity(String.valueOf(availableQuantity - sellQuantity));
       ledgerService.persist(ledger);
     }
-    return "redirect:/project";
+    return "redirect:/projectOrder";
   }
 
   @GetMapping( "/remove/{id}" )

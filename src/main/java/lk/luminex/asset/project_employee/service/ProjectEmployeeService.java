@@ -1,6 +1,7 @@
 package lk.luminex.asset.project_employee.service;
 
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
+import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.project_employee.dao.ProjectEmployeeDao;
 import lk.luminex.asset.project_employee.entity.ProjectEmployee;
 import lk.luminex.util.interfaces.AbstractService;
@@ -59,4 +60,8 @@ public class ProjectEmployeeService implements AbstractService< ProjectEmployee,
     public ProjectEmployee lastCustomer(){
         return projectEmployeeDao.findFirstByOrderByIdDesc();
     }
+
+  public List< ProjectEmployee> findByProject(Project project) {
+        return projectEmployeeDao.findByProject(project);
+  }
 }
