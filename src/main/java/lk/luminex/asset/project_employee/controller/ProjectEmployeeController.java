@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,22 +37,15 @@ public class ProjectEmployeeController {
     Project project = projectService.findById(id);
 
     model.addAttribute("projectDetail", project);
-    List< Employee > employees = new ArrayList<>();
+    List< Employee > employees = employeeService.findAll();
+    List< Employee > employeeAlready = new ArrayList<>();
 
-    for ( Employee employee : employeeService.findAll() ) {
-      if ( !project.getProjectEmployees().isEmpty() ) {
-        for ( ProjectEmployee projectEmployee : project.getProjectEmployees() ) {
-          if ( !projectEmployee.getEmployee().equals(employee) || (projectEmployee.getEmployee().equals(employee) && projectEmployee.getProjectEmployeeStatus().equals(ProjectEmployeeStatus.REMOVE)) ) {
-            employees.add(employee);
-          }
-        }
-      } else {
-        employees.addAll(employeeService.findAll());
-        break;
-      }
-    }
+    project.getProjectEmployees().forEach(x -> employeeAlready.add(employeeService.findById(x.getEmployee().getId())));
+   //remove duplicates employee
+    employees.removeAll(new HashSet<>(employeeAlready));
+
     model.addAttribute("projectDetail", project);
-    model.addAttribute("employees", employees.stream().distinct().collect(Collectors.toList()));
+    model.addAttribute("employees", employees);
     model.addAttribute("project", project);
     return "projectEmployee/addProjectEmployee";
   }
