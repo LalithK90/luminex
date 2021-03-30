@@ -22,7 +22,7 @@
         <div class="row" >
           <div class="col-sm-6 col-sm-offset-3" >
             <h4 class="text-info" ><b > Custom Search</b ></h4 >
-            <form class="form-inline" data-th-action="@{/projectOrder/search}" data-th-method="POST" >
+            <form class="form-inline" data-th-action="${formAction}" data-th-method="POST" >
               <div class="form-group" >
                 <label for="startDate" >FROM :</label >
                 <input class="form-control" id="startDate" name="startDate" type="date" />
@@ -40,21 +40,26 @@
       </div >
     </div >
   </div >
-  <!--There is message about projectOrder count-->
+  <div class="row" >
+    <div class="col-3" >
+      <a class="btn btn-primary" href="/projectOrder/add" > &nbsp; New Order</a >
+    </div >
+    <div class="col-3" >
+      <a class="btn btn-info" href="/projectOrder/pendingOrder" >&nbsp; Pending Order</a >
+    </div >
+    <div class="col-3" >
+      <a class="btn btn-info" href="/projectOrder/approved" >&nbsp; Approved</a >
+    </div >
+    <div class="col-3" >
+      <a class="btn btn-info" href="/projectOrder/cancel" >&nbsp; Canceled</a >
+    </div >
+  </div >
+
+  <!--Show message on here-->
   <div class="row" data-th-if="${firstOrderMessage}" >
     <div class="col-sm-12 mt-4" >
-      <div class="form-group text-left col-sm-2" >
-        <a class="btn btn-primary" href="/projectOrder/add" ><span
-              class="glyphicon glyphicon-list-alt" ></span >&nbsp; New Order</a >
-      </div >
       <div class="alert alert-warning col-sm-8" role="alert" >
-        <strong >Following table show details belongs to there month. if you need to more please
-                 search
-                 using above method</strong >
-      </div >
-      <div class="form-group text-right col-sm-2" >
-        <a class="btn btn-info" href="/projectOrder/search" ><span
-              class="glyphicon glyphicon-search" ></span >&nbsp; Search Order</a >
+        <strong data-th-text="${message}" ></strong >
       </div >
     </div >
   </div >

@@ -11,160 +11,176 @@
 <link data-th-href="@{/css/modal.css}" media="all" rel="stylesheet" type="text/css" />
 
 
+<!--Creates the popup body-->
+<div class="popup-overlay" >
+  <!--Creates the popup content-->
+  <div class="popup-content" >
+    <div class="form-row" >
+      <!--item name-->
+      <div class="form-group col-md-6" >
+        <label for="itemName" class="text-dark" >Item Name :</label >
+        <input id="itemName" class="form-control" type="text" readonly />
+      </div >
+      <!--Available Quantity-->
+      <div class="form-group col-md-6" >
+        <label for="abQuantity" class="text-dark" >Available Quantity :</label >
+        <input id="abQuantity" class="form-control" type="text" readonly />
+      </div >
+    </div >
+    <div class="form-row" >
+      <!--Expired date-->
+      <div class="form-group col-md-6" >
+        <label for="exDate" class="text-dark" >Expired Date :</label >
+        <input id="exDate" class="form-control" type="text" readonly />
+      </div >
+      <!--Request count-->
+      <div class="form-group col-md-6" >
+        <label for="sellPriceModal" class="text-dark" >Sell Price :</label >
+        <input id="sellPriceModal" class="form-control" type="number" step="0.01" readonly />
+      </div >
+    </div >
+    <div class="form-row" >
+      <!--Expired date-->
+      <div class="form-group col-md-6" >
+        <label for="requestCount" class="text-dark" >Request Count :</label >
+        <input id="requestCount" class="form-control" type="number" step="0.01" />
+      </div >
+      <!--Total -->
+      <div class="form-group col-md-6" >
+        <label for="totalModal" class="text-dark" >Total:</label >
+        <input id="totalModal" class="form-control" type="number" step="0.01" readonly />
+        <input id="ledgerId" class="form-control" type="hidden" hidden />
+      </div >
+    </div >
+    <!--button area-->
+    <div class="form-row" >
+      <div class="col-6" ></div >
+      <div class="col " >
+        <button class="btn btn-danger" id="close" >Close</button >
+      </div >
+      <div class="col " >
+        <button class="btn btn-success" id="addModal" >Add</button >
+      </div >
+    </div >
+  </div >
+</div >
 
-      <!--Creates the popup body-->
-      <div class="popup-overlay" >
-        <!--Creates the popup content-->
-        <div class="popup-content" >
-          <div class="form-row" >
-            <!--item name-->
-            <div class="form-group col-md-6" >
-              <label for="itemName" class="text-dark" >Item Name :</label >
-              <input id="itemName" class="form-control" type="text" readonly />
-            </div >
-            <!--Available Quantity-->
-            <div class="form-group col-md-6" >
-              <label for="abQuantity" class="text-dark" >Available Quantity :</label >
-              <input id="abQuantity" class="form-control" type="text" readonly />
-            </div >
+<div id="accordianId" role="tablist" aria-multiselectable="true" >
+  <div class="card" >
+    <div class="card-header" role="tab" id="section1HeaderId" >
+      <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true"
+         aria-controls="section1ContentId" >
+        <h5 class="mb-0 container-fluid text-center" >
+          Project Detail
+        </h5 >
+      </a >
+    </div >
+    <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId" >
+      <div class="card-body" >
+        <div data-th-replace="~{project/project-detail :: projectDetailsFragment}" ></div >
+      </div >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid mt-3" >
+  <div class="container-fluid" >
+    <form action="/projectOrder" method="post" data-th-object="${projectOrder}" >
+      <!--ledgers will list-->
+      <div class="form-group" >
+        <!--Ledgers item-->
+        <div class="form-row " >
+          <div class="col-2 text-right" >
+            <label class="control-label" for="item" >Items :</label >
           </div >
-          <div class="form-row" >
-            <!--Expired date-->
-            <div class="form-group col-md-6" >
-              <label for="exDate" class="text-dark" >Expired Date :</label >
-              <input id="exDate" class="form-control" type="text" readonly />
-            </div >
-            <!--Request count-->
-            <div class="form-group col-md-6" >
-              <label for="sellPriceModal" class="text-dark" >Sell Price :</label >
-              <input id="sellPriceModal" class="form-control" type="number" step="0.01" readonly />
-            </div >
+          <div class="col-10 text-left" >
+            <select id="item" class="form-control" tabindex="9" >
+              <option value="" >Please select</option >
+              <option data-th-each="ledger : ${ledgers}"
+                      data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity+'  Expired Date : '+ledger.expiredDate}"
+                      data-th-value="${ledger.id}" >
+                Please select
+              </option >
+            </select >
           </div >
-          <div class="form-row" >
-            <!--Expired date-->
-            <div class="form-group col-md-6" >
-              <label for="requestCount" class="text-dark" >Request Count :</label >
-              <input id="requestCount" class="form-control" type="number" step="0.01" />
-            </div >
-            <!--Total -->
-            <div class="form-group col-md-6" >
-              <label for="totalModal" class="text-dark" >Total:</label >
-              <input id="totalModal" class="form-control" type="number" step="0.01" readonly />
-              <input id="ledgerId" class="form-control" type="hidden" hidden />
-            </div >
-          </div >
-          <!--button area-->
-          <div class="form-row" >
-            <div class="col-6" ></div >
-            <div class="col " >
-              <button class="btn btn-danger" id="close" >Close</button >
-            </div >
-            <div class="col " >
-              <button class="btn btn-success" id="addModal" >Add</button >
+        </div >
+      </div >
+      <!--selected ledger items-->
+      <div class="form-group" >
+        <div class="form-row" >
+          <div class="container" >
+            <div class="col" >
+              <table class="table table-hover table-striped " id="myTable" >
+                <thead >
+                <tr >
+                  <th >Index</th >
+                  <th >Item Name</th >
+                  <th >Available Quantity</th >
+                  <th >Quantity</th >
+                  <th >Modify</th >
+                </tr >
+                </thead >
+                <tbody >
+
+                </tbody >
+                <tfoot >
+                <tr >
+                  <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
+                  <th ><input id="total" type="text" class="form-control" name="totalPrice"
+                              placeholder="Total Price" >
+                  </th >
+                </tr >
+                </tfoot >
+              </table >
             </div >
           </div >
         </div >
       </div >
-
-      <div class="container-fluid mt-3" >
-        <div class="container-fluid" >
-          <form action="/projectOrder" method="post" data-th-object="${projectOrder}" >
-            <!--ledgers will list-->
-            <div class="form-group" >
-              <!--Ledgers item-->
-              <div class="form-row " >
-                <div class="col-2 text-right" >
-                  <label class="control-label" for="item" >Items :</label >
-                </div >
-                <div class="col-10 text-left" >
-                  <select id="item" class="form-control" tabindex="9" >
-                    <option value="" >Please select</option >
-                    <option data-th-each="ledger : ${ledgers}"
-                            data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity+'  Expired Date : '+ledger.expiredDate}"
-                            data-th-value="${ledger.id}" >
-                      Please select
-                    </option >
-                  </select >
-                </div >
-              </div >
-            </div >
-            <!--selected ledger items-->
-            <div class="form-group" >
-              <div class="form-row" >
-                <div class="container" >
-                  <div class="col" >
-                    <table class="table table-hover table-striped " id="myTable" >
-                      <thead >
-                      <tr >
-                        <th >Index</th >
-                        <th >Item Name</th >
-                        <th >Ex Date</th >
-                        <th >Available Quantity</th >
-                        <th >Unit Price</th >
-                        <th >Quantity</th >
-                        <th >Line Total</th >
-                        <th >Modify</th >
-                      </tr >
-                      </thead >
-                      <tbody >
-
-                      </tbody >
-                      <tfoot >
-                      <tr >
-                        <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
-                        <th ><input id="total" type="text" class="form-control" name="totalPrice"
-                                    placeholder="Total Price" >
-                        </th >
-                      </tr >
-                      </tfoot >
-                    </table >
-                  </div >
-                </div >
-              </div >
-            </div >
-            <hr >
-
-            <hr >
-            <!--remarks and projectOrder print or not-->
-            <div class="form-group" >
-              <div class="form-row" >
-                <!--Remarks-->
-                <div class="col-md-12" >
-                  <div class="form-row text-right" >
-                    <div class="col-md-4" >
-                      <label for="remarks" >Remarks :</label ></div >
-                    <div class="col-md-8" >
+      <hr >
+      <input data-th-name="${'name'}" data-th-value="${projectDetail.id}" placeholder="Total Price" hidden required>
+      <hr >
+      <!--remarks and projectOrder print or not-->
+      <div class="form-group" >
+        <div class="form-row" >
+          <!--Remarks-->
+          <div class="col-md-12" >
+            <div class="form-row text-right" >
+              <div class="col-md-4" >
+                <label for="remarks" >Remarks :</label ></div >
+              <div class="col-md-8" >
                                             <textarea id="remarks" class="form-control" data-th-field="*{remarks}"
                                                       rows="2" ></textarea >
-                    </div >
-                  </div >
-                </div >
               </div >
             </div >
-            <hr >
-            <!--button-->
-            <div class="form-group" >
-              <!--Button-->
-              <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-                <!--Back Button-->
-                <a class="btn btn-dark" href="/projectOrder" tabindex="14" >
-                  <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
-                </a >
-                <!--Save Button-->
-                <button class="btn btn-success ml-5" tabindex="12" type="submit" >
-                  <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span
-                      data-th-text="${'Save'}"
-                      id="submit" ></span >
-                </button >
-                <!--Cancel Button-->
-                <button class="btn btn-warning ml-5" tabindex="13" type="reset" >
-                  <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-                </button >
-              </div >
-            </div >
-          </form >
+          </div >
         </div >
       </div >
+
+
+      <hr >
+      <!--button-->
+      <div class="form-group" >
+        <!--Button-->
+        <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+          <!--Back Button-->
+          <a class="btn btn-dark" href="/projectOrder" tabindex="14" >
+            <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+          </a >
+          <!--Save Button-->
+          <button class="btn btn-success ml-5" tabindex="12" type="submit" >
+            <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span
+                data-th-text="${'Save'}"
+                id="submit" ></span >
+          </button >
+          <!--Cancel Button-->
+          <button class="btn btn-warning ml-5" tabindex="13" type="reset" >
+            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+          </button >
+        </div >
+      </div >
+    </form >
+  </div >
+</div >
 
 <input type="hidden" data-th-value="${ledgerItemURL}" id="ledgerItemURL" >
 <!--/* footer is */-->
@@ -173,7 +189,6 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
-    /*todo so many thing to remove*/
     //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
     $("#close, .popup-overlay body").on("click", function () {
         $(".popup-overlay, .popup-content").removeClass("active");
@@ -214,7 +229,6 @@
         $("#ledgerId").val(resp.id);
         $("#itemName").val(resp.item.name);
         $("#abQuantity").val(resp.quantity);
-        $("#sellPriceModal").val(resp.sellPrice);
         $(".popup-overlay, .popup-content").addClass("active");
         addButtonDisable();
     }
@@ -233,7 +247,6 @@
         receivedLedgerItem.id = $("#ledgerId").val();
         receivedLedgerItem.name = $("#itemName").val();
         receivedLedgerItem.quantity = $("#abQuantity").val();
-        receivedLedgerItem.sellPrice = $("#sellPriceModal").val();
         receivedLedgerItem.requestCount = $("#requestCount").val();
         receivedLedgerItem.totalModal = $("#totalModal").val();
         selectedOrderLedger.push(receivedLedgerItem);
@@ -248,8 +261,6 @@
         for (let i = 0; i < selectedOrderLedger.length; i++) {
             html += tableRowCreate(i, selectedOrderLedger[i]);
         }
-        //$("#myTable tbody tr:last").after(html);
-
         $("#myTable tbody ").html(html);
         totalPrice();
     }
@@ -266,14 +277,6 @@
                           <input type="number" id="aq${id}" class="form-control" value="${orderLedger.quantity}" readonly>
                           </th >
                           <th >
-                          <input type="number" id="sp${id}" class="form-control" name="orderLedgers[${id}].sellPrice" value="${orderLedger.sellPrice}" readonly>
-                          </th >
-                          <th >
-                          <input type="number" id="rq${id}" class="form-control" onchange="lineTotalCalculateByLine(this)"  onkeyup="lineTotalCalculateByLine(this)" name="orderLedgers[${id}].quantity" value="${orderLedger.requestCount}">
-                          </th >
-                          <th >
-                          <input type="number" id="lt${id}" class="form-control lineTotal" name="orderLedgers[${id}].lineTotal" value="${orderLedger.totalModal}" readonly>
-                          </th >
                           <th>
                           <button type="button" id="rm${id}" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
                           </th>

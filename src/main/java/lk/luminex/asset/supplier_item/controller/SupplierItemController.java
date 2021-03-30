@@ -127,7 +127,6 @@ public class SupplierItemController {
     List< SupplierItem > supplierItems = supplier.getSupplierItems();
     for ( SupplierItem supplierItem : supplierItems ) {
       SupplierItem supplierItemOne = new SupplierItem();
-      System.out.println("  sppappapsdadsd "+ supplierItem.getItemSupplierStatus());
       supplierItemOne.setItemSupplierStatus(supplierItem.getItemSupplierStatus());
       if ( supplierItem.getId() != null ) {
         supplierItemOne.setId(supplierItem.getId());
@@ -147,12 +146,7 @@ public class SupplierItemController {
   @ResponseBody
   public PurchaseOrderItemLedger purchaseOrderSupplierItem(@RequestParam( "supplierId" ) Integer supplierId,
                                                            @RequestParam( "itemId" ) Integer itemId) {
-    Supplier supplier = supplierService.findById(supplierId);
-
-    Item item = itemService.findById(itemId);
-
-
-    SupplierItem supplierItem = supplierItemService.findBySupplierAndItemItemSupplierStatus(supplier,item, ItemSupplierStatus.CURRENTLY_BUYING);
+    SupplierItem supplierItem = supplierItemService.findBySupplierAndItemAndItemSupplierStatus(supplierService.findById(supplierId),itemService.findById(itemId),ItemSupplierStatus.CURRENTLY_BUYING);
     PurchaseOrderItemLedger purchaseOrderItemLedger = new PurchaseOrderItemLedger();
     /* 1. item ID   2. Item name 3. Rop 4. Price 5. Available Quantity. */
     purchaseOrderItemLedger.setItemId(supplierItem.getItem().getId());
@@ -160,13 +154,16 @@ public class SupplierItemController {
     purchaseOrderItemLedger.setRop(supplierItem.getItem().getRop());
     purchaseOrderItemLedger.setPrice(supplierItem.getPrice());
 
-    Ledger ledger =        ledgerDao.findByItem(supplierItem.getItem());
+    Ledger ledger =
+        ledgerDao.findByItem(supplierItem.getItem());
 
     if ( ledger != null ) {
       purchaseOrderItemLedger.setAvailableQuantity(ledger.getQuantity());
     } else {
       purchaseOrderItemLedger.setAvailableQuantity(String.valueOf(0));
     }
+
+
     return purchaseOrderItemLedger;
   }
 
