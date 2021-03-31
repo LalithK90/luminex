@@ -71,7 +71,7 @@
             <label class="control-label" for="startDate" >Start Date :</label >
           </div >
           <div class="col-md-8" >
-            <input id="startDate" data-th-field="*{startDate}" class="form-control" tabindex="4" type="date" required />
+            <input data-th-field="*{startDate}" class="form-control" tabindex="4" type="date" required />
             <span  data-th-errors="*{name}"
                   data-th-if="${#fields.hasErrors('startDate')}" class="error" >Error Name</span >
           </div >

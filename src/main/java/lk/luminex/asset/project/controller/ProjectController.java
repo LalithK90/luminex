@@ -45,7 +45,9 @@ public class ProjectController implements AbstractController< Project, Integer >
   }
 
   private String commonThings(Model model, Project project, Boolean addState) {
-    project.setProjectEmployees(projectEmployeeService.findByProject(project));
+    if (!addState) {
+      project.setProjectEmployees(projectEmployeeService.findByProject(project));
+    }
     model.addAttribute("project", project);
     model.addAttribute("addStatus", addState);
     model.addAttribute("projectStatuses", ProjectStatus.values());
