@@ -85,7 +85,6 @@ public class Employee extends AuditEntity {
     @OneToMany(mappedBy = "employee")
     private List< ProjectEmployee > projectEmployees;
 
-
     @Transient
     private MultipartFile file;
 

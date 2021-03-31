@@ -38,15 +38,10 @@ public class LedgerController {
   @GetMapping( "/reorderPoint" )
   public String reorderPoint(Model model) {
     model.addAttribute("title", "Reorder Point Limit Exceeded");
-/*    model.addAttribute("ledgers", ledgerService.findAll()
+    model.addAttribute("ledgers", ledgerService.findAll()
         .stream()
         .filter(x -> Integer.parseInt(x.getQuantity()) < Integer.parseInt(x.getItem().getRop()))
-        .collect(Collectors.toList()));*/
-    for (int i=0;i< ledgerService.findAll().size();i++){
-
-
-
-    }
+        .collect(Collectors.toList()));
 
     model.addAttribute("twoDate", new TwoDate());
     return "ledger/ledger";
