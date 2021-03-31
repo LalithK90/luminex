@@ -72,6 +72,16 @@
                class="display_detail" ></p >
           </div >
         </div >
+        <!--start date-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="startDate" >Start Date :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="startDate" data-th-text="${projectDetail.startDate}"
+               class="display_detail" ></p >
+          </div >
+        </div >
         <!--Address-->
         <div class="form-row text-right" >
           <div class="col-md-4" >
@@ -150,13 +160,13 @@
       </tr >
       </thead >
       <tbody >
-      <tr data-th-each="employee, rowCount : ${projectDetail.projectEmployees}" >
+      <tr data-th-each="projectEmployee, rowCount : ${projectDetail.projectEmployees}" >
         <th data-th-text="${rowCount.count}" ></th >
-        <th data-th-text="${employee.code}" ></th >
-        <th data-th-text="${employee.callingName}" ></th >
-        <th data-th-text="${employee.mobileOne}" ></th >
-        <th data-th-text="${employee.designation.designation}" ></th >
-        <th data-th-text="${employee.employeeStatus.employeeStatus}" ></th >
+        <th data-th-text="${projectEmployee.employee.code}" ></th >
+        <th data-th-text="${projectEmployee.employee.callingName}" ></th >
+        <th data-th-text="${projectEmployee.employee.mobileOne}" ></th >
+        <th data-th-text="${projectEmployee.employee.designation.designation}" ></th >
+        <th data-th-text="${projectEmployee.employee.employeeStatus.employeeStatus}" ></th >
       </tr >
       </tbody >
     </table >

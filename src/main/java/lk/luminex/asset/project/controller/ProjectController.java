@@ -2,10 +2,11 @@ package lk.luminex.asset.project.controller;
 
 
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
-import lk.luminex.asset.common_asset.model.enums.Title;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.project.entity.enums.ProjectStatus;
 import lk.luminex.asset.project.service.ProjectService;
+import lk.luminex.asset.project_employee.entity.ProjectEmployee;
+import lk.luminex.asset.project_employee.service.ProjectEmployeeService;
 import lk.luminex.util.interfaces.AbstractController;
 import lk.luminex.util.service.EmailService;
 import lk.luminex.util.service.MakeAutoGenerateNumberService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,17 +31,21 @@ public class ProjectController implements AbstractController< Project, Integer >
   private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
   private final EmailService emailService;
   private final TwilioMessageService twilioMessageService;
+  private final ProjectEmployeeService projectEmployeeService;
 
   @Autowired
   public ProjectController(ProjectService projectService, MakeAutoGenerateNumberService makeAutoGenerateNumberService
-      , EmailService emailService, TwilioMessageService twilioMessageService) {
+      , EmailService emailService, TwilioMessageService twilioMessageService,
+                           ProjectEmployeeService projectEmployeeService) {
     this.projectService = projectService;
     this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
     this.emailService = emailService;
     this.twilioMessageService = twilioMessageService;
+    this.projectEmployeeService = projectEmployeeService;
   }
 
   private String commonThings(Model model, Project project, Boolean addState) {
+    project.setProjectEmployees(projectEmployeeService.findByProject(project));
     model.addAttribute("project", project);
     model.addAttribute("addStatus", addState);
     model.addAttribute("projectStatuses", ProjectStatus.values());

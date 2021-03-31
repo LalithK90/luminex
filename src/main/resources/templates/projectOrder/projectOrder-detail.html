@@ -18,20 +18,14 @@
             <tr >
               <th >Index</th >
               <th >Item Name</th >
-              <th >Ex Date</th >
               <th >Quantity</th >
-              <th >Unit Price</th >
-              <th >Line Total</th >
             </tr >
             </thead >
             <tbody >
-            <tr data-th-each="orderLedger, index : ${orderDetail.orderLedgers}" >
+            <tr data-th-each="orderLedger, index : ${projectOrderDetail.orderLedgers}" >
               <td data-th-text="${index.count}" ></td >
               <td data-th-text="${orderLedger.ledger.item.name}" ></td >
-              <td data-th-text="${orderLedger.ledger.expiredDate}" ></td >
               <td data-th-text="${orderLedger.quantity}" ></td >
-              <td data-th-text="${orderLedger.sellPrice}" ></td >
-              <td class="lineTotal" data-th-text="${orderLedger.lineTotal}" ></td >
             </tr >
             </tbody >
             <tfoot >
@@ -62,7 +56,7 @@
           <div class="col-md-4" >
             <label for="remarks" >Remarks :</label ></div >
           <div class="col-md-8" >
-            <p id="remarks" class="form-control" data-th-utext="${orderDetail.remarks}" ></p >
+            <p id="remarks" class="form-control" data-th-utext="${projectOrderDetail.remarks}" ></p >
           </div >
         </div >
       </div >
@@ -78,12 +72,12 @@
         <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
       </a >
       <!--Action-->
-      <a data-th-if="${orderDetail.orderState=='PENDING'}" class="btn btn-success"
-         data-th-href="${'/projectOrder/approve/'+orderDetail.id}" tabindex="14" >
+      <a data-th-if="${projectOrderDetail.orderState=='PENDING'}" class="btn btn-success"
+         data-th-href="${'/projectOrder/approve/'+projectOrderDetail.id}" tabindex="14" >
         <i class="fas fa-hammer" style="font-size: 20px" ></i >&nbsp;&nbsp;Approved
       </a >
-      <a data-th-if="${orderDetail.orderState=='PENDING'}" class="btn btn-danger"
-         data-th-href="${'/projectOrder/remove/'+orderDetail.id}" tabindex="14" >
+      <a data-th-if="${projectOrderDetail.orderState=='PENDING'}" class="btn btn-danger"
+         data-th-href="${'/projectOrder/remove/'+projectOrderDetail.id}" tabindex="14" >
         <i class="fas fa-ban" ></i >&nbsp;&nbsp;Cancel
       </a >
       <!--Print-->
