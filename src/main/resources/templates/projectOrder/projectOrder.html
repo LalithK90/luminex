@@ -85,7 +85,7 @@
           <th data-th-text="${projectOrder.createdBy}" ></th >
           <th data-th-text="${{projectOrder.createdAt}}" ></th >
           <th ><a class="btn btn-success" data-th-href="${'/projectOrder/'+ projectOrder.id}" ><i
-                class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
+                class="fa fa-folder-open" ></i >&nbsp;View / Approve / Print / Cancel</a >&nbsp;
           </th >
           <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
                 class="btn btn-danger" data-th-href="${'/projectOrder/remove/' + projectOrder.id}" >Delete</a >
