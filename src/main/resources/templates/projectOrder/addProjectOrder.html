@@ -80,7 +80,8 @@
             <select id="item" class="form-control" tabindex="9" >
               <option value="" >Please select</option >
               <option data-th-each="ledger : ${ledgers}"
-                      data-th-text="${'Item Name: '+ledger.item.name+' Available quantity : '+ledger.quantity}"
+                      data-th-text="${'Item Name: '+ledger.item.name+'Available quantity : '+ledger.quantity}"
+
                       data-th-value="${ledger.id}" >
                 Please select
               </option >
