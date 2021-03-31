@@ -11,9 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -35,6 +37,9 @@ public class Project extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private LiveDead liveDead;
+
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
+    private LocalDate startDate;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;

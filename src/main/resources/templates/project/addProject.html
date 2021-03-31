@@ -65,6 +65,17 @@
                   data-th-if="${#fields.hasErrors('name')}" class="error" >Error Name</span >
           </div >
         </div >
+        <!--Name-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="startDate" >Start Date :</label >
+          </div >
+          <div class="col-md-8" >
+            <input id="startDate" data-th-field="*{startDate}" class="form-control" tabindex="4" type="date" required />
+            <span  data-th-errors="*{name}"
+                  data-th-if="${#fields.hasErrors('startDate')}" class="error" >Error Name</span >
+          </div >
+        </div >
         <!--projectStatus-->
         <div class="form-row text-right" >
           <div class="col-md-4" >
