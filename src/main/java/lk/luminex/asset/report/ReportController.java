@@ -42,7 +42,9 @@ public class ReportController {
   private final UserService userService;
   private final OrderLedgerService orderLedgerService;
 
-  public ReportController(PaymentService paymentService, ProjectOrderService projectOrderService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, OrderLedgerService orderLedgerService) {
+  public ReportController(PaymentService paymentService, ProjectOrderService projectOrderService,
+                          OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
+                          UserService userService, OrderLedgerService orderLedgerService) {
     this.paymentService = paymentService;
     this.projectOrderService = projectOrderService;
     this.operatorService = operatorService;
@@ -58,7 +60,7 @@ public class ReportController {
     //according to payment type -> payment
     commonPayment(payments, model);
     // order count by cashier
-/*    commonPerCashier(projectOrders, model);*/
+    commonPerCashier(projectOrders, model);
     // payment count by account department
     commonPerAccountUser(payments, model);
     // item count according to item
@@ -91,32 +93,12 @@ public class ReportController {
                      projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
   }
+
   private void commonOrders(List< ProjectOrder > projectOrders, Model model) {
-   /* // order count
+    // order count
     int orderTotalCount = projectOrders.size();
     model.addAttribute("orderTotalCount", orderTotalCount);
-    //|-> card
-    List< Order > orderCards =
-        projectOrders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CREDIT)).collect(Collectors.toList());
-    int orderCardCount = orderCards.size();
-    AtomicReference< BigDecimal > orderCardAmount = new AtomicReference<>(BigDecimal.ZERO);
-    orderCards.forEach(x -> {
-      BigDecimal addAmount = operatorService.addition(orderCardAmount.get(), x.getTotalAmount());
-      orderCardAmount.set(addAmount);
-    });
-    model.addAttribute("orderCardCount", orderCardCount);
-    model.addAttribute("orderCardAmount", orderCardAmount.get());
-    //|-> cash
-    List< Order > orderCash =
-        projectOrders.stream().filter(x -> x.getPaymentMethod().equals(PaymentMethod.CASH)).collect(Collectors.toList());
-    int orderCashCount = orderCash.size();
-    AtomicReference< BigDecimal > orderCashAmount = new AtomicReference<>(BigDecimal.ZERO);
-    orderCash.forEach(x -> {
-      BigDecimal addAmount = operatorService.addition(orderCashAmount.get(), x.getTotalAmount());
-      orderCashAmount.set(addAmount);
-    });
-    model.addAttribute("orderCashCount", orderCashCount);
-    model.addAttribute("orderCashAmount", orderCashAmount.get());*/
+
 
   }
 
@@ -199,7 +181,7 @@ public class ReportController {
     return "report/paymentReport";
   }
 
-/*  private void commonPerCashier(List< Order > projectOrders, Model model) {
+  private void commonPerCashier(List< ProjectOrder > projectOrders, Model model) {
     List< NameCount > orderByCashierAndTotalAmount = new ArrayList<>();
 //name, count, total
     HashSet< String > createdByAll = new HashSet<>();
@@ -210,13 +192,9 @@ public class ReportController {
       Employee employee = userService.findByUserName(x).getEmployee();
       nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
       AtomicReference< BigDecimal > cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
-      List< Order > cashierOrder =
+      List< ProjectOrder > cashierOrder =
           projectOrders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
       nameCount.setCount(cashierOrder.size());
-      cashierOrder.forEach(a -> {
-        BigDecimal addAmount = operatorService.addition(cashierTotalCount.get(), a.getTotalAmount());
-        cashierTotalCount.set(addAmount);
-      });
       nameCount.setTotal(cashierTotalCount.get());
       orderByCashierAndTotalAmount.add(nameCount);
     });
@@ -229,7 +207,7 @@ public class ReportController {
     String message = "This report is belongs to " + localDate.toString();
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
-    commonPerCashier(orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+    commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
     model.addAttribute("message", message);
     return "report/perCashierReport";
   }
@@ -240,10 +218,10 @@ public class ReportController {
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
     LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
     LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
-    commonPerCashier(orderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+    commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
     model.addAttribute("message", message);
     return "report/perCashierReport";
-  }*/
+  }
 
   private void commonPerAccountUser(List< Payment > payments, Model model) {
     List< NameCount > paymentByUserAndTotalAmount = new ArrayList<>();
@@ -262,7 +240,7 @@ public class ReportController {
       paymentUser.forEach(a -> {
         userTotalCount.add(a.getAmount());
       });
-      nameCount.setTotal(userTotalCount.stream().reduce(BigDecimal.ZERO,BigDecimal::add));
+      nameCount.setTotal(userTotalCount.stream().reduce(BigDecimal.ZERO, BigDecimal::add));
       paymentByUserAndTotalAmount.add(nameCount);
     });
 
