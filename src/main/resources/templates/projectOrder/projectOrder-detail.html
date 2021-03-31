@@ -8,61 +8,63 @@
 <body class="sb-nav-fixed" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 <div class="container-fluid" >
-  <!--selected ledger items-->
-  <div class="form-group" >
-    <div class="form-row" >
-      <div class="container" >
-        <div class="col" >
-          <table class="table table-hover table-striped" id="myTable" >
-            <thead >
-            <tr >
-              <th >Index</th >
-              <th >Item Name</th >
-              <th >Quantity</th >
-            </tr >
-            </thead >
-            <tbody >
-            <tr data-th-each="orderLedger, index : ${projectOrderDetail.orderLedgers}" >
-              <td data-th-text="${index.count}" ></td >
-              <td data-th-text="${orderLedger.ledger.item.name}" ></td >
-              <td data-th-text="${orderLedger.quantity}" ></td >
-            </tr >
-            </tbody >
-            <tfoot >
-            <tr >
-              <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
-              <th ><p id="total" ></p >
-              </th >
-            </tr >
-            </tfoot >
-          </table >
-        </div >
-      </div >
-    </div >
-  </div >
-  <hr >
-  <!--project -->
-  <div class="form-group" >
-    <!--Project-->
-    <div data-th-replace="~{project/project-detail :: projectDetailsFragment}" ></div >
-  </div >
-  <hr >
-  <!--remarks and projectOrder print or not-->
-  <div class="form-group" >
-    <div class="form-row" >
-      <!--Remarks-->
-      <div class="col-md-12" >
-        <div class="form-row text-right" >
-          <div class="col-md-4" >
-            <label for="remarks" >Remarks :</label ></div >
-          <div class="col-md-8" >
-            <p id="remarks" class="form-control" data-th-utext="${projectOrderDetail.remarks}" ></p >
+  <div id="purchaseOrder" >
+    <!--selected ledger items-->
+    <div class="form-group" >
+      <div class="form-row" >
+        <div class="container" >
+          <div class="col" >
+            <table class="table table-hover table-striped" id="myTable" >
+              <thead >
+              <tr >
+                <th >Index</th >
+                <th >Item Name</th >
+                <th >Quantity</th >
+              </tr >
+              </thead >
+              <tbody >
+              <tr data-th-each="orderLedger, index : ${projectOrderDetail.orderLedgers}" >
+                <td data-th-text="${index.count}" ></td >
+                <td data-th-text="${orderLedger.ledger.item.name}" ></td >
+                <td data-th-text="${orderLedger.quantity}" ></td >
+              </tr >
+              </tbody >
+              <tfoot >
+              <tr >
+                <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
+                <th ><p id="total" ></p >
+                </th >
+              </tr >
+              </tfoot >
+            </table >
           </div >
         </div >
       </div >
     </div >
+    <hr >
+    <!--project -->
+    <div class="form-group" >
+      <!--Project-->
+      <div data-th-replace="~{project/project-detail :: projectDetailsFragment}" ></div >
+    </div >
+    <hr >
+    <!--remarks and projectOrder print or not-->
+    <div class="form-group" >
+      <div class="form-row" >
+        <!--Remarks-->
+        <div class="col-md-12" >
+          <div class="form-row text-right" >
+            <div class="col-md-4" >
+              <label for="remarks" >Remarks :</label ></div >
+            <div class="col-md-8" >
+              <p id="remarks" class="form-control" data-th-utext="${projectOrderDetail.remarks}" ></p >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <hr >
   </div >
-  <hr >
   <!--button-->
   <div class="form-group" >
     <!--Button-->
@@ -72,11 +74,12 @@
         <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
       </a >
       <!--Action-->
-      <a data-th-if="${projectOrderDetail.orderState=='PENDING'}" class="btn btn-success"
+      <a data-th-if="${#strings.equals(projectOrderDetail.orderState,'PENDING')}" class="btn btn-success"
          data-th-href="${'/projectOrder/approve/'+projectOrderDetail.id}" tabindex="14" >
         <i class="fas fa-hammer" style="font-size: 20px" ></i >&nbsp;&nbsp;Approved
       </a >
-      <a data-th-if="${projectOrderDetail.orderState=='PENDING'}" class="btn btn-danger"
+      <!--remove-->
+      <a data-th-if="${#strings.equals(projectOrderDetail.orderState,'PENDING')}" class="btn btn-danger"
          data-th-href="${'/projectOrder/remove/'+projectOrderDetail.id}" tabindex="14" >
         <i class="fas fa-ban" ></i >&nbsp;&nbsp;Cancel
       </a >

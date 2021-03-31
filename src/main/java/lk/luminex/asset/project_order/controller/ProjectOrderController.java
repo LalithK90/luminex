@@ -1,5 +1,6 @@
 package lk.luminex.asset.project_order.controller;
 
+import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.ledger.controller.LedgerController;
 import lk.luminex.asset.ledger.entity.Ledger;
@@ -90,13 +91,12 @@ public class ProjectOrderController {
     return commonMethod(model, "/projectOrder/pendingOrder/search", startDate, endDate, projectOrders);
   }
 
-  @GetMapping( "/pendingOrder/search" )
-  public String projectOrderSearchPendingOrder(@RequestAttribute( "startDate" ) LocalDate startDate,
-                                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+  @PostMapping( "/pendingOrder/search" )
+  public String projectOrderSearchPendingOrder(@ModelAttribute TwoDate twoDate, Model model) {
     List< ProjectOrder > projectOrders =
-        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate),
-                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate), OrderState.PENDING);
-    return commonMethod(model, "/projectOrder/pendingOrder/search", startDate, endDate, projectOrders);
+        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()),
+                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate()), OrderState.PENDING);
+    return commonMethod(model, "/projectOrder/pendingOrder/search", twoDate.getStartDate(), twoDate.getEndDate(), projectOrders);
 
   }
 
@@ -111,13 +111,12 @@ public class ProjectOrderController {
     return commonMethod(model, "/projectOrder/approved/search", startDate, endDate, projectOrders);
   }
 
-  @GetMapping( "/approved/search" )
-  public String projectOrderSearchApproved(@RequestAttribute( "startDate" ) LocalDate startDate,
-                                           @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+  @PostMapping( "/approved/search" )
+  public String projectOrderSearchApproved(@ModelAttribute TwoDate twoDate, Model model) {
     List< ProjectOrder > projectOrders =
-        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate),
-                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate), OrderState.APPROVED);
-    return commonMethod(model, "/projectOrder/approved/search", startDate, endDate, projectOrders);
+        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()),
+                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate()), OrderState.APPROVED);
+    return commonMethod(model, "/projectOrder/approved/search", twoDate.getStartDate(), twoDate.getEndDate(), projectOrders);
 
   }
 
@@ -132,13 +131,12 @@ public class ProjectOrderController {
     return commonMethod(model, "/projectOrder/approved/search", startDate, endDate, projectOrders);
   }
 
-  @GetMapping( "/cancel/search" )
-  public String projectOrderSearchCancel(@RequestAttribute( "startDate" ) LocalDate startDate,
-                                         @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+  @PostMapping( "/cancel/search" )
+  public String projectOrderSearchCancel(@ModelAttribute TwoDate twoDate, Model model) {
     List< ProjectOrder > projectOrders =
-        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate),
-                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate), OrderState.CANCELED);
-    return commonMethod(model, "/projectOrder/approved/search", startDate, endDate, projectOrders);
+        projectOrderService.findByCreatedAtIsBetweenAndOrderState(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()),
+                                                                  dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate()), OrderState.CANCELED);
+    return commonMethod(model, "/projectOrder/approved/search", twoDate.getStartDate(), twoDate.getEndDate(), projectOrders);
 
   }
 
