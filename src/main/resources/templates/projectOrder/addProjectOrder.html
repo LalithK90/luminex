@@ -301,7 +301,7 @@
     }
 
     //modal total mount calculate
-    $("#requestCount").bind('keyup', function () {
+    $("#requestCount").bind('keyup keydown change', function () {
         if ($("#abQuantity").val() >= $(this).val()) {
             $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat($(this).val()));
             addButtonDisable();

@@ -78,16 +78,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // For developing easy to give permission all lin
 // {"ADMIN","PROCUREMENT_MANAGER","SUPERVISOR","MANAGER","HR_MANAGER","ACCOUNT_MANAGER","ENGINNER"}
 
-/*
     http.authorizeRequests(
         authorizeRequests ->
             authorizeRequests
                 .antMatchers(ALL_PERMIT_URL).permitAll()
-                .antMatchers("/category/**").hasAnyRole("ADMIN","PROCUREMENT_MANAGER")
-                .antMatchers("/category/**").hasAnyRole("CASHIER","MANAGER")
-                .antMatchers("/discountRatio/**").hasAnyRole("PROCUREMENT_MANAGER","MANAGER")
+                .antMatchers("/category/**").hasAnyRole("ADMIN","PROCUREMENT_MANAGER","CASHIER","MANAGER")
                 .antMatchers("/employee/**").hasAnyRole("MANAGER","HR_MANAGER" ,"ADMIN")
                 .antMatchers("/goodReceivedNote/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER")
+                .antMatchers("/projectOrder/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER","SUPERVISOR")
+                .antMatchers("/project/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER","SUPERVISOR")
                 .antMatchers("/payment/**").hasAnyRole("MANAGER","ACCOUNT_MANAGER")
                 .antMatchers("/purchaseOrder/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER")
                 .antMatchers("/role/**").hasAnyRole("MANAGER","HR_MANAGER","ADMIN")
@@ -130,7 +129,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Cross site disable
         .csrf(AbstractHttpConfigurer::disable)
         .exceptionHandling();
-*/
 
   }
 }
