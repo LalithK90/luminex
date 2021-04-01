@@ -1,9 +1,11 @@
 package lk.luminex.asset.project_order.controller;
 
+import lk.luminex.asset.employee.entity.Employee;
 import lk.luminex.asset.ledger.controller.LedgerController;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.asset.ledger.service.LedgerService;
 import lk.luminex.asset.order_ledger.entity.OrderLedger;
+import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.project.service.ProjectService;
 import lk.luminex.asset.project_order.entity.ProjectOrder;
 import lk.luminex.asset.project_order.entity.enums.OrderState;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -147,16 +150,20 @@ public class ProjectOrderController {
         .build()
         .toString());
     //send not expired and not zero quantity
-    model.addAttribute("ledgers",
+   model.addAttribute("ledgers",
                        ledgerService.findAll().stream().filter(x -> 0 < Integer.parseInt(x.getQuantity())).collect(Collectors.toList()));
     return "projectOrder/addProjectOrder";
+
+
   }
 
-  @GetMapping( "/add/{id}" )
+ @GetMapping( "/add/{id}" )
   public String getOrderForm(@PathVariable( "id" ) Integer id, Model model) {
+
     model.addAttribute("projectDetail", projectService.findById(id));
     return common(model, new ProjectOrder());
   }
+
 
   @GetMapping( "/{id}" )
   public String viewDetails(@PathVariable Integer id, Model model) {
