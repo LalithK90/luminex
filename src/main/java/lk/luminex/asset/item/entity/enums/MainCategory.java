@@ -9,16 +9,21 @@ public enum MainCategory {
 
 
     CABLE("Cable"),
+    CABLE_TIE("Cable Tie"),
     BUILDING_MATERIALS("Building Materials"),
+    GRIP("Grip"),
     CEMENT("Cement"),
     LIGHT("Light"),
     LADDER("Ladder"),
     ROPE("Rope"),
+    SAFETY_BELT("Safety  Belt"),
+    GALVANISE_BRACKET("Galvanise Bracket"),
+    CLAMP("Clamp"),
     HELMET("Helmet");
+
     /* Database saved name(UID shown name)
     CANNED_FOODS("Canned Foods"),
     */
-
 
     private final String mainCategory;
 }
