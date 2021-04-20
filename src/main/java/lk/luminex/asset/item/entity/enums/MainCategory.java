@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MainCategory {
 
+    CONSTRUCTION_ACCESSORIES("Construction Accessories"),
+    SAFETY_MATERIALS("Safety Material"),
 
     CABLE("Cable"),
     CABLE_TIE("Cable Tie"),

@@ -11,6 +11,8 @@ public enum Designation {
   PROCUREMENT_MANAGER("Procurement Manager"),
   HR_MANAGER("HR Manager"),
   ACCOUNT_MANAGER("Account Manager"),
+  ENGINEER("Engineer"),
+  SUPERVISOR("Supervisor"),
   CASHIER("Cashier");
 
   private final String designation;

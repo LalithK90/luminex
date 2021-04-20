@@ -63,17 +63,16 @@
                 <th data-th-if="${supplierDetailShow !=true}" >
                   <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/edit/' + supplier.id}" ><i
                         class="fa fa-folder-open" style="font-size: 15px" ></i >Edit Item </a >
-                  <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/supplier/' + supplier.id}" ><i
+                  <a class="btn btn-success btn-sm" data-th-href="${'/supplierItem/supplier/' + supplier.id}" ><i
                         class="fa fa-folder-open" style="font-size: 15px" ></i >Add Item </a >
-                  <a class="btn btn-primary btn-sm" data-th-href="${'/purchaseOrder/supplier/' + supplier.id}" ><i
+                  <a class="btn btn-warning btn-sm" style="margin-top: 3px" data-th-href="${'/purchaseOrder/supplier/' + supplier.id}" ><i
                         class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
                   <a class="btn btn-primary btn-sm" data-th-href="${'/supplier/' + supplier.id}" ><i
                         class="fa fa-folder-open" style="font-size: 15px" ></i >&nbsp;View</a >
-                  <a class="btn btn-success btn-sm" data-th-href="${'/supplier/edit/' + supplier.id}" ><i
+                  <a class="btn btn-secondary btn-sm" data-th-href="${'/supplier/edit/' + supplier.id}" ><i
                         class="fa fa-edit" style="font-size: 15px" ></i >&nbsp;Edit</a >
                   <a class="btn btn-danger btn-sm" data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" data-th-href="${'/supplier/delete/' + supplier.id}" >
-                  <i
-                        class="fa fa-trash" style="font-size: 15px" ></i > Delete</a >
+                  <i class="fa fa-trash" style="font-size: 15px" ></i > Delete</a >
                 </th >
                 <th data-th-if="${supplierDetailShow==true}" >
                   <a class="btn btn-primary btn-sm"

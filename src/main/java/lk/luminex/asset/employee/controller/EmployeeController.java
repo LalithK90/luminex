@@ -121,6 +121,18 @@ public class EmployeeController {
   @PostMapping( value = {"/save", "/update"} )
   public String addEmployee(@Valid @ModelAttribute Employee employee, BindingResult result, Model model
                            ) {
+    Employee employeeNic = null;
+
+    if ( employee.getNic() != null && employee.getId() == null ) {
+      employeeNic = employeeService.findByNic(employee.getNic());
+    }
+    if ( employeeNic != null ) {
+      ObjectError error = new ObjectError("employee",
+              "There is employee on same nic number . System message ");
+      result.addError(error);
+    }
+
+
     if ( result.hasErrors() ) {
       model.addAttribute("addStatus", true);
       model.addAttribute("employee", employee);
