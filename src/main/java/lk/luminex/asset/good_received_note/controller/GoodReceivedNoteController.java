@@ -57,18 +57,14 @@ public class GoodReceivedNoteController {
 //New Leger add to add system as new item on ledger
     List< Ledger > ledgers = new ArrayList<>();
     for ( Ledger ledger : goodReceivedNote.getLedgers() ) {
-      Ledger ledgerDB = ledgerService.findByItem(ledger.getItem() );
+      Ledger ledgerDB = ledgerService.findByItem(ledger.getItem());
 //if there is on value in ledger need to update it
       if ( ledgerDB != null ) {
-          ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
-          ledger.setGoodReceivedNote(goodReceivedNote);
-          ledger.setLiveDead(LiveDead.ACTIVE);
-          ledgers.add(ledger);
+        ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
       }
       ledger.setGoodReceivedNote(goodReceivedNote);
       ledger.setLiveDead(LiveDead.ACTIVE);
       ledgers.add(ledger);
-
     }
     goodReceivedNote.setGoodReceivedNoteState(GoodReceivedNoteState.NOT_PAID);
     goodReceivedNote.setLedgers(ledgers);
