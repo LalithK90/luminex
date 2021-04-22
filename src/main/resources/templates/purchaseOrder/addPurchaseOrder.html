@@ -187,6 +187,7 @@
     if (supplierIdValue.length !== 0) {
         $("#item").bind('change', function () {
             //taken item id
+            // http://localhost:8080/supplierItem/supplierItem?supplierId=15&itemId=1
             let itemIdValue = $(this).val();       //get data from a database using supplier and item
             let purchaseOrderItemUrl = $("#purchaseOrderItemUrl").val().split("?");
             let finalUrl = purchaseOrderItemUrl[0] + `?supplierId=${supplierIdValue}&itemId=${itemIdValue}`;
@@ -204,6 +205,8 @@
             });
         });
     }
+
+
     //table row add
     let tableRowAdd = function (value) {
         let rows = $("#selectedItemInTable tbody tr").length;
