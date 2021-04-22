@@ -32,7 +32,7 @@ public class GoodReceivedNote extends AuditEntity {
     @ManyToOne
     private PurchaseOrder purchaseOrder;
 
-    @OneToMany( mappedBy = "goodReceivedNote", cascade = CascadeType.PERSIST)
+    @OneToMany( mappedBy = "goodReceivedNote", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List< Ledger > ledgers;
 
 
