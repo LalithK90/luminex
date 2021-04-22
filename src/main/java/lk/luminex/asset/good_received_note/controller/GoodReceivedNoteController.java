@@ -60,7 +60,8 @@ public class GoodReceivedNoteController {
       Ledger ledgerDB = ledgerService.findByItem(ledger.getItem());
 //if there is on value in ledger need to update it
       if ( ledgerDB != null ) {
-        ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
+        ledger.setId(ledgerDB.getId());
+        ledger.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
       }
       ledger.setGoodReceivedNote(goodReceivedNote);
       ledger.setLiveDead(LiveDead.ACTIVE);
