@@ -35,22 +35,29 @@
     <div class="collapse mx-auto" id="dataTargetCollapse" >
       <div class="container-fluid text-center" >
         <div class="row" >
-          <div class="col-sm-6 col-sm-offset-3" >
+          <div class="container-fluid" >
             <h4 class="text-info" ><b > Custom Search</b ></h4 >
+          </div >
+          <div class="container-fluid" >
             <form class="form-inline" data-th-action="@{/report/project}" data-th-method="POST" >
-              <div class="form-group" >
-                <label for="startDate" >FROM :</label >
-                <input class="form-control" id="startDate" name="startDate" type="date" />
+              <div class="row" >
+                <div class="col" >
+                  <label for="startDate" >FROM :</label >
+                  <input class="form-control" id="startDate" name="startDate" type="date" />
+                </div >
+                <div class="col" >
+                  <label for="endDate" >TO :</label >
+                  <input class="form-control" id="endDate" name="endDate" type="date" />
+                </div >
+                <div class="col" >
+                  <button class="btn btn-success mt-4" id="btnSummaryFind" type="submit" ><span
+                        class="glyphicon glyphicon-search" ></span >&nbsp;Search
+                  </button >
+                </div >
               </div >
-              <div class="form-group" >
-                <label for="endDate" >TO :</label >
-                <input class="form-control" id="endDate" name="endDate" type="date" />
-              </div >
-              <button class="btn btn-success" id="btnSummaryFind" type="submit" ><span
-                    class="glyphicon glyphicon-search" ></span >&nbsp;Search
-              </button >
             </form >
           </div >
+
         </div >
       </div >
     </div >
@@ -97,7 +104,7 @@
               <label class="control-label" for="startDate" >Start Date :</label >
             </div >
             <div class="col-md-8" >
-              <p id="startDate" data-th-text="${projectSupplierItem.project.startDate}"
+              <p data-th-text="${projectSupplierItem.project.startDate}"
                  class="display_detail" ></p >
             </div >
           </div >
@@ -156,7 +163,7 @@
     </div >
     <div class="col-sm-12 flex-column " >
       <div class="row" >
-        <table class="table table-hover table-striped" >
+        <table class="table table-hover table-striped" id="tableItem" >
           <thead >
           <tr >
             <th > Index</th >
@@ -173,10 +180,14 @@
             <th data-th-text="${item.count}" ></th >
             <th data-th-text="${item.amount}" ></th >
             <th >
-              <span class="amount" data-th-text="${item.amount * item.amount}" ></span ></th >
+              <span data-th-id="${rowCount.index}" class="amount" data-th-text="${item.amount * item.amount}" ></span >
+            </th >
           </tr >
           </tbody >
         </table >
+      </div >
+      <div class="row" >
+        Total : <span id="totalAmount" ></span >
       </div >
     </div >
   </div >
@@ -186,6 +197,16 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+
+    let total = 0;
+    let tableRowLength = $("#tableItem").length;
+    for (let i = 1; i < tableRowLength; i++) {
+        total += parseFloat($(`#{i}`).val());
+    }
+    $("#totalAmount").val(total)
+</script >
 
 </body >
 </html >
