@@ -55,8 +55,8 @@ public class ProjectOrderController {
     model.addAttribute("formAction", formAction);
     model.addAttribute("projectOrders", projectOrders);
     model.addAttribute("firstOrderMessage", true);
-    model.addAttribute("message", "Following table show details belongs since" + startDate + " to " + endDate +
-        "there month. if you need to more please search using above method");
+    model.addAttribute("message", "Following table show details belongs since " + startDate + " to " + endDate +
+        "there month. if you need to more please search using above method ");
     return "projectOrder/projectOrder";
   }
 

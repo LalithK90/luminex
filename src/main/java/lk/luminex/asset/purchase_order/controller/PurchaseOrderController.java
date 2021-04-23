@@ -39,21 +39,20 @@ public class PurchaseOrderController {
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
     private final EmailService emailService;
     private final TwilioMessageService twilioMessageService;
-    private final SupplierItemService supplierItemService;
 
     public PurchaseOrderController(PurchaseOrderService purchaseOrderService,
                                    PurchaseOrderItemService purchaseOrderItemService, SupplierService supplierService
-        , CommonService commonService, ItemService itemService, MakeAutoGenerateNumberService makeAutoGenerateNumberService, EmailService emailService,
-                                   TwilioMessageService twilioMessageService, SupplierItemService supplierItemService) {
+            , CommonService commonService, ItemService itemService, MakeAutoGenerateNumberService makeAutoGenerateNumberService,
+                                   EmailService emailService,
+                                   TwilioMessageService twilioMessageService) {
         this.purchaseOrderService = purchaseOrderService;
-      this.purchaseOrderItemService = purchaseOrderItemService;
-      this.supplierService = supplierService;
+        this.purchaseOrderItemService = purchaseOrderItemService;
+        this.supplierService = supplierService;
         this.commonService = commonService;
-      this.itemService = itemService;
-      this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
+        this.itemService = itemService;
+        this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
         this.emailService = emailService;
         this.twilioMessageService = twilioMessageService;
-        this.supplierItemService = supplierItemService;
     }
 
     @GetMapping
@@ -94,12 +93,12 @@ public class PurchaseOrderController {
         if (purchaseOrder.getId() == null) {
             if (purchaseOrderService.lastPurchaseOrder() == null) {
                 //need to generate new one
-                purchaseOrder.setCode("SSPO" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                purchaseOrder.setCode("LPO" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
 
-                //if there is customer in db need to get that customer's code and increase its value
-                String previousCode = purchaseOrderService.lastPurchaseOrder().getCode().substring(4);
-                purchaseOrder.setCode("SSPO" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                //if there is customer in db need to get that customer's code and incrgood_received_noteease its value
+                String previousCode = purchaseOrderService.lastPurchaseOrder().getCode().substring(3);
+                purchaseOrder.setCode("LPO" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
         }
         List<PurchaseOrderItem> purchaseOrderItemList = new ArrayList<>();
@@ -115,14 +114,13 @@ public class PurchaseOrderController {
         if (purchaseOrderSaved.getSupplier().getEmail() != null) {
             StringBuilder message = new StringBuilder("Item Name\t\t\t\t\tQuantity\t\t\tItem Price\t\t\tTotal(Rs)\n");
             for (int i = 0; i < purchaseOrder.getPurchaseOrderItems().size(); i++) {
-              Item item = itemService.findById(purchaseOrder.getPurchaseOrderItems().get(i).getItem().getId());
-              PurchaseOrderItem purchaseOrderItem = purchaseOrderItemService.findById(purchaseOrderSaved.getPurchaseOrderItems().get(i).getId());
+                Item item = itemService.findById(purchaseOrder.getPurchaseOrderItems().get(i).getItem().getId());
+                PurchaseOrderItem purchaseOrderItem = purchaseOrderItemService.findById(purchaseOrderSaved.getPurchaseOrderItems().get(i).getId());
                 message
                         .append(item.getName())
                         .append("\t\t\t\t\t")
                         .append(purchaseOrderItem.getQuantity())
                         .append("\t\t\t\t\t")
-                        .append(supplierItemService.findBySupplierAndItem(purchaseOrderSaved.getSupplier(),item).getPrice())
                         .append("\t\t\t\t\t")
                         .append(purchaseOrderItem.getLineTotal())
                         .append("\n");
@@ -131,8 +129,8 @@ public class PurchaseOrderController {
                     "Requesting Items According To PO Code " + purchaseOrder.getCode(), message.toString());
             if (purchaseOrderSaved.getSupplier().getContactOne() != null) {
                 try {
-                  String mobileNumber = purchaseOrderSaved.getSupplier().getContactOne().substring(1,10);
-                    twilioMessageService.sendSMS("+94"+mobileNumber, "There is immediate PO from " +
+                    String mobileNumber = purchaseOrderSaved.getSupplier().getContactOne().substring(1, 10);
+                    twilioMessageService.sendSMS("+94" + mobileNumber, "There is immediate PO from " +
                             "Luminex \nPlease Check Your Email Form Further Details");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,10 +142,7 @@ public class PurchaseOrderController {
 
     @GetMapping("/all")
     public String findAll(Model model) {
-        model.addAttribute("purchaseOrders", purchaseOrderService.findAll()
-                .stream()
-                .filter(x -> x.getPurchaseOrderStatus().equals(PurchaseOrderStatus.NOT_COMPLETED))
-                .collect(Collectors.toList()));
+        model.addAttribute("purchaseOrders", purchaseOrderService.findByPurchaseOrderStatus(PurchaseOrderStatus.NOT_COMPLETED));
         model.addAttribute("heading", "Pending Purchase Order");
         model.addAttribute("grnStatus", true);
         return "purchaseOrder/purchaseOrder";
@@ -188,4 +183,3 @@ public class PurchaseOrderController {
     }
 
 }
-

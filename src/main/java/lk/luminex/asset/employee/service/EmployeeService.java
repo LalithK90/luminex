@@ -4,6 +4,7 @@ package lk.luminex.asset.employee.service;
 import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.employee.dao.EmployeeDao;
 import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.employee.entity.enums.EmployeeStatus;
 import lk.luminex.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
@@ -31,6 +32,7 @@ public class EmployeeService implements AbstractService< Employee, Integer > {
     public List< Employee > findAll() {
         return employeeDao.findAll().stream()
             .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+               /* .filter(x -> x.getEmployeeStatus().equals(EmployeeStatus.WORKING) && LiveDead.ACTIVE.equals(x.getLiveDead()))*/
             .collect(Collectors.toList());
     }
 
@@ -44,7 +46,8 @@ public class EmployeeService implements AbstractService< Employee, Integer > {
     @Transactional
     public Employee persist(Employee employee) {
         if(employee.getId()==null){
-            employee.setLiveDead(LiveDead.ACTIVE);}
+            employee.setLiveDead(LiveDead.ACTIVE);
+        employee.setEmployeeStatus(EmployeeStatus.WORKING);}
         return employeeDao.save(employee);
     }
 
@@ -83,6 +86,7 @@ public class EmployeeService implements AbstractService< Employee, Integer > {
     public Employee findByNic(String nic) {
         return employeeDao.findByNic(nic);
     }
+
 
 
 }

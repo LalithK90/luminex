@@ -20,8 +20,11 @@ import lk.luminex.asset.report.model.ProjectSupplierItem;
 import lk.luminex.asset.supplier_item.entity.SupplierItem;
 import lk.luminex.asset.supplier_item.service.SupplierItemService;
 import lk.luminex.asset.user_management.user.service.UserService;
+import lk.luminex.asset.viva.entity.SupplierItemObj;
 import lk.luminex.util.service.DateTimeAgeService;
 import lk.luminex.util.service.OperatorService;
+import lombok.NonNull;
+import org.hibernate.mapping.Collection;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +34,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,7 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping( "/report" )
+@RequestMapping("/report")
 public class ReportController {
   private final PaymentService paymentService;
   private final ProjectOrderService projectOrderService;
@@ -199,47 +206,47 @@ public class ReportController {
   private void commonPerCashier(List< ProjectOrder > projectOrders, Model model) {
     List< NameCount > orderByCashierAndTotalAmount = new ArrayList<>();
 //name, count, total
-    HashSet< String > createdByAll = new HashSet<>();
-    projectOrders.forEach(x -> createdByAll.add(x.getCreatedBy()));
+        HashSet<String> createdByAll = new HashSet<>();
+        projectOrders.forEach(x -> createdByAll.add(x.getCreatedBy()));
 
-    createdByAll.forEach(x -> {
-      NameCount nameCount = new NameCount();
-      Employee employee = userService.findByUserName(x).getEmployee();
-      nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
-      AtomicReference< BigDecimal > cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
-      List< ProjectOrder > cashierOrder =
-          projectOrders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
-      nameCount.setCount(cashierOrder.size());
-      nameCount.setTotal(cashierTotalCount.get());
-      orderByCashierAndTotalAmount.add(nameCount);
-    });
-    model.addAttribute("orderByCashierAndTotalAmount", orderByCashierAndTotalAmount);
-  }
+        createdByAll.forEach(x -> {
+            NameCount nameCount = new NameCount();
+            Employee employee = userService.findByUserName(x).getEmployee();
+            nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
+            AtomicReference<BigDecimal> cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
+            List<ProjectOrder> cashierOrder =
+                    projectOrders.stream().filter(a -> a.getCreatedBy().equals(x)).collect(Collectors.toList());
+            nameCount.setCount(cashierOrder.size());
+            nameCount.setTotal(cashierTotalCount.get());
+            orderByCashierAndTotalAmount.add(nameCount);
+        });
+        model.addAttribute("orderByCashierAndTotalAmount", orderByCashierAndTotalAmount);
+    }
 
-  @GetMapping( "/perCashier" )
-  public String perCashierToday(Model model) {
-    LocalDate localDate = LocalDate.now();
-    String message = "This report is belongs to " + localDate.toString();
-    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
-    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
-    commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
-    model.addAttribute("message", message);
-    return "report/perCashierReport";
-  }
+    @GetMapping("/perCashier")
+    public String perCashierToday(Model model) {
+        LocalDate localDate = LocalDate.now();
+        String message = "This report is belongs to " + localDate.toString();
+        LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
+        LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
+        commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+        model.addAttribute("message", message);
+        return "report/perCashierReport";
+    }
 
-  @PostMapping( "/perCashier/search" )
-  public String getPerCashierSearch(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
-    String message =
-        "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
-    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
-    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
-    commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
-    model.addAttribute("message", message);
-    return "report/perCashierReport";
-  }
+    @PostMapping("/perCashier/search")
+    public String getPerCashierSearch(@ModelAttribute("twoDate") TwoDate twoDate, Model model) {
+        String message =
+                "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
+        LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
+        LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
+        commonPerCashier(projectOrderService.findByCreatedAtIsBetween(startDateTime, endDateTime), model);
+        model.addAttribute("message", message);
+        return "report/perCashierReport";
+    }
 
-  private void commonPerAccountUser(List< Payment > payments, Model model) {
-    List< NameCount > paymentByUserAndTotalAmount = new ArrayList<>();
+    private void commonPerAccountUser(List<Payment> payments, Model model) {
+        List<NameCount> paymentByUserAndTotalAmount = new ArrayList<>();
 //name, count, total
     HashSet< String > createdByAllPayment = new HashSet<>();
     payments.forEach(x -> createdByAllPayment.add(x.getCreatedBy()));

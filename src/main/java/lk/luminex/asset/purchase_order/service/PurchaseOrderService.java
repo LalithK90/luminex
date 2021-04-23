@@ -29,8 +29,8 @@ public class PurchaseOrderService implements AbstractService< PurchaseOrder, Int
 
     public List< PurchaseOrder > findAll() {
         return purchaseOrderDao.findAll().stream()
-            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
-            .collect(Collectors.toList());
+                .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList());
     }
 
     public PurchaseOrder findById(Integer id) {
@@ -60,7 +60,9 @@ public class PurchaseOrderService implements AbstractService< PurchaseOrder, Int
     }
 
     public List< PurchaseOrder > findByPurchaseOrderStatus(PurchaseOrderStatus purchaseOrderStatus) {
-        return purchaseOrderDao.findByPurchaseOrderStatus(purchaseOrderStatus);
+        List<PurchaseOrder> purchaseOrderLIst = purchaseOrderDao.findByPurchaseOrderStatus(purchaseOrderStatus);
+        System.out.println("dsdds   "+purchaseOrderLIst.size());
+        return purchaseOrderLIst;
     }
 
 
@@ -74,6 +76,6 @@ public class PurchaseOrderService implements AbstractService< PurchaseOrder, Int
     }
 
     public List< PurchaseOrder> findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to) {
-    return purchaseOrderDao.findByCreatedAtIsBetween(form, to);
+        return purchaseOrderDao.findByCreatedAtIsBetween(form, to);
     }
 }

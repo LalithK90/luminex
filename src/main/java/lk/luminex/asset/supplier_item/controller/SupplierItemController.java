@@ -164,8 +164,9 @@ public class SupplierItemController {
     purchaseOrderItemLedger.setRop(supplierItem.getItem().getRop());
     purchaseOrderItemLedger.setPrice(supplierItem.getPrice());
 
-    Ledger ledger =
-        ledgerDao.findByItem(supplierItem.getItem());
+
+    Ledger ledger = ledgerDao.findByItem(itemService.findById(itemId));
+
 
     if ( ledger != null ) {
       purchaseOrderItemLedger.setAvailableQuantity(ledger.getQuantity());

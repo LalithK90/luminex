@@ -69,7 +69,7 @@
               <!--Name-->
               <div class="form-row text-right" >
                 <div class="col-md-4" >
-                  <label class="control-label" for="name" >Name :</label >
+                  <label class="control-label" for="name" >Sub Category :</label >
                 </div >
                 <div class="col-md-4" >
                   <input id="name" data-th-field="*{name}" class="form-control" tabindex="4" type="text" required />
@@ -84,11 +84,11 @@
                 <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
               </button >
               <button class="btn btn-success ml-5" type="submit" tabindex="21" >
-                <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span id="submit"
-                                                                                       data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
+                <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+                <span id="submit" data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
               </button >
-              <button class="btn btn-warning ml-5" type="reset" tabindex="21" >
-                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+              <button class="btn btn-warning btnReset ml-5" type="reset" tabindex="21" >
+                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Reset
               </button >
             </div >
             <!--Error-->
