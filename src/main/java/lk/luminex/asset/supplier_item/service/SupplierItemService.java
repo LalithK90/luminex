@@ -34,7 +34,8 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
   public SupplierItem findById(Integer id) {
     return supplierItemDao.getOne(id);
   }
-@Transactional
+
+  @Transactional
   public SupplierItem persist(SupplierItem supplierItem) {
     //if item is new supplier should be save as currently buying item
     if ( supplierItem.getId() == null ) {
@@ -93,12 +94,17 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
     return suppliers;
   }
 
+  public List< SupplierItem > findByItemOne(Item item) {
+
+    return supplierItemDao.findByItem(item);
+  }
+
   public Item findByItemAndSupplier(Item item, Supplier supplier) {
     return supplierItemDao.findByItemAndSupplier(item, supplier);
   }
 
   public SupplierItem findBySupplierAndItemAndItemSupplierStatus(Supplier supplier, Item item,
-                                                              ItemSupplierStatus itemSupplierStatus) {
+                                                                 ItemSupplierStatus itemSupplierStatus) {
     return supplierItemDao.findBySupplierAndItemAndItemSupplierStatus(supplier, item, itemSupplierStatus);
   }
 

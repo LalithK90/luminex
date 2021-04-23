@@ -1,5 +1,6 @@
 package lk.luminex.asset.report.model;
 
+import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.supplier_item.entity.SupplierItem;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectSupplierItem {
   private Project project;
-  private List< SupplierItem > supplierItems;
+  private List< Item > items;
   private BigDecimal amount;
 }

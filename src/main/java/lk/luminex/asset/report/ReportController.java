@@ -4,6 +4,7 @@ import lk.luminex.asset.common_asset.model.NameCount;
 import lk.luminex.asset.common_asset.model.ParameterCount;
 import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.item.service.ItemService;
 import lk.luminex.asset.project.entity.Project;
 import lk.luminex.asset.project.service.ProjectService;
 import lk.luminex.asset.project_order.entity.ProjectOrder;
@@ -16,6 +17,8 @@ import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.payment.entity.Payment;
 import lk.luminex.asset.payment.service.PaymentService;
 import lk.luminex.asset.report.model.ProjectSupplierItem;
+import lk.luminex.asset.supplier_item.entity.SupplierItem;
+import lk.luminex.asset.supplier_item.service.SupplierItemService;
 import lk.luminex.asset.user_management.user.service.UserService;
 import lk.luminex.util.service.DateTimeAgeService;
 import lk.luminex.util.service.OperatorService;
@@ -46,11 +49,14 @@ public class ReportController {
   private final UserService userService;
   private final OrderLedgerService orderLedgerService;
   private final ProjectService projectService;
+  private final ItemService itemService;
+  private final SupplierItemService supplierItemService;
 
   public ReportController(PaymentService paymentService, ProjectOrderService projectOrderService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
                           UserService userService, OrderLedgerService orderLedgerService,
-                          ProjectService projectService) {
+                          ProjectService projectService, ItemService itemService,
+                          SupplierItemService supplierItemService) {
     this.paymentService = paymentService;
     this.projectOrderService = projectOrderService;
     this.operatorService = operatorService;
@@ -58,6 +64,8 @@ public class ReportController {
     this.userService = userService;
     this.orderLedgerService = orderLedgerService;
     this.projectService = projectService;
+    this.itemService = itemService;
+    this.supplierItemService = supplierItemService;
   }
 
   private String commonAll(List< Payment > payments, List< ProjectOrder > projectOrders, Model model, String message,
@@ -331,7 +339,7 @@ public class ReportController {
     return "report/project";
   }
 
-  @PostMapping( "/perItem/search" )
+  @PostMapping( "/project" )
   public String getProject(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
     String message =
         "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
@@ -354,6 +362,7 @@ public class ReportController {
         if ( x.equals(orderLedger.getProjectOrder().getProject()) ) {
           ProjectSupplierItem projectSupplierItem = new ProjectSupplierItem();
           projectSupplierItem.setProject(projectService.findById(x.getId()));
+          List< Item > projectItems = new ArrayList<>();
 
           List< ProjectOrder > projectOrders = new ArrayList<>();
 
@@ -370,14 +379,54 @@ public class ReportController {
               projectOrders.stream().filter(p -> p.getOrderState().equals(OrderState.APPROVED)).collect(Collectors.toList());
 
 
-          List< BigDecimal > totalPrice = new ArrayList<>();
+          for ( ProjectOrder activeProjectOrder : activeProjectOrders ) {
+            activeProjectOrders.forEach(z -> {
+              for ( OrderLedger ledger : z.getOrderLedgers() ) {
+                activeProjectOrder.getOrderLedgers().forEach(s -> {
+                  s.getProjectOrder().getOrderLedgers().forEach(q -> {
+                    projectItems.add(itemService.findById(q.getId()));
+                  });
+                });
 
+
+              }
+            });
+          }
+
+          projectItems.stream().distinct();
+
+
+          List< Item > projectItemWithDetails = new ArrayList<>();
+          for ( Item projectItem : projectItems ) {
+            List< SupplierItem > supplierItems = supplierItemService.findByItemOne(projectItem);
+            if ( !supplierItems.isEmpty() ) {
+              projectItem.setAmount(supplierItems.get(supplierItems.size() - 1).getPrice());
+              int itemcounter = 0;
+              for ( ProjectOrder activeProjectOrder : activeProjectOrders ) {
+                if ( activeProjectOrder.getProject().equals(x) ) {
+                  List< OrderLedger > orderLedgers1 =
+                      activeProjectOrder.getOrderLedgers().stream().filter(v -> v.getLedger().getItem().equals(projectItem)).collect(Collectors.toList());
+                  for ( OrderLedger ledger : orderLedgers1 ) {
+                    itemcounter =
+                        itemcounter + Integer.parseInt(orderLedgerService.findById(ledger.getId()).getQuantity());
+                  }
+                }
+              }
+              projectItem.setCount(itemcounter);
+              projectItemWithDetails.add(projectItem);
+            }
+
+
+          }
+
+          projectSupplierItem.setItems(projectItemWithDetails);
+          projectSupplierItems.add(projectSupplierItem);
 
         }
       }
     });
 
-
+    model.addAttribute("projectSupplierItems", projectSupplierItems);
   }
 
 

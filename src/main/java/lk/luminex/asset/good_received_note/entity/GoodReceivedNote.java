@@ -34,9 +34,9 @@ public class GoodReceivedNote extends AuditEntity {
 
     @ManyToOne
     private PurchaseOrder purchaseOrder;
-
+/*
     @ManyToOne
-    private Supplier supplier;
+    private Supplier supplier;*/
 
     @OneToMany( mappedBy = "goodReceivedNote", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List< Ledger > ledgers;

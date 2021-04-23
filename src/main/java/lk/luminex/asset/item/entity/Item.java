@@ -55,4 +55,11 @@ public class Item extends AuditEntity {
 
     @OneToMany( mappedBy = "item" )
     private List< PurchaseOrderItem > purchaseOrderItems;
+
+    @Transient
+    private BigDecimal amount;
+
+    @Transient
+    private int count;
+
 }
