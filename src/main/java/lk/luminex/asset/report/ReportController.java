@@ -4,14 +4,18 @@ import lk.luminex.asset.common_asset.model.NameCount;
 import lk.luminex.asset.common_asset.model.ParameterCount;
 import lk.luminex.asset.common_asset.model.TwoDate;
 import lk.luminex.asset.employee.entity.Employee;
+import lk.luminex.asset.project.entity.Project;
+import lk.luminex.asset.project.service.ProjectService;
 import lk.luminex.asset.project_order.entity.ProjectOrder;
 import lk.luminex.asset.payment.entity.enums.PaymentMethod;
+import lk.luminex.asset.project_order.entity.enums.OrderState;
 import lk.luminex.asset.project_order.service.ProjectOrderService;
 import lk.luminex.asset.order_ledger.entity.OrderLedger;
 import lk.luminex.asset.order_ledger.service.OrderLedgerService;
 import lk.luminex.asset.item.entity.Item;
 import lk.luminex.asset.payment.entity.Payment;
 import lk.luminex.asset.payment.service.PaymentService;
+import lk.luminex.asset.report.model.ProjectSupplierItem;
 import lk.luminex.asset.user_management.user.service.UserService;
 import lk.luminex.util.service.DateTimeAgeService;
 import lk.luminex.util.service.OperatorService;
@@ -41,16 +45,19 @@ public class ReportController {
   private final DateTimeAgeService dateTimeAgeService;
   private final UserService userService;
   private final OrderLedgerService orderLedgerService;
+  private final ProjectService projectService;
 
   public ReportController(PaymentService paymentService, ProjectOrderService projectOrderService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
-                          UserService userService, OrderLedgerService orderLedgerService) {
+                          UserService userService, OrderLedgerService orderLedgerService,
+                          ProjectService projectService) {
     this.paymentService = paymentService;
     this.projectOrderService = projectOrderService;
     this.operatorService = operatorService;
     this.dateTimeAgeService = dateTimeAgeService;
     this.userService = userService;
     this.orderLedgerService = orderLedgerService;
+    this.projectService = projectService;
   }
 
   private String commonAll(List< Payment > payments, List< ProjectOrder > projectOrders, Model model, String message,
@@ -312,5 +319,66 @@ public class ReportController {
     model.addAttribute("message", message);
     return "report/perItemReport";
   }
+
+  @GetMapping( "/project" )
+  public String perProject(Model model) {
+    LocalDate localDate = LocalDate.now();
+    String message = "This report is belongs to " + localDate.toString();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
+    commonProject(startDateTime, endDateTime, model);
+    model.addAttribute("message", message);
+    return "report/project";
+  }
+
+  @PostMapping( "/perItem/search" )
+  public String getProject(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
+    String message =
+        "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString() + " and \n congratulation all are done by you.";
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
+    commonProject(startDateTime, endDateTime, model);
+    model.addAttribute("message", message);
+    return "report/project";
+  }
+
+  private void commonProject(LocalDateTime startDateTime, LocalDateTime endDateTime, Model model) {
+    List< ProjectSupplierItem > projectSupplierItems = new ArrayList<>();
+
+    List< OrderLedger > orderLedgers = orderLedgerService.findByCreatedAtIsBetween(startDateTime, endDateTime);
+
+    List< Project > projects = projectService.findAll();
+
+    projects.forEach(x -> {
+      for ( OrderLedger orderLedger : orderLedgers ) {
+        if ( x.equals(orderLedger.getProjectOrder().getProject()) ) {
+          ProjectSupplierItem projectSupplierItem = new ProjectSupplierItem();
+          projectSupplierItem.setProject(projectService.findById(x.getId()));
+
+          List< ProjectOrder > projectOrders = new ArrayList<>();
+
+          List< OrderLedger > orderLedgerPerProjects =
+              orderLedgers
+                  .stream()
+                  .filter(y -> y.getProjectOrder().getProject().equals(x))
+                  .collect(Collectors.toList());
+
+          orderLedgerPerProjects
+              .forEach(z -> projectOrders.add(projectOrderService.findById(z.getProjectOrder().getId())));
+
+          List< ProjectOrder > activeProjectOrders =
+              projectOrders.stream().filter(p -> p.getOrderState().equals(OrderState.APPROVED)).collect(Collectors.toList());
+
+
+          List< BigDecimal > totalPrice = new ArrayList<>();
+
+
+        }
+      }
+    });
+
+
+  }
+
 
 }

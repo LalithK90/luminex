@@ -13,6 +13,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Entity
 @Getter
@@ -24,6 +25,8 @@ public class GoodReceivedNote extends AuditEntity {
     private String remarks;
 
     @Column( precision = 10, scale = 2 )
+
+
     private BigDecimal totalAmount;
 
     @Enumerated( EnumType.STRING )
@@ -31,6 +34,9 @@ public class GoodReceivedNote extends AuditEntity {
 
     @ManyToOne
     private PurchaseOrder purchaseOrder;
+
+    @ManyToOne
+    private Supplier supplier;
 
     @OneToMany( mappedBy = "goodReceivedNote", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List< Ledger > ledgers;
