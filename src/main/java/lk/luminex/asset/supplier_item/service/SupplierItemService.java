@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = "supplierItem" )
+
 public class SupplierItemService implements AbstractService< SupplierItem, Integer > {
   private final SupplierItemDao supplierItemDao;
 

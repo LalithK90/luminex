@@ -54,7 +54,7 @@ public class EmployeeController {
     model.addAttribute("civilStatus", CivilStatus.values());
     model.addAttribute("employeeStatus", EmployeeStatus.values());
     model.addAttribute("designation", Designation.values());
-    model.addAttribute("bloodGroup", BloodGroup.values());
+    /*model.addAttribute("bloodGroup", BloodGroup.values());*/
     return "employee/addEmployee";
   }
 
@@ -75,6 +75,8 @@ public class EmployeeController {
     for ( Employee employee : employeeService.findAll()
         .stream()
         .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            /**working employee status tyen ayaw filter karana code eka **/
+          /*  .filter(x ->x.getEmployeeStatus().equals(EmployeeStatus.WORKING) && LiveDead.ACTIVE.equals(x.getLiveDead()))*/
         .collect(Collectors.toList())
     ) {
       employee.setFileInfo(employeeFilesService.employeeFileDownloadLinks(employee));

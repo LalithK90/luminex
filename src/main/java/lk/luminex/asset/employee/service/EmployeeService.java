@@ -32,6 +32,7 @@ public class EmployeeService implements AbstractService< Employee, Integer > {
     public List< Employee > findAll() {
         return employeeDao.findAll().stream()
             .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+               /* .filter(x -> x.getEmployeeStatus().equals(EmployeeStatus.WORKING) && LiveDead.ACTIVE.equals(x.getLiveDead()))*/
             .collect(Collectors.toList());
     }
 

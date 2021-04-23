@@ -96,8 +96,8 @@ public class PurchaseOrderController {
                 purchaseOrder.setCode("LPO" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
 
-                //if there is customer in db need to get that customer's code and increase its value
-                String previousCode = purchaseOrderService.lastPurchaseOrder().getCode().substring(4);
+                //if there is customer in db need to get that customer's code and incrgood_received_noteease its value
+                String previousCode = purchaseOrderService.lastPurchaseOrder().getCode().substring(3);
                 purchaseOrder.setCode("LPO" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
         }

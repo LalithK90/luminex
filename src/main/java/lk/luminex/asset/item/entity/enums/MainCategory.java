@@ -8,9 +8,9 @@ import lombok.Getter;
 public enum MainCategory {
 
     CONSTRUCTION_ACCESSORIES("Construction Accessories"),
-    SAFETY_MATERIALS("Safety Material"),
+    SAFETY_MATERIALS("Safety Material");
 
-    CABLE("Cable"),
+   /* CABLE("Cable"),
     CABLE_TIE("Cable Tie"),
     BUILDING_MATERIALS("Building Materials"),
     GRIP("Grip"),
@@ -21,7 +21,7 @@ public enum MainCategory {
     SAFETY_BELT("Safety  Belt"),
     GALVANISE_BRACKET("Galvanise Bracket"),
     CLAMP("Clamp"),
-    HELMET("Helmet");
+    HELMET("Helmet");*/
 
     /* Database saved name(UID shown name)
     CANNED_FOODS("Canned Foods"),

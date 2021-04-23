@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // set current year to the footer
-    document.getElementById("currentYear").innerHTML = new Date().getFullYear();
+    // document.getElementById("currentYear").innerHTML = new Date().getFullYear();
 
     /*//Nav bar properties - start//*/
     /*//Nav bar properties - start//*/
@@ -30,7 +30,6 @@ $(document).ready(function () {
     /* Patient and employee Nic Validation - start*/
     $("#nic").bind('keyup', function () {
         let nic = $(this).val();
-        //window.alert(nic);
         $("#dateOfBirth").val(calculateDateOfBirth(nic));
         //access our front-end gender*/
         $("input:radio[name=gender]").filter(`[value=${calculateGender(nic)}]`).prop('checked', true);
@@ -46,8 +45,6 @@ $(document).ready(function () {
 
 
 // regex
-let officeEmailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-let addressRegex = /^[0-9a-zA-Z\s,-./]+$/;
 let nicRegex = /^([0-9]{9}[|X|V]|[0-9]{12})$/;
 let mobileRegex = /^([0][7][\d]{8}$)|^([7][\d]{8})$/;
 let landRegex = /^0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))([2-4]|5|7|9)[0-9]{6}$/;
@@ -55,32 +52,15 @@ let callingNameRegex = /^[A-Za-z\\s]+$/;
 let nameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
 let numberRegex = /^([eE][hH][sS][\d]+)$/;
 let invoiceNumberRegex = /^[0-9]{10}$/;
+let addressRegex = /^[0-9a-zA-Z\s,-,/]+$/;
+let officeEmailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+let emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+let roleNameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
+let suppliernameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
 
 
 
-//Email validation
-$("#officeEmail").bind("keyup", function () {
-    let officeEmail = $(this).val();
-    if (officeEmailRegex.test(officeEmail)) {
-        backgroundColourChangeGood($(this));
-    } else if (officeEmail.length === 0) {
-        backgroundColourChangeNothingToChange($(this));
-    } else {
-        backgroundColourChangeBad($(this));
-    }
-});
 
-//Address validation
-$("#address").bind("keyup", function () {
-    let address = $(this).val();
-    if (addressRegex.test(address)) {
-        backgroundColourChangeGood($(this));
-    } else if (address.length === 0) {
-        backgroundColourChangeNothingToChange($(this));
-    } else {
-        backgroundColourChangeBad($(this));
-    }
-});
 //Nic - data of birth - start
 let dateLengthValidate = function (day) {
     if (day.toLocaleString().length === 1) {
@@ -296,6 +276,23 @@ $("#nic").bind("keyup", function () {
 });
 
 
+//Supplier Name validation
+$("#suppliername").bind("keyup", function () {
+    let suppliername = $(this).val();
+    if (suppliernameRegex.test(suppliername)) {
+        backgroundColourChangeGood($(this));
+    } else if (suppliername.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+
+
+
+
+
 //Name validation
 $("#name").bind("keyup", function () {
     let name = $(this).val();
@@ -308,6 +305,54 @@ $("#name").bind("keyup", function () {
     }
 });
 
+//RoleName validation
+$("#roleName").bind("keyup", function () {
+    let roleName = $(this).val();
+    if (roleNameRegex.test(roleName)) {
+        backgroundColourChangeGood($(this));
+    } else if (roleName.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+//Email validation
+$("#officeEmail").bind("keyup", function () {
+    let officeEmail = $(this).val();
+    if (officeEmailRegex.test(officeEmail)) {
+        backgroundColourChangeGood($(this));
+    } else if (officeEmail.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+//Supplier Email validation
+$("#email").bind("keyup", function () {
+    let email = $(this).val();
+    if (emailRegex.test(email)) {
+        backgroundColourChangeGood($(this));
+    } else if (email.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+
+//Address validation
+$("#address").bind("keyup", function () {
+    let address = $(this).val();
+    if (addressRegex.test(address)) {
+        backgroundColourChangeGood($(this));
+    } else if (address.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
 //calling Name validation
 $("#callingName").bind("keyup", function () {
     let callingname = $(this).val();
@@ -327,6 +372,37 @@ $("#invoiceNumber").bind("keyup", function () {
     } else {
         backgroundColourChangeBad($(this));
     }
+});
+
+//title validation
+$("#title").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Civil STATUS validation
+$("#civilStatus").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Designation validation
+$("#designation").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Employee Status validation
+$("#employeeStatus").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
 });
 
 //colour change function --start
@@ -588,5 +664,9 @@ function confirmDelete(obj) {
 }
 
 $(".btn-warning").on('click', function () {
+    location.reload();
+});
+
+$(".btnReset").on('click',function (){
     location.reload();
 });
