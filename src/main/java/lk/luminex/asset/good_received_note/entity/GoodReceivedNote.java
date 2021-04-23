@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.good_received_note.entity.enums.GoodReceivedNoteState;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
+import lk.luminex.asset.supplier.entity.Supplier;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Entity
 @Getter

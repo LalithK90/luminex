@@ -43,7 +43,9 @@ public class GoodReceivedNoteController {
 
   @GetMapping( "/{id}" )
   public String grnAdd(@PathVariable Integer id, Model model) {
-    model.addAttribute("purchaseOrderDetail", purchaseOrderService.findById(id));
+    PurchaseOrder purchaseOrder = purchaseOrderService.findById(id);
+    model.addAttribute("purchaseOrderDetail", purchaseOrder);
+    model.addAttribute("supplier", purchaseOrder.getSupplier());
     model.addAttribute("goodReceivedNote", new GoodReceivedNote());
     return "goodReceivedNote/addGoodReceivedNote";
   }
