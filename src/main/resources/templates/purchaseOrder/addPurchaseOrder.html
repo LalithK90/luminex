@@ -9,7 +9,7 @@
 
 <!--Heading Area -->
 <!--Multi CSS-->
-            <link data-th-href="@{/css/multi.css}" media="all" rel="stylesheet" type="text/css"/>
+<link data-th-href="@{/css/multi.css}" media="all" rel="stylesheet" type="text/css"/>
 <div class="container-fluid ">
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
@@ -171,7 +171,7 @@
 </div>
 
 <input  data-th-if="${supplierDetailShow==false}" data-th-value="${purchaseOrderItemUrl}" hidden
-       id="purchaseOrderItemUrl" type="text">
+        id="purchaseOrderItemUrl" type="text">
 <!--Supplier Item add - end-->
 <div data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <div data-th-replace="~{fragments/script :: scriptFragment}"></div>

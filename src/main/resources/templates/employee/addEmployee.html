@@ -13,9 +13,9 @@
           data-th-object="${employee}" method="POST" enctype="multipart/form-data" >
       <div class="row" >
         <div class="container  form-Border" >
-          <div class="row text-center formManagement border-info" >
+          <div class="row text-center formManagement border-info">
             <div class="col" >
-              <a class="btn btn-success" href="/home" >
+              <a class="btn btn-success" style="margin-top: 3px" href="/home" >
                 Back To Home
               </a >
             </div >
@@ -100,19 +100,21 @@
                     data-th-if="${#fields.hasErrors('callingName')}" id="callingNameError" >Error Calling Name</span >
             </div >
           </div >
+
           <!--Nic-->
           <div class="form-row text-right" >
             <div class="col-md-4" >
               <label class="control-label" for="nic" >NIC No :</label >
             </div >
             <div class="col-md-8" >
-              <input data-th-field="*{nic}" class="form-control" tabindex="6" type="text"
+              <input data-th-field="*{nic}" pattern="([0-9]{9}[|X|V]|[0-9]{12})" title="Your NIC cannot be accepted" class="form-control" tabindex="6" type="text"
                      maxlength="12"
                      minlength="10" required />
               <span class="error" id="nicError" data-th-errors="*{nic}"
                     data-th-if="${#fields.hasErrors('nic')}" >Error NIC Number</span >
             </div >
           </div >
+
           <!--Gender-->
           <div class="form-row text-right" >
             <div class="col-md-4" >
@@ -133,6 +135,7 @@
               </div >
             </div >
           </div >
+
           <!--Date of birth-->
           <div class="form-row text-right" >
             <div class="col-md-4" >
@@ -264,7 +267,7 @@
             </div >
           </div >
           <!--Employee status-->
-          <div class="form-row text-right" >
+          <div class="form-row text-right"  data-th-if="${addStatus==false}">
             <div class="col-md-4" >
               <label class="control-label" for="employeeStatus" >Employee Status :</label >
             </div >
@@ -327,7 +330,7 @@
               <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp; &nbsp;<span id="submit"
                                                                                       data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
             </button >
-            <button class="btn btn-danger" type="reset" >
+            <button class="btn btn-warning btnReset" type="reset" >
               <i class="fa fa-redo" ></i > <span id="reset" >Reset</span >
             </button >
           </div >

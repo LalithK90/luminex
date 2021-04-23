@@ -4,7 +4,9 @@ import lk.luminex.asset.common_asset.model.enums.LiveDead;
 import lk.luminex.asset.supplier.dao.SupplierDao;
 import lk.luminex.asset.supplier.entity.Supplier;
 import lk.luminex.asset.supplier_item.entity.enums.ItemSupplierStatus;
+import lk.luminex.asset.viva.entity.SupplierItemObj;
 import lk.luminex.util.interfaces.AbstractService;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -62,7 +64,18 @@ public class SupplierService implements AbstractService<Supplier, Integer> {
         return supplierDao.findFirstByOrderByIdDesc();
     }
 
+
+
     public Supplier findByIdAndItemSupplierStatus(Integer supplierId, ItemSupplierStatus itemSupplierStatus) {
         return supplierDao.findByIdAndItemSupplierStatus(supplierId,itemSupplierStatus);
+    }
+
+    public Supplier findByEmail(String email) {
+        return supplierDao.findByEmail(email);
+    }
+
+
+    public Supplier findByName(String name) {
+        return supplierDao.findByName(name);
     }
 }

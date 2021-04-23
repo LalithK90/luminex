@@ -45,7 +45,7 @@
               </div >
               <div class="form-row text-right" >
                 <div class="col-md-4" >
-                  <label class="control-label" for="roleName" >Name :</label >
+                  <label class="control-label" for="roleName" >Role Name :</label >
                 </div >
                 <div class="col-md-8" >
                   <input id="roleName" data-th-field="*{roleName}" class="form-control" type="text" required />
@@ -60,9 +60,13 @@
               <i class="fa fa-save" style="font-size: 20px" ></i >&nbsp; &nbsp;<span
                   id="submit" data-th-text="${addStatus==true?'Save': 'Update'}" >                        </span >
             </button >
+            <!--Reset Button-->
+            <button class="btn btn-warning ml-5 btnReset" tabindex="10" type="reset">
+              <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;Reset
+            </button>
           </div >
           <!--Error-->
-          <div class="form-row" >
+          <div class="form-row text-danger" >
             <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
             <ul >
               <li id="errorDisplay" data-th-each="err: ${#fields.errors('*')}" data-th-utext="${err}"
@@ -76,4 +80,4 @@
     <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 
 </body >
-</html >
+</html>

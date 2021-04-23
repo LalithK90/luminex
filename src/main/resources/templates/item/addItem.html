@@ -47,6 +47,7 @@
                   <div class="col-md-4" >
                     <input id="id" data-th-field="*{id}" class="form-control" type="text" readonly />
                     <input type="text" data-th-field="*{liveDead}" hidden >
+                    <input type="text" data-th-field="*{code}" hidden >
                   </div >
                 </div >
                 <!--Main Category -->
@@ -139,9 +140,9 @@
                   <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span id="submit"
                                                                                          data-th-text="${addStatus==true?'Save': 'Update'}" ></span >
                 </button >
-                <!--Cancel Button-->
-                <button class="btn btn-warning ml-5" type="reset" tabindex="13" >
-                  <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                <!--Reset Button-->
+                <button class="btn btn-warning btnReset ml-5" type="reset" tabindex="13" >
+                  <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Reset
                 </button >
               </div >
 

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // set current year to the footer
-    document.getElementById("currentYear").innerHTML = new Date().getFullYear();
+    // document.getElementById("currentYear").innerHTML = new Date().getFullYear();
 
     /*//Nav bar properties - start//*/
     /*//Nav bar properties - start//*/
@@ -22,7 +22,7 @@ $(document).ready(function () {
     /*//--------------- data table short using - data table plugin ------- start //*/
 
     /*When edit employee if there is a nic number need to select relevant gender*/
-    if ($("#nic").val()) {
+    if ($("#nic").val() !== null && $("#nic").val() !== undefined) {
         $("input:radio[name=gender]").filter(`[value=${calculateGender($("#nic").val())}]`).prop('checked', true);
     }
 
@@ -36,17 +36,29 @@ $(document).ready(function () {
 
     });
     /* Patient and employee Nic Validation - end*/
+    //input type date can not be selected future date
+    $('[type="date"]').prop('max', function () {
+        return new Date().toJSON().split('T')[0];
+    });
 
 });
 
 
 // regex
-let nicRegex = /^([0-9]{9}[vV|xX])|^([0-9]{12})$/;
+let nicRegex = /^([0-9]{9}[|X|V]|[0-9]{12})$/;
 let mobileRegex = /^([0][7][\d]{8}$)|^([7][\d]{8})$/;
 let landRegex = /^0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))([2-4]|5|7|9)[0-9]{6}$/;
-let nameRegex = /^[a-zA-Z .-]{3}[ a-zA-Z.-]+$/;
+let callingNameRegex = /^[A-Za-z\\s]+$/;
+let nameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
 let numberRegex = /^([eE][hH][sS][\d]+)$/;
 let invoiceNumberRegex = /^[0-9]{10}$/;
+let addressRegex = /^[0-9a-zA-Z\s,-,/]+$/;
+let officeEmailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+let emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+let roleNameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
+let suppliernameRegex = /^[a-zA-Z.-]{3}[ a-zA-Z.-]+$/;
+
+
 
 
 //Nic - data of birth - start
@@ -264,6 +276,23 @@ $("#nic").bind("keyup", function () {
 });
 
 
+//Supplier Name validation
+$("#suppliername").bind("keyup", function () {
+    let suppliername = $(this).val();
+    if (suppliernameRegex.test(suppliername)) {
+        backgroundColourChangeGood($(this));
+    } else if (suppliername.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+
+
+
+
+
 //Name validation
 $("#name").bind("keyup", function () {
     let name = $(this).val();
@@ -275,17 +304,66 @@ $("#name").bind("keyup", function () {
         backgroundColourChangeBad($(this));
     }
 });
-//calling Name validation
-$("#callingName").bind("keyup", function () {
-    let name = $(this).val();
-    if (nameRegex.test(name)) {
+
+//RoleName validation
+$("#roleName").bind("keyup", function () {
+    let roleName = $(this).val();
+    if (roleNameRegex.test(roleName)) {
         backgroundColourChangeGood($(this));
-    } else if (name.length === 0) {
+    } else if (roleName.length === 0) {
         backgroundColourChangeNothingToChange($(this));
     } else {
         backgroundColourChangeBad($(this));
     }
 });
+
+//Email validation
+$("#officeEmail").bind("keyup", function () {
+    let officeEmail = $(this).val();
+    if (officeEmailRegex.test(officeEmail)) {
+        backgroundColourChangeGood($(this));
+    } else if (officeEmail.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+//Supplier Email validation
+$("#email").bind("keyup", function () {
+    let email = $(this).val();
+    if (emailRegex.test(email)) {
+        backgroundColourChangeGood($(this));
+    } else if (email.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+
+//Address validation
+$("#address").bind("keyup", function () {
+    let address = $(this).val();
+    if (addressRegex.test(address)) {
+        backgroundColourChangeGood($(this));
+    } else if (address.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+//calling Name validation
+$("#callingName").bind("keyup", function () {
+    let callingname = $(this).val();
+    if (callingNameRegex.test(callingname)) {
+        backgroundColourChangeGood($(this));
+    } else if (callingname.length === 0) {
+        backgroundColourChangeNothingToChange($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+})
 //invoiceNumber validation
 $("#invoiceNumber").bind("keyup", function () {
     let invoiceNumber = $(this).val();
@@ -296,13 +374,44 @@ $("#invoiceNumber").bind("keyup", function () {
     }
 });
 
+//title validation
+$("#title").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Civil STATUS validation
+$("#civilStatus").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Designation validation
+$("#designation").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
+
+//Employee Status validation
+$("#employeeStatus").bind("change", function () {
+    let title = $(this).val();
+    backgroundColourChangeGood($(this));
+
+});
+
 //colour change function --start
 let backgroundColourChangeGood = function (id) {
-    $(id).css('background-color', '#00FFFF');
+    $(id).css('background-color', '#90EE90');
 };
 
 let backgroundColourChangeBad = function (id) {
-    $(id).css('background-color', '#FF00AA');
+    $(id).css('background-color', '#FF6347');
 };
 
 let backgroundColourChangeNothingToChange = function (id) {
@@ -355,61 +464,56 @@ let conformationAndLoginWindow = function () {
     });
 };
 
-//custom invoice search page validation - start
-$("#invoiceFindBy").bind("change", function () {
-    //set what is the parameter will search
-    $("#invoiceFindValue").attr('name', $("#invoiceFindBy").val());
-    document.getElementById("invoiceFindValue").style.setProperty('background-color', '#ffffff', 'important');
-    $("#invoiceFindValue").val("");
-});
 
-$("#invoiceFindValue").bind("keyup", function () {
-    let selectedInvoiceSearch = document.getElementById("invoiceFindBy").value;
-    let enterValue = $(this).val();
-    if (document.getElementById("invoiceFindValue").value.length === 0) {
-        backgroundColourChangeNothingToChange($(this));
-    } else {
-        switch (selectedInvoiceSearch) {
-            case ("patient.number") :
-                if (numberRegex.test(enterValue)) {
-                    backgroundColourChangeGood($(this));
-                } else {
-                    backgroundColourChangeBad($(this));
-                }
-                break;
-            case ("patient.nic") :
-                if (nicRegex.test(enterValue)) {
-                    backgroundColourChangeGood($(this));
-                } else {
-                    backgroundColourChangeBad($(this));
-                }
-                break;
-            case ("patient.mobile") :
-                if (mobileRegex.test(enterValue)) {
-                    backgroundColourChangeGood($(this));
-                } else {
-                    backgroundColourChangeBad($(this));
-                }
-                break;
-            case ("patient.name") :
-                if (nameRegex.test(enterValue)) {
-                    backgroundColourChangeGood($(this));
-                } else {
-                    backgroundColourChangeBad($(this));
-                }
-                break;
-            case ("number") :
-                if (invoiceNumberRegex.test(enterValue)) {
-                    backgroundColourChangeGood($(this));
-                } else {
-                    backgroundColourChangeBad($(this));
-                }
-                break;
+$("#startDate, #endDate").bind("click", function () {
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+
+    if (endDate.length !== 0) {
+        $('#startDate').attr('max', $('#endDate').val());
+    }
+    if (startDate.length !== 0) {
+        $('#endDate').attr('min', $('#startDate').val());
+    }
+
+//only start date has value
+    if (startDate.length !== 0 && endDate.length !== 0) {
+        let milliSecondStartDate = Date.parse(startDate);
+        let milliSecondEndDate = Date.parse(endDate);
+        if (milliSecondEndDate > milliSecondStartDate) {
+            backgroundColourChangeGood($(this));
+        } else {
+            backgroundColourChangeBad($(this));
         }
+    } else {
+        backgroundColourChangeNothingToChange($(this));
     }
 });
-//custom invoice search page validation - end
 
+$("#btnSummaryFind").bind("mouseover", function () {
+    let endDate = document.getElementById("endDate").value;
+    let startDate = document.getElementById("startDate").value;
+
+    //if both date filed has some thing
+    if (endDate.length !== 0 && startDate.length !== 0) {
+
+        let milliSecondStartDate = Date.parse(startDate);
+        let milliSecondEndDate = Date.parse(endDate);
+
+        if (milliSecondToDay < milliSecondStartDate || milliSecondToDay < milliSecondEndDate) {
+            swal({
+                title: "Date range is not valid",
+                icon: "warning",
+            });
+        }
+    } else {
+        swal({
+            title: "Please re-check date filed",
+            icon: "warning",
+        });
+    }
+});
+//Search form date validation — end
 
 //Customer employee Search filed - start any way in project
 
@@ -469,7 +573,6 @@ let deleteAllTableRow = function (tableName) {
         }
     }
 };
-
 
 
 //password validator user add
@@ -547,4 +650,23 @@ $(".reveal").on('click', function () {
     } else {
         $pwd.attr('type', 'password');
     }
+});
+
+function confirmDelete(obj) {
+    swal("Are you sure to delete this?", {
+        dangerMode: true,
+        buttons: true,
+    }).then((x) => {
+        if (x) {
+            self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
+        }
+    });
+}
+
+$(".btn-warning").on('click', function () {
+    location.reload();
+});
+
+$(".btnReset").on('click',function (){
+    location.reload();
 });

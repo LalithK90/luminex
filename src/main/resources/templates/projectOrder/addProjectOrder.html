@@ -107,14 +107,7 @@
                 <tbody >
 
                 </tbody >
-                <tfoot >
-                <tr >
-                  <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
-                  <th ><input id="total" type="text" class="form-control" name="totalPrice"
-                              placeholder="Total Price" >
-                  </th >
-                </tr >
-                </tfoot >
+
               </table >
             </div >
           </div >
@@ -142,7 +135,7 @@
 
 
       <hr >
-      <!--button-->
+      <!--buttSelect Items:on-->
       <div class="form-group" >
         <!--Button-->
         <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
@@ -156,9 +149,9 @@
                 data-th-text="${'Save'}"
                 id="submit" ></span >
           </button >
-          <!--Cancel Button-->
-          <button class="btn btn-warning ml-5" tabindex="13" type="reset" >
-            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+          <!--Reset Button-->
+          <button class="btn btn-warning btn/reset ml-5" tabindex="13" type="reset" >
+            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Reset
           </button >
         </div >
       </div >
@@ -302,17 +295,27 @@
     }
 
     //modal total mount calculate
-    $("#requestCount").bind('keyup keydown change', function () {
-        if ($("#abQuantity").val() >= $(this).val()) {
-            $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat($(this).val()));
-            addButtonDisable();
-        } else {
-            swal({
-                title: "Request more than available   ",
-                icon: "warning",
-            });
-        }
+    //modal total mount calculate
+    $("#requestCount").bind('keyup', function () {
+      totalPriceCard();
     });
+
+    function totalPriceCard() {
+      let requestCountVal = $("#requestCount").val();
+      let abQuantity = $("#abQuantity").val();
+
+      if (parseFloat(abQuantity) >= parseFloat(requestCountVal) && ! isNaN(requestCountVal)) {
+        $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat(requestCountVal));
+        addButtonDisable();
+      } else {
+        swal({
+          title: "Request more than available or less than available  ",
+          icon: "warning",
+        });
+
+        addButtonDisable();
+      }
+    }
 
     //modal all values zero
     function modalValueZero() {
