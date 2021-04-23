@@ -43,7 +43,9 @@ public class GoodReceivedNoteController {
 
   @GetMapping( "/{id}" )
   public String grnAdd(@PathVariable Integer id, Model model) {
-    model.addAttribute("purchaseOrderDetail", purchaseOrderService.findById(id));
+    PurchaseOrder purchaseOrder = purchaseOrderService.findById(id);
+    model.addAttribute("purchaseOrderDetail", purchaseOrder);
+    model.addAttribute("supplier", purchaseOrder.getSupplier());
     model.addAttribute("goodReceivedNote", new GoodReceivedNote());
     return "goodReceivedNote/addGoodReceivedNote";
   }
@@ -60,7 +62,6 @@ public class GoodReceivedNoteController {
       Ledger ledgerDB = ledgerService.findByItem(ledger.getItem());
 //if there is on value in ledger need to update it
       if ( ledgerDB != null ) {
-
         ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
         ledgerService.persist(ledgerDB);
         continue;

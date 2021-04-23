@@ -147,13 +147,16 @@ public class SupplierItemController {
   public PurchaseOrderItemLedger purchaseOrderSupplierItem(@RequestParam( "supplierId" ) Integer supplierId,
                                                            @RequestParam( "itemId" ) Integer itemId) {
     SupplierItem supplierItem = new SupplierItem();
+
     List< SupplierItem > supplierItems =
-            supplierItemService.findBySupplier(supplierService.findById(supplierId)).stream().filter(x -> x.getItemSupplierStatus().equals(ItemSupplierStatus.CURRENTLY_BUYING)).collect(Collectors.toList());
+        supplierItemService.findBySupplier(supplierService.findById(supplierId)).stream().filter(x -> x.getItemSupplierStatus().equals(ItemSupplierStatus.CURRENTLY_BUYING)).collect(Collectors.toList());
+
     for ( SupplierItem supplierItem1 : supplierItems ) {
       if ( supplierItem1.getItem().getId().equals(itemId) ) {
         supplierItem = supplierItemService.findById(supplierItem1.getId());
       }
     }
+
     PurchaseOrderItemLedger purchaseOrderItemLedger = new PurchaseOrderItemLedger();
     /* 1. item ID   2. Item name 3. Rop 4. Price 5. Available Quantity. */
     purchaseOrderItemLedger.setItemId(supplierItem.getItem().getId());

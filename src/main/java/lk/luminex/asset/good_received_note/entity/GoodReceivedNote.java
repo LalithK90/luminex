@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.luminex.asset.good_received_note.entity.enums.GoodReceivedNoteState;
 import lk.luminex.asset.ledger.entity.Ledger;
 import lk.luminex.asset.purchase_order.entity.PurchaseOrder;
+import lk.luminex.asset.supplier.entity.Supplier;
 import lk.luminex.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,8 @@ public class GoodReceivedNote extends AuditEntity {
     private String remarks;
 
     @Column( precision = 10, scale = 2 )
+
+
     private BigDecimal totalAmount;
 
     @Enumerated( EnumType.STRING )
@@ -31,6 +34,9 @@ public class GoodReceivedNote extends AuditEntity {
 
     @ManyToOne
     private PurchaseOrder purchaseOrder;
+/*
+    @ManyToOne
+    private Supplier supplier;*/
 
     @OneToMany( mappedBy = "goodReceivedNote", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List< Ledger > ledgers;

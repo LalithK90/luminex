@@ -18,4 +18,8 @@ private final OrderLedgerDao orderLedgerDao;
   public List< OrderLedger > findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
   return orderLedgerDao.findByCreatedAtIsBetween(from, to);
   }
+
+  public OrderLedger findById(Integer id) {
+    return orderLedgerDao.getOne(id);
+  }
 }

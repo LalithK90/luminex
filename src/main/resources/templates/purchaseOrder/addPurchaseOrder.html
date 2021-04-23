@@ -184,7 +184,7 @@
     });
     //taken supplier id
     let supplierIdValue = $("#supplier").val();
-    if (supplierIdValue.length !== 0) {
+    if (supplierIdValue) {
         $("#item").bind('change', function () {
             //taken item id
             // http://localhost:8080/supplierItem/supplierItem?supplierId=15&itemId=1
